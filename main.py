@@ -1,4 +1,4 @@
-import sys 
+import sys
 import os
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -6,17 +6,19 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 
 import argparse
 import logging
-import time 
+import time
 from src.RML import *
 from src.RMLtoShacl import RMLtoSHACL
 from src.SHACL import *
 
 if __name__ == "__main__":
-    
+
     RtoS = RMLtoSHACL()
     parser = argparse.ArgumentParser()
     parser.add_argument("MAPPING_FILE", type=str,
                         help="RML mapping file to be converted into SHACL shapes.")
+    parser.add_argument("ONTOLOGY_FILE", type=str,
+                        help="Ontology file to be converted into SHACL shapes.")
     parser.add_argument("-logLevel", "-l", type=str, default="INFO",
                         help="Logging level of this script")
 
@@ -29,10 +31,10 @@ if __name__ == "__main__":
     logging.basicConfig(level=numeric_level)
 
     start = time.time()
-    if args.MAPPING_FILE is None:
+    if args.MAPPING_FILE is None and args.ONTOLOGY_FILE is None:
         exit()
     else:
-        RtoS.evaluate_file(args.MAPPING_FILE)
+        RtoS.evaluate_files(args.MAPPING_FILE, args.ONTOLOGY_FILE)
 
     end = time.time()
 

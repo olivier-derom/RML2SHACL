@@ -7,6 +7,7 @@ import string
 import time
 import timeit
 from typing import Any, List
+import requests
 
 import rdflib
 from rdflib import RDF
@@ -27,9 +28,9 @@ class RMLtoSHACL:
     def helpAddTriples(self, shacl_graph: Graph, sub: Identifier,
                        pred: Identifier, obj_arr: Optional[List[Identifier]]) -> None:
         """
-        This method takes an array of object terms (obj_arr)  associated with 
-        the given predicate (pred) and add them to the 
-        subject node (sub) as triples.  
+        This method takes an array of object terms (obj_arr)  associated with
+        the given predicate (pred) and add them to the
+        subject node (sub) as triples.
         """
 
         if obj_arr is None:
@@ -47,8 +48,8 @@ class RMLtoSHACL:
 
     def transformList(self, node: Identifier, arr: List[Any], shacl_graph: Graph) -> None:
         """
-        Transform the given array objects into RDF compliant array list. 
-        The transformation is done in the manner of a functional list. 
+        Transform the given array objects into RDF compliant array list.
+        The transformation is done in the manner of a functional list.
         """
         current_node = node
         next_node = rdflib.BNode()
@@ -71,7 +72,7 @@ class RMLtoSHACL:
 
         shacl_graph.add((node, self.shaclNS.nodeKind, self.shaclNS.Literal))
 
-        # Transform rr:language 
+        # Transform rr:language
         # it can be a list of languages
         language_iri = self.RML.LANGUAGE
         if language_iri in termMap.po_dict:
@@ -121,8 +122,8 @@ class RMLtoSHACL:
 
     def transformSubjectMap(self, node: Identifier, subjectmap: SubjectMap, shacl_graph: Graph) -> None:
         """
-        Transform the given SubjectMap into the corresponding SHACL shapes and 
-        store them in the self.SHACL's rdflib graph. 
+        Transform the given SubjectMap into the corresponding SHACL shapes and
+        store them in the self.SHACL's rdflib graph.
         """
 
         po_dict = subjectmap.po_dict
@@ -142,7 +143,7 @@ class RMLtoSHACL:
 
         # End of class and targetNode shacl mapping
 
-        # Shacl shl:pattern parsing 
+        # Shacl shl:pattern parsing
         template_strings = [self.serializeTemplate(x)
                             for x in po_dict.get(self.RML.TEMPLATE, [])]
         self.helpAddTriples(shacl_graph, node,
@@ -168,7 +169,7 @@ class RMLtoSHACL:
                 print(f"WARNING: {term_type} is not a valid term type for {self}, defaulting to IRI")
                 self.transformIRI(node, shacl_graph)
 
-        # default behaviour if no termType is defined 
+        # default behaviour if no termType is defined
         elif po_dict.get(self.RML.REFERENCE):
             self.transformLiteral(node, termMap, shacl_graph)
         else:
@@ -179,8 +180,8 @@ class RMLtoSHACL:
         pm = pom.PM
         om = pom.OM
 
-        # Find the subject's class in 
-        # Check if it defines the class of the subject node (node) and 
+        # Find the subject's class in
+        # Check if it defines the class of the subject node (node) and
         # return immediately since the pom is parsed
         pred_constant_objs = pm.po_dict.get(self.RML.CONSTANT)
         if pred_constant_objs and pred_constant_objs[0] == rdflib.RDF.type:
@@ -223,16 +224,13 @@ class RMLtoSHACL:
 
         return filenNameShape
 
-    def evaluate_file(self, rml_mapping_file):
-        self.RML.parseFile(rml_mapping_file)
+    def evaluate_files(self, rml_mapping_file, ontology_file):
 
-        for _, triples_map in self.RML.tm_model_dict.items():
-            subject_shape_node = self.createNodeShape(triples_map, self.SHACL.graph)
+        self.evaluate_mapping(rml_mapping_file)
+        if ontology_file is not None:
+            self.evaluate_ontology(ontology_file)
 
-            for pom in triples_map.poms:
-                self.transformPOM(subject_shape_node, pom, self.SHACL.graph)
-
-        outputfileName = f"{rml_mapping_file}-output-shape.ttl"
+        outputfileName = f"{rml_mapping_file}-mapping-shape.ttl"
         self.writeShapeToFile(outputfileName)
 
         validation_shape_graph = rdflib.Graph()
@@ -247,4 +245,24 @@ class RMLtoSHACL:
 
         return None
 
+    def evaluate_mapping(self, rml_mapping_file):
+        self.RML.parseFile(rml_mapping_file)
 
+        for _, triples_map in self.RML.tm_model_dict.items():
+            subject_shape_node = self.createNodeShape(triples_map, self.SHACL.graph)
+
+            for pom in triples_map.poms:
+                self.transformPOM(subject_shape_node, pom, self.SHACL.graph)
+
+        return None
+
+    def evaluate_ontology(self, ontology_file):
+        url = "https://astrea.linkeddata.es/api/shacl/file"
+        files = {'file': (ontology_file, open(ontology_file, 'rb'))}
+        params = {'format': 'Turtle'}
+
+        r_onto = requests.post(url=url, params=params, files=files)
+
+        self.SHACL.graph.parse(r_onto.content)
+
+        return None
