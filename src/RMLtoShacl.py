@@ -10,6 +10,7 @@ from typing import Any, List
 import requests
 
 import rdflib
+from rdflib import URIRef
 from rdflib import RDF
 from requests.exceptions import HTTPError
 
@@ -228,7 +229,7 @@ class RMLtoSHACL:
 
         self.evaluate_mapping(rml_mapping_file)
         if ontology_file is not None:
-            self.evaluate_ontology(ontology_file)
+            self.enrich_ontology(self.evaluate_ontology(ontology_file))
 
         outputfileName = f"{rml_mapping_file}-mapping-shape.ttl"
         self.writeShapeToFile(outputfileName)
@@ -242,6 +243,7 @@ class RMLtoSHACL:
         logging.debug("RESULTS")
         logging.debug("=" * 100)
         logging.debug(self.SHACL.results_text)
+        print(self.SHACL.results_text)
 
         return None
 
@@ -262,7 +264,128 @@ class RMLtoSHACL:
         params = {'format': 'Turtle'}
 
         r_onto = requests.post(url=url, params=params, files=files)
+        g_astrea = rdflib.Graph()
+        g_astrea.parse(r_onto.content)
 
-        self.SHACL.graph.parse(r_onto.content)
+        return g_astrea
 
-        return None
+    def enrich_ontology(self, ontology_graph):
+        nodeshape_blacklist = [URIRef("http://www.w3.org/ns/shacl#targetClass"),
+                               URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                               URIRef("http://www.w3.org/2000/01/rdf-schema#label"),
+                               URIRef("http://www.w3.org/ns/shacl#description"),
+                               URIRef("http://www.w3.org/ns/shacl#name")]
+
+        propertyshape_blacklist = [URIRef("http://www.w3.org/ns/shacl#targetClass"),
+                                   URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                                   URIRef("http://www.w3.org/2000/01/rdf-schema#label"),
+                                   URIRef("http://www.w3.org/ns/shacl#description"),
+                                   URIRef("http://www.w3.org/ns/shacl#name")]
+
+        # Get a list of all targetClasses
+        q1 = f'SELECT ?nodeshape ?targetclass {{?nodeshape a <{URIRef("http://www.w3.org/ns/shacl#NodeShape")}> .?nodeshape <{URIRef("http://www.w3.org/ns/shacl#targetClass")}> ?targetclass.}}'
+        x1 = self.SHACL.graph.query(q1)
+
+        # Get the constraints for each targetClass and add them to the rml2shacl shapes
+        for row in x1:
+            # print(f"{row.targetclass}")
+
+            q2 = f'SELECT ?p ?o {{?s a <{URIRef("http://www.w3.org/ns/shacl#NodeShape")}> .?s <{URIRef("http://www.w3.org/ns/shacl#targetClass")}> <{row.targetclass}> .?s ?p ?o}}'
+            x2 = ontology_graph.query(q2)
+            q3 = f'SELECT ?p ?o {{?s a <{URIRef("http://www.w3.org/ns/shacl#NodeShape")}> .?s <{URIRef("http://www.w3.org/ns/shacl#targetClass")}> \"{row.targetclass}\" .?s ?p ?o}}'
+            x3 = self.SHACL.graph.query(q3)
+            property_BNodes_dict = dict()
+            q5 = f'SELECT ?bnode ?p ?o {{<{row.nodeshape}> a <{URIRef("http://www.w3.org/ns/shacl#NodeShape")}> .<{row.nodeshape}> <{URIRef("http://www.w3.org/ns/shacl#property")}> ?bnode. ?bnode ?p ?o}}'
+            x5 = self.SHACL.graph.query(q5)
+            for row5 in x5:
+                if row5.p not in propertyshape_blacklist:
+                    if row5.p == URIRef("http://www.w3.org/ns/shacl#path"):
+                        property_BNodes_dict[row5.o] = row5.bnode
+            for row2 in x2:
+                if row2.p not in nodeshape_blacklist:
+                    if row2.p != URIRef("http://www.w3.org/ns/shacl#property"):
+                        for row3 in x3:
+                            if row2.p == row3.p:
+                                break
+                        else:
+                            # print(f"added constraint to {row.nodeshape}: {row2.p} || {row2.o}")
+                            self.SHACL.graph.add((row.nodeshape, row2.p, row2.o))
+                    else:
+                        property_dict = dict()
+                        q4 = f'SELECT ?p ?o {{<{row2.o}> a <{URIRef("http://www.w3.org/ns/shacl#PropertyShape")}> .<{row2.o}> ?p ?o}}'
+                        x4 = ontology_graph.query(q4)
+                        for row4 in x4:
+                            if row4.p not in propertyshape_blacklist:
+                                property_dict[row4.p] = row4.o
+                        if property_dict.get(URIRef("http://www.w3.org/ns/shacl#path")) in property_BNodes_dict:
+                            for item in property_dict:
+                                self.SHACL.graph.add(
+                                    (property_BNodes_dict[property_dict[URIRef("http://www.w3.org/ns/shacl#path")]],
+                                     item,
+                                     property_dict[item]))
+                                # print(f"added property to {row.nodeshape}: {item} || {property_dict[item]}")
+                        else:
+                            new_BNode = rdflib.BNode()
+                            self.SHACL.graph.add(
+                                (row.nodeshape, URIRef("http://www.w3.org/ns/shacl#property"), new_BNode))
+                            for item in property_dict:
+                                self.SHACL.graph.add((new_BNode, item, property_dict[item]))
+                                # print(f"added property to {row.nodeshape}: {item} || {property_dict[item]}")
+
+        property_BNodes_dict = dict()
+        q6 = f'SELECT ?bnode {{?s a <{URIRef("http://www.w3.org/ns/shacl#NodeShape")}> .?s <{URIRef("http://www.w3.org/ns/shacl#property")}> ?bnode.}}'
+        x6 = self.SHACL.graph.query(q6)
+        BNode_list = list()
+        for row6 in x6:
+            if type(row6.bnode) == rdflib.term.BNode:
+                BNode_list += [row6.bnode]
+
+        for bnode in BNode_list:
+            if ((bnode, URIRef("http://www.w3.org/ns/shacl#nodeKind"),
+                 URIRef("http://www.w3.org/ns/shacl#IRIOrLiteral")) in self.SHACL.graph) and ((bnode,
+                                                                                               URIRef(
+                                                                                                   "http://www.w3.org/ns/shacl#nodeKind"),
+                                                                                               URIRef(
+                                                                                                   "http://www.w3.org/ns/shacl#IRI")) in self.SHACL.graph):
+                self.SHACL.graph.remove((bnode, URIRef("http://www.w3.org/ns/shacl#nodeKind"),
+                                         URIRef("http://www.w3.org/ns/shacl#IRIOrLiteral")))
+            elif ((bnode, URIRef("http://www.w3.org/ns/shacl#nodeKind"),
+                   URIRef("http://www.w3.org/ns/shacl#IRIOrLiteral")) in self.SHACL.graph) and ((bnode,
+                                                                                                 URIRef(
+                                                                                                     "http://www.w3.org/ns/shacl#nodeKind"),
+                                                                                                 URIRef(
+                                                                                                     "http://www.w3.org/ns/shacl#Literal")) in self.SHACL.graph):
+                self.SHACL.graph.remove((bnode, URIRef("http://www.w3.org/ns/shacl#nodeKind"),
+                                         URIRef("http://www.w3.org/ns/shacl#IRIOrLiteral")))
+            elif ((bnode, URIRef("http://www.w3.org/ns/shacl#nodeKind"),
+                   URIRef("http://www.w3.org/ns/shacl#BlankNodeOrLiteral")) in self.SHACL.graph) and ((bnode,
+                                                                                                       URIRef(
+                                                                                                           "http://www.w3.org/ns/shacl#nodeKind"),
+                                                                                                       URIRef(
+                                                                                                           "http://www.w3.org/ns/shacl#Literal")) in self.SHACL.graph):
+                self.SHACL.graph.remove((bnode, URIRef("http://www.w3.org/ns/shacl#nodeKind"),
+                                         URIRef("http://www.w3.org/ns/shacl#BlankNodeOrLiteral")))
+            elif ((bnode, URIRef("http://www.w3.org/ns/shacl#nodeKind"),
+                   URIRef("http://www.w3.org/ns/shacl#BlankNodeOrLiteral")) in self.SHACL.graph) and ((bnode,
+                                                                                                       URIRef(
+                                                                                                           "http://www.w3.org/ns/shacl#nodeKind"),
+                                                                                                       URIRef(
+                                                                                                           "http://www.w3.org/ns/shacl#BlankNode")) in self.SHACL.graph):
+                self.SHACL.graph.remove((bnode, URIRef("http://www.w3.org/ns/shacl#nodeKind"),
+                                         URIRef("http://www.w3.org/ns/shacl#BlankNodeOrLiteral")))
+            elif ((bnode, URIRef("http://www.w3.org/ns/shacl#nodeKind"),
+                   URIRef("http://www.w3.org/ns/shacl#BlankNodeOrIRI")) in self.SHACL.graph) and ((bnode,
+                                                                                                   URIRef(
+                                                                                                       "http://www.w3.org/ns/shacl#nodeKind"),
+                                                                                                   URIRef(
+                                                                                                       "http://www.w3.org/ns/shacl#IRI")) in self.SHACL.graph):
+                self.SHACL.graph.remove((bnode, URIRef("http://www.w3.org/ns/shacl#nodeKind"),
+                                         URIRef("http://www.w3.org/ns/shacl#BlankNodeOrIRI")))
+            elif ((bnode, URIRef("http://www.w3.org/ns/shacl#nodeKind"),
+                   URIRef("http://www.w3.org/ns/shacl#BlankNodeOrIRI")) in self.SHACL.graph) and ((bnode,
+                                                                                                   URIRef(
+                                                                                                       "http://www.w3.org/ns/shacl#nodeKind"),
+                                                                                                   URIRef(
+                                                                                                       "http://www.w3.org/ns/shacl#BlankNode")) in self.SHACL.graph):
+                self.SHACL.graph.remove((bnode, URIRef("http://www.w3.org/ns/shacl#nodeKind"),
+                                         URIRef("http://www.w3.org/ns/shacl#BlankNodeOrIRI")))
