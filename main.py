@@ -13,12 +13,18 @@ from src.SHACL import *
 
 if __name__ == "__main__":
 
+    def dir_path(string):
+        if os.path.isdir(string):
+            return string
+        else:
+            raise NotADirectoryError(string)
+
     RtoS = RMLtoSHACL()
     parser = argparse.ArgumentParser()
     parser.add_argument("MAPPING_FILE", type=str,
                         help="RML mapping file to be converted into SHACL shapes.")
-    parser.add_argument("ONTOLOGY_FILE", type=str,
-                        help="Ontology file to be converted into SHACL shapes.")
+    parser.add_argument("--ONTOLOGY_DIR", "-o", type=str,
+                        help="Directory with additional ontology files to be converted into SHACL shapes.")
     parser.add_argument("-logLevel", "-l", type=str, default="INFO",
                         help="Logging level of this script")
 
@@ -31,10 +37,13 @@ if __name__ == "__main__":
     logging.basicConfig(level=numeric_level)
 
     start = time.time()
-    if args.MAPPING_FILE is None and args.ONTOLOGY_FILE is None:
+    if args.MAPPING_FILE is None:
         exit()
     else:
-        RtoS.evaluate_files(args.MAPPING_FILE, args.ONTOLOGY_FILE)
+        if args.ONTOLOGY_DIR is None:
+            RtoS.evaluate_files(args.MAPPING_FILE)
+        else:
+            RtoS.evaluate_files(args.MAPPING_FILE, args.ONTOLOGY_DIR)
 
     end = time.time()
 

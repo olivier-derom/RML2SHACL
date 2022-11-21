@@ -8,6 +8,7 @@ import time
 import timeit
 from typing import Any, List
 import requests
+import json
 
 import rdflib
 from rdflib import URIRef
@@ -229,11 +230,22 @@ class RMLtoSHACL:
 
         return filenNameShape
 
-    def evaluate_files(self, rml_mapping_file, ontology_file):
+    def evaluate_files(self, rml_mapping_file, ontology_dir=None):
 
         self.evaluate_mapping(rml_mapping_file)
-        if ontology_file is not None:
-            self.enrich_ontology(self.evaluate_ontology(ontology_file))
+
+        self.enrich_ontology(self.get_prefix_ontologies())
+
+        if ontology_dir is not None:
+            for ontology in os.listdir(ontology_dir):
+                file = os.path.join(ontology_dir, ontology)
+                try:
+                    g = rdflib.Graph()
+                    g.parse(file)
+                    self.enrich_ontology(self.evaluate_ontology_file(file))
+                except:
+                    pass
+
 
         outputfileName = f"{rml_mapping_file}-mapping-shape.ttl"
         self.writeShapeToFile(outputfileName)
@@ -262,7 +274,7 @@ class RMLtoSHACL:
 
         return None
 
-    def evaluate_ontology(self, ontology_file):
+    def evaluate_ontology_file(self, ontology_file):
         url = "https://astrea.linkeddata.es/api/shacl/file"
         files = {'file': (ontology_file, open(ontology_file, 'rb'))}
         params = {'format': 'Turtle'}
@@ -271,6 +283,32 @@ class RMLtoSHACL:
         g_astrea = rdflib.Graph()
         g_astrea.parse(r_onto.content)
 
+        return g_astrea
+
+    def get_prefix_ontologies(self):
+        ontologyURLvalues = []
+
+        for namespace in self.RML.graph.namespaces():
+            try:
+                g = rdflib.Graph()
+                g.parse(namespace[1])
+                ontologyURLvalues += [namespace[1]]
+            except:
+                pass
+
+
+        ontologyURLdict = dict()
+        ontologyURLdict['ontologies'] = ontologyURLvalues
+        # ontologyURLdict['ontologies'] = ["https://www.w3.org/2006/time#"]
+        ontologyURLsfile = json.dumps(ontologyURLdict)
+
+        params = {'ontologyURLs': f"{ontologyURLdict}"}
+
+        url = "https://astrea.linkeddata.es/api/shacl/url"
+
+        r_onto = requests.post(url=url, json=ontologyURLdict)
+        g_astrea = rdflib.Graph()
+        g_astrea.parse(r_onto.content)
         return g_astrea
 
     def enrich_ontology(self, ontology_graph):
@@ -311,7 +349,7 @@ class RMLtoSHACL:
                             if row2.p == row3.p:
                                 break
                         else:
-                            self.add_item(self.SHACL.graph, row.nodeshape, row2.p, row2.o, ontology_graph)
+                            self.add_ontology_item(self.SHACL.graph, row.nodeshape, row2.p, row2.o, ontology_graph)
                     else:
                         property_dict = dict()
                         q4 = f'SELECT ?p ?o {{<{row2.o}> a <{self.shaclNS.PropertyShape}> .<{row2.o}> ?p ?o}}'
@@ -325,7 +363,7 @@ class RMLtoSHACL:
                                     if item == row5.p:
                                         break
                                 else:
-                                    self.add_item(self.SHACL.graph, property_BNodes_dict[property_dict[self.shaclNS.path]], item, property_dict[item], ontology_graph)
+                                    self.add_ontology_item(self.SHACL.graph, property_BNodes_dict[property_dict[self.shaclNS.path]], item, property_dict[item], ontology_graph)
 
         property_BNodes_dict = dict()
         q6 = f'SELECT ?bnode {{?s a <{self.shaclNS.NodeShape}> .?s <{self.shaclNS.property}> ?bnode.}}'
@@ -349,12 +387,12 @@ class RMLtoSHACL:
             elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNode) in self.SHACL.graph):
                 self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI))
 
-    def add_item(self, g, s, p, o, g2=None):
+    def add_ontology_item(self, g, s, p, o, g2=None):
         if type(o) == rdflib.term.BNode:
             new_BNode = rdflib.BNode()
             g.add((s, p, new_BNode))
             for p2, o2 in g2.predicate_objects(o):
-                self.add_item(g, new_BNode, p2, o2, g2)
+                self.add_ontology_item(g, new_BNode, p2, o2, g2)
         else:
             if type(o) == rdflib.term.URIRef and str(o).startswith('https://astrea.linkeddata.es/shapes'):
                 if (o, self.rdfSyntax.type, None) not in g:
@@ -365,6 +403,6 @@ class RMLtoSHACL:
                     else:
                         g.add((s, p, o))
                         for p2, o2 in g2.predicate_objects(o):
-                            self.add_item(g, o, p2, o2, g2)
+                            self.add_ontology_item(g, o, p2, o2, g2)
             else:
                 g.add((s, p, o))

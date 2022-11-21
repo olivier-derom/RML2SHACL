@@ -28,6 +28,9 @@ optional arguments:
   -logLevel LOGLEVEL, -l LOGLEVEL
                         Logging level of this script
                         Possible values: INFO,DEBUG,WARN
+  -o ONTOLOGY_DIR       Directory/path with additional ontology files to be converted 
+                        into SHACL shapes.
+  
 
 ```
 
@@ -38,6 +41,11 @@ To generate your shacl shapes:
 
 ```bash 
 python3 main.py MAPPING_FILE
+```
+
+An example with an additional folder containing ontology-files:
+```bash 
+python3 main.py -o ONTOLOGIES_PATH MAPPING_FILE
 ```
 
 For more clarity to locate the generated shape file, please 
