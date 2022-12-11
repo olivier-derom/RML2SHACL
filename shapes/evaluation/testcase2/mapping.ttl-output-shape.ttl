@@ -1,0 +1,14 @@
+@prefix ex: <http://example.com/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/base/TriplesMap1/shape> a sh:NodeShape ;
+    sh:class foaf:Person ;
+    sh:nodeKind sh:Literal ;
+    sh:pattern "http://example.com/.*;.*" ;
+    sh:property [ sh:datatype xsd:date ;
+            sh:nodeKind sh:Literal ;
+            sh:path ex:birthday ] ;
+    sh:targetClass foaf:Person .
+
