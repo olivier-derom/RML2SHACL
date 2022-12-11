@@ -429,6 +429,7 @@ class RMLtoSHACL:
                 self.onto_stats_add(p)
                 g.add((s, p, o))
 
+    # temp functions
     def onto_stats_add(self, p):
         if p in self.onto_stats:
             self.onto_stats[p] +=1
