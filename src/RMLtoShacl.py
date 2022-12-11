@@ -9,6 +9,7 @@ import timeit
 from typing import Any, List
 import requests
 import json
+import subprocess
 
 import rdflib
 from rdflib import URIRef
@@ -26,6 +27,13 @@ class RMLtoSHACL:
         self.rdfSyntax = rdflib.Namespace(
             'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
         self.SHACL = SHACL()
+        self.AstreaArgs = []
+        self.astreageneratedpath = str(os.getcwd()) + "\\temp\\AstreaGenerated"
+        self.temp_imported_onto_folder = str(os.getcwd()) + "\\temp\\imported_ontologies_turtle"
+
+        # temp vars
+        # also see lines 268-270, 391,394,397,400,403,406,411,421,424,429, 432-437
+        self.onto_stats = dict()
 
     def helpAddTriples(self, shacl_graph: Graph, sub: Identifier,
                        pred: Identifier, obj_arr: Optional[List[Identifier]]) -> None:
@@ -234,21 +242,32 @@ class RMLtoSHACL:
 
         self.evaluate_mapping(rml_mapping_file)
 
-        self.enrich_ontology(self.get_prefix_ontologies())
+        if not os.path.exists(self.astreageneratedpath):
+            os.makedirs(self.astreageneratedpath)
+        if not os.path.exists(self.temp_imported_onto_folder):
+            os.makedirs(self.temp_imported_onto_folder)
 
-        if ontology_dir is not None:
-            for ontology in os.listdir(ontology_dir):
-                file = os.path.join(ontology_dir, ontology)
-                try:
-                    g = rdflib.Graph()
-                    g.parse(file)
-                    self.enrich_ontology(self.evaluate_ontology_file(file))
-                except:
-                    pass
+        self.get_file_ontologies(ontology_dir)
 
+        self.get_prefix_ontologies()
+
+        self.convert_ontologies()
+
+        for astreafile in os.listdir(self.astreageneratedpath):
+            file = os.path.join(self.astreageneratedpath, astreafile)
+            try:
+                g = rdflib.Graph()
+                g.parse(file)
+                self.enrich_ontology(g)
+            except:
+                pass
 
         outputfileName = f"{rml_mapping_file}-mapping-shape.ttl"
         self.writeShapeToFile(outputfileName)
+
+        outputfiledict = f"shapes/{rml_mapping_file}-dict.txt"
+        with open(outputfiledict, 'w') as data:
+            data.write(str(self.onto_stats))
 
         validation_shape_graph = rdflib.Graph()
         validation_shape_graph.parse("shacl-shacl.ttl", format="turtle")
@@ -274,42 +293,37 @@ class RMLtoSHACL:
 
         return None
 
-    def evaluate_ontology_file(self, ontology_file):
-        url = "https://astrea.linkeddata.es/api/shacl/file"
-        files = {'file': (ontology_file, open(ontology_file, 'rb'))}
-        params = {'format': 'Turtle'}
-
-        r_onto = requests.post(url=url, params=params, files=files)
-        g_astrea = rdflib.Graph()
-        g_astrea.parse(r_onto.content)
-
-        return g_astrea
-
     def get_prefix_ontologies(self):
-        ontologyURLvalues = []
-
         for namespace in self.RML.graph.namespaces():
             try:
                 g = rdflib.Graph()
                 g.parse(namespace[1])
-                ontologyURLvalues += [namespace[1]]
+                self.AstreaArgs += [str(namespace[1])]
             except:
                 pass
 
+    def get_file_ontologies(self, ontology_dir):
+        if ontology_dir is not None:
+            for ontology in os.listdir(ontology_dir):
+                file = os.path.join(ontology_dir, ontology)
+                try:
+                    g = rdflib.Graph()
+                    g.parse(file)
+                    destination = str(self.temp_imported_onto_folder + "\\" + ontology)
+                    g.serialize(destination=destination, format='turtle')
+                except:
+                    pass
+            for ontology in os.listdir(self.temp_imported_onto_folder):
+                file = os.path.join(self.temp_imported_onto_folder, ontology)
+                self.AstreaArgs += [str(file)]
 
-        ontologyURLdict = dict()
-        ontologyURLdict['ontologies'] = ontologyURLvalues
-        # ontologyURLdict['ontologies'] = ["https://www.w3.org/2006/time#"]
-        ontologyURLsfile = json.dumps(ontologyURLdict)
-
-        params = {'ontologyURLs': f"{ontologyURLdict}"}
-
-        url = "https://astrea.linkeddata.es/api/shacl/url"
-
-        r_onto = requests.post(url=url, json=ontologyURLdict)
-        g_astrea = rdflib.Graph()
-        g_astrea.parse(r_onto.content)
-        return g_astrea
+    def convert_ontologies(self):
+        astreajarpath = str(os.getcwd()) + "\\Astrea2SHACL.jar"
+        subprocesscommand = ['java', '-jar', astreajarpath]
+        for item in self.AstreaArgs:
+            subprocesscommand.append(item)
+        print(subprocesscommand)
+        subprocess.call(subprocesscommand, cwd=self.astreageneratedpath)
 
     def enrich_ontology(self, ontology_graph):
         nodeshape_blacklist = [self.shaclNS.targetClass,
@@ -330,8 +344,6 @@ class RMLtoSHACL:
 
         # Get the constraints for each targetClass and add them to the rml2shacl shapes
         for row in x1:
-            # print(f"{row.targetclass}")
-
             q2 = f'SELECT ?p ?o {{?s a <{self.shaclNS.NodeShape}> .?s <{self.shaclNS.targetClass}> <{row.targetclass}> .?s ?p ?o}}'
             x2 = ontology_graph.query(q2)
             q3 = f'SELECT ?p ?o {{?s a <{self.shaclNS.NodeShape}> .?s <{self.shaclNS.targetClass}> \"{row.targetclass}\" .?s ?p ?o}}'
@@ -376,20 +388,27 @@ class RMLtoSHACL:
         for bnode in BNode_list:
             if ((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind,  self.shaclNS.IRI) in self.SHACL.graph):
                 self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral))
+                self.onto_stats[self.shaclNS.nodeKind] -= 1
             elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind, self.shaclNS.Literal) in self.SHACL.graph):
                 self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral))
+                self.onto_stats[self.shaclNS.nodeKind] -= 1
             elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrLiteral) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind, self.shaclNS.Literal) in self.SHACL.graph):
                 self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrLiteral))
+                self.onto_stats[self.shaclNS.nodeKind] -= 1
             elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrLiteral) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNode) in self.SHACL.graph):
                 self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrLiteral))
+                self.onto_stats[self.shaclNS.nodeKind] -= 1
             elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind, self.shaclNS.IRI) in self.SHACL.graph):
                 self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI))
+                self.onto_stats[self.shaclNS.nodeKind] -= 1
             elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNode) in self.SHACL.graph):
                 self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI))
+                self.onto_stats[self.shaclNS.nodeKind] -= 1
 
     def add_ontology_item(self, g, s, p, o, g2=None):
         if type(o) == rdflib.term.BNode:
             new_BNode = rdflib.BNode()
+            self.onto_stats_add(p)
             g.add((s, p, new_BNode))
             for p2, o2 in g2.predicate_objects(o):
                 self.add_ontology_item(g, new_BNode, p2, o2, g2)
@@ -399,10 +418,19 @@ class RMLtoSHACL:
                     if (o, self.rdfSyntax.type, self.shaclNS.NodeShape) in g2:
                         targetclass = g2.value(subject=o, predicate=self.shaclNS.targetClass)
                         for s2 in g.subjects(self.shaclNS.targetClass, rdflib.Literal(targetclass)):
+                            self.onto_stats_add(p)
                             g.add((s, p, s2))
                     else:
+                        self.onto_stats_add(p)
                         g.add((s, p, o))
                         for p2, o2 in g2.predicate_objects(o):
                             self.add_ontology_item(g, o, p2, o2, g2)
             else:
+                self.onto_stats_add(p)
                 g.add((s, p, o))
+
+    def onto_stats_add(self, p):
+        if p in self.onto_stats:
+            self.onto_stats[p] +=1
+        else:
+            self.onto_stats[p] = 1
