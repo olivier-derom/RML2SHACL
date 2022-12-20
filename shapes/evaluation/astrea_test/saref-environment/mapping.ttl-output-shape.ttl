@@ -1,0 +1,213 @@
+@prefix ns: <https://saref.etsi.org/saref4envi/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+<http://mapping.example.com/map_triplesMapActuator_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:Actuator .
+
+<http://mapping.example.com/map_triplesMapColor_000/shape> a sh:NodeShape ;
+    sh:disjoint ns:CommunicationInterface,
+        ns:CommunicationProtocol,
+        ns:CompassDirection,
+        ns:DigitalRepresentation,
+        ns:Geometry,
+        ns:Light ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:Color .
+
+<http://mapping.example.com/map_triplesMapCommunicationinterface_000/shape> a sh:NodeShape ;
+    sh:disjoint ns:CommunicationProtocol,
+        ns:CompassDirection,
+        ns:DigitalRepresentation,
+        ns:Geometry,
+        ns:Light ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:CommunicationInterface .
+
+<http://mapping.example.com/map_triplesMapCommunicationprotocol_000/shape> a sh:NodeShape ;
+    sh:disjoint ns:CompassDirection,
+        ns:DigitalRepresentation,
+        ns:Geometry,
+        ns:Light ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:CommunicationProtocol .
+
+<http://mapping.example.com/map_triplesMapCompassdirection_000/shape> a sh:NodeShape ;
+    sh:disjoint ns:DigitalRepresentation,
+        ns:Geometry,
+        ns:Light ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:CompassDirection .
+
+<http://mapping.example.com/map_triplesMapDevice_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:Device .
+
+<http://mapping.example.com/map_triplesMapDigitalrepresentation_000/shape> a sh:NodeShape ;
+    sh:disjoint ns:Geometry,
+        ns:Light ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:DigitalRepresentation .
+
+<http://mapping.example.com/map_triplesMapFrequencymeasurement_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:FrequencyMeasurement .
+
+<http://mapping.example.com/map_triplesMapFrequencyunit_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:FrequencyUnit .
+
+<http://mapping.example.com/map_triplesMapGeometry_000/shape> a sh:NodeShape ;
+    sh:disjoint ns:Light ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:Geometry .
+
+<http://mapping.example.com/map_triplesMapHeightmeasurement_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:HeightMeasurement .
+
+<http://mapping.example.com/map_triplesMapLamppost_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:Lamppost .
+
+<http://mapping.example.com/map_triplesMapLengthunit_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:LengthUnit .
+
+<http://mapping.example.com/map_triplesMapLight_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:Light .
+
+<http://mapping.example.com/map_triplesMapLightpoint_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:LightPoint .
+
+<http://mapping.example.com/map_triplesMapLightproperty_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:LightProperty .
+
+<http://mapping.example.com/map_triplesMapMeasurement_000/shape> a sh:NodeShape ;
+    sh:disjoint <https://saref.etsi.org/core/Property>,
+        <https://saref.etsi.org/core/Service>,
+        <https://saref.etsi.org/core/UnitOfMeasure>,
+        ns:CommunicationInterface,
+        ns:CommunicationProtocol,
+        ns:CompassDirection,
+        ns:DigitalRepresentation,
+        ns:Geometry,
+        ns:Light ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass <https://saref.etsi.org/core/Measurement> .
+
+<http://mapping.example.com/map_triplesMapPeriodmeasurement_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:PeriodMeasurement .
+
+<http://mapping.example.com/map_triplesMapPhotometer_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:Photometer .
+
+<http://mapping.example.com/map_triplesMapPhysicalobject_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:PhysicalObject .
+
+<http://mapping.example.com/map_triplesMapPoint_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass <http://www.w3.org/2003/01/geo/wgs84_pos#Point> .
+
+<http://mapping.example.com/map_triplesMapProperty_000/shape> a sh:NodeShape ;
+    sh:disjoint <https://saref.etsi.org/core/Service>,
+        <https://saref.etsi.org/core/UnitOfMeasure>,
+        ns:CommunicationInterface,
+        ns:CommunicationProtocol,
+        ns:CompassDirection,
+        ns:Geometry,
+        ns:Light ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass <https://saref.etsi.org/core/Property> .
+
+<http://mapping.example.com/map_triplesMapSensor_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy <https://saref.etsi.org/core/> ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass <https://saref.etsi.org/core/Sensor> .
+
+<http://mapping.example.com/map_triplesMapService_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy <https://saref.etsi.org/core/> ;
+    sh:disjoint <https://saref.etsi.org/core/UnitOfMeasure>,
+        ns:Color,
+        ns:CommunicationProtocol,
+        ns:CompassDirection,
+        ns:Geometry,
+        ns:Light ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass <https://saref.etsi.org/core/Service> .
+
+<http://mapping.example.com/map_triplesMapSpatialthing_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
+    sh:disjoint <https://saref.etsi.org/core/Measurement>,
+        <https://saref.etsi.org/core/Service>,
+        ns:Color,
+        ns:CommunicationInterface,
+        ns:CommunicationProtocol,
+        ns:CompassDirection,
+        ns:DigitalRepresentation,
+        ns:Geometry ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
+
+<http://mapping.example.com/map_triplesMapSystem_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:System .
+
+<http://mapping.example.com/map_triplesMapTemporalunit_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy <http://www.w3.org/2006/time#> ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass <http://www.w3.org/2006/time#TemporalUnit> .
+
+<http://mapping.example.com/map_triplesMapTess_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:TESS .
+
+<http://mapping.example.com/map_triplesMapUnitofmeasure_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy <https://saref.etsi.org/core/> ;
+    sh:disjoint ns:Color,
+        ns:CommunicationInterface,
+        ns:CommunicationProtocol,
+        ns:CompassDirection,
+        ns:DigitalRepresentation,
+        ns:Geometry,
+        ns:Light ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass <https://saref.etsi.org/core/UnitOfMeasure> .
+

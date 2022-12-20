@@ -1,0 +1,69 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns: <http://www.w3.org/ns/ssn/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+<http://mapping.example.com/map_triplesMapActuation_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/sosa/> ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass <http://www.w3.org/ns/sosa/Actuation> .
+
+<http://mapping.example.com/map_triplesMapAgent_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass foaf:Agent .
+
+<http://mapping.example.com/map_triplesMapDeployment_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy ns: ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:Deployment .
+
+<http://mapping.example.com/map_triplesMapInput_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy ns: ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:Input .
+
+<http://mapping.example.com/map_triplesMapObservation_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/sosa/> ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass <http://www.w3.org/ns/sosa/Observation> .
+
+<http://mapping.example.com/map_triplesMapOutput_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy ns: ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:Output .
+
+<http://mapping.example.com/map_triplesMapProperty_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy ns: ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:Property .
+
+<http://mapping.example.com/map_triplesMapSampling_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/sosa/> ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass <http://www.w3.org/ns/sosa/Sampling> .
+
+<http://mapping.example.com/map_triplesMapStimulus_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy ns: ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:Stimulus .
+
+<http://mapping.example.com/map_triplesMapSystem_000/shape> a sh:NodeShape ;
+    rdfs:isDefinedBy ns: ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass ns:System .
+
+<http://mapping.example.com/map_triplesMapVocabulary_000/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://.*" ;
+    sh:targetClass <http://purl.org/vocommons/voaf#Vocabulary> .
+

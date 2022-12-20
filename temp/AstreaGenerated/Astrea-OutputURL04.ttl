@@ -1,0 +1,238 @@
+@prefix void:  <http://rdfs.org/ns/void#> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix vann:  <http://purl.org/vocab/vann/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix sdo:   <https://schema.org/> .
+
+<https://astrea.linkeddata.es/shapes#825f708ca105fc8e70042e98eeb6cf50>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "in dataset" , "Points to the void:Dataset that a document is a part of." ;
+        sh:class        void:Dataset ;
+        sh:description  "Points to the void:Dataset that a document is a part of." ;
+        sh:name         "in dataset" ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#4c6fe9ae4c281df56a28ac58073d8743>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Data Dump" , "An RDF dump, partial or complete, of a void:Dataset." ;
+        sh:class        rdfs:Resource ;
+        sh:description  "An RDF dump, partial or complete, of a void:Dataset." ;
+        sh:name         "Data Dump" ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#e85f83bb513465614a66c4ebacfab9d7>
+        rdf:type     sh:PropertyShape ;
+        rdfs:label   "a link predicate" ;
+        sh:class     rdf:Property ;
+        sh:name      "a link predicate" ;
+        sh:nodeKind  sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#35ff777cf20cb215ff2456f17c79511b>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "number of properties" , "The total number of distinct properties in a void:Dataset. In other words, the number of distinct resources that occur in the predicate position of triples in the dataset." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of distinct properties in a void:Dataset. In other words, the number of distinct resources that occur in the predicate position of triples in the dataset." ;
+        sh:name         "number of properties" ;
+        sh:nodeKind     sh:Literal ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#c4ea875cf2f85292172d0957239421f7>
+        rdf:type     sh:PropertyShape ;
+        rdfs:label   "example resource of dataset" ;
+        sh:class     rdfs:Resource ;
+        sh:name      "example resource of dataset" ;
+        sh:nodeKind  sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#9183ec4592778e350755956753ed1a12>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "number of documents" , "The total number of documents, for datasets that are published as a set of individual documents, such as RDF/XML documents or RDFa-annotated web pages. Non-RDF documents, such as web pages in HTML or images, are usually not included in this count. This property is intended for datasets where the total number of triples or entities is hard to determine. void:triples or void:entities should be preferred where practical." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of documents, for datasets that are published as a set of individual documents, such as RDF/XML documents or RDFa-annotated web pages. Non-RDF documents, such as web pages in HTML or images, are usually not included in this count. This property is intended for datasets where the total number of triples or entities is hard to determine. void:triples or void:entities should be preferred where practical." ;
+        sh:name         "number of documents" ;
+        sh:nodeKind     sh:Literal ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#ece05d0ce0885063aca1d6273855e38d>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "property partition" , "A subset of a void:Dataset that contains only the triples of a certain rdf:Property." ;
+        sh:class        void:Dataset ;
+        sh:description  "A subset of a void:Dataset that contains only the triples of a certain rdf:Property." ;
+        sh:name         "property partition" ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#9bd910c33d9c3c0ba5f9a1f4fd8f6371>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "vocabulary" , "A vocabulary that is used in the dataset." ;
+        sh:description  "A vocabulary that is used in the dataset." ;
+        sh:name         "vocabulary" ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#92413d47d30041e0ea7257c800a9e3f5>
+        rdf:type     sh:PropertyShape ;
+        rdfs:label   "feature" ;
+        sh:class     void:TechnicalFeature ;
+        sh:name      "feature" ;
+        sh:nodeKind  sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#d5ab1dae4827a430540dab1c7895ad4a>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "open search description" , "An OpenSearch description document for a free-text search service over a void:Dataset." ;
+        sh:class        foaf:Document ;
+        sh:description  "An OpenSearch description document for a free-text search service over a void:Dataset." ;
+        sh:name         "open search description" ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#19fbad003b5e8b493087c5591eedc821>
+        rdf:type     sh:PropertyShape ;
+        rdfs:label   "has subset" ;
+        sh:class     void:Dataset ;
+        sh:name      "has subset" ;
+        sh:nodeKind  sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#a7f55a797fa1acb8f0b695a74ec14a48>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "technical feature" ;
+        sh:description  "A technical feature of a void:Dataset, such as a supported RDF serialization format." ;
+        sh:name         "technical feature" ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  void:TechnicalFeature .
+
+<https://astrea.linkeddata.es/shapes#52f602fa94ae482025750508e210f4d2>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "number of entities" , "The total number of entities that are described in a void:Dataset." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of entities that are described in a void:Dataset." ;
+        sh:name         "number of entities" ;
+        sh:nodeKind     sh:Literal ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#a9be4a45c3bfde1f4fb9acb6e19d42bf>
+        rdf:type     sh:PropertyShape ;
+        sh:maxCount  1 ;
+        sh:nodeKind  sh:IRIOrLiteral .
+
+<https://astrea.linkeddata.es/shapes#7da37c2a61e840b55aef998a6a184512>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "root resource" , "A top concept or entry point for a void:Dataset that is structured in a tree-like fashion. All resources in a dataset can be reached by following links from its root resources in a small number of steps." ;
+        sh:description  "A top concept or entry point for a void:Dataset that is structured in a tree-like fashion. All resources in a dataset can be reached by following links from its root resources in a small number of steps." ;
+        sh:name         "root resource" ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#79642af4a4c82f9c90611a6dc81fe11d>
+        rdf:type     sh:PropertyShape ;
+        sh:maxCount  1 ;
+        sh:nodeKind  sh:IRIOrLiteral .
+
+<https://astrea.linkeddata.es/shapes#3a190925aa3c02eab10d24a0904d162d>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "distinct objects" , "The total number of distinct objects in a void:Dataset. In other words, the number of distinct resources that occur in the object position of triples in the dataset. Literals are included in this count." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of distinct objects in a void:Dataset. In other words, the number of distinct resources that occur in the object position of triples in the dataset. Literals are included in this count." ;
+        sh:name         "distinct objects" ;
+        sh:nodeKind     sh:Literal ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#ec60de5b1e189251b0dd387e437e60e0>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Target" , "One of the two datasets linked by the Linkset." ;
+        sh:class        void:Dataset ;
+        sh:description  "One of the two datasets linked by the Linkset." ;
+        sh:name         "Target" ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#3fb6ff86370e59e28c2d3851e5b3f004>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "dataset" ;
+        sh:description  "A set of RDF triples that are published, maintained or aggregated by a single provider." ;
+        sh:name         "dataset" ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  void:Dataset .
+
+<https://astrea.linkeddata.es/shapes#a7c4971a4e53cdff4a576c265161294f>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "distinct subjects" , "The total number of distinct subjects in a void:Dataset. In other words, the number of distinct resources that occur in the subject position of triples in the dataset." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of distinct subjects in a void:Dataset. In other words, the number of distinct resources that occur in the subject position of triples in the dataset." ;
+        sh:name         "distinct subjects" ;
+        sh:nodeKind     sh:Literal ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#583ee322e80e919bce2a2e4ebed8473b>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "linkset" ;
+        sh:description  "A collection of RDF links between two void:Datasets." ;
+        sh:name         "linkset" ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  void:Linkset .
+
+<https://astrea.linkeddata.es/shapes#b5b091375b417dae7dbeaa5023094649>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "number of triples" , "The total number of triples contained in a void:Dataset." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of triples contained in a void:Dataset." ;
+        sh:name         "number of triples" ;
+        sh:nodeKind     sh:Literal ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#5e0fc15985673a3dd0c18bf29eebc395>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has an URI look-up endpoint at" , "Defines a simple URI look-up protocol for accessing a dataset." ;
+        sh:description  "Defines a simple URI look-up protocol for accessing a dataset." ;
+        sh:name         "has an URI look-up endpoint at" ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#9fe4bbe8211c6c07df05b0bd55772fb2>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "URI space" , "A URI that is a common string prefix of all the entity URIs in a void:Dataset." ;
+        sh:datatype     rdfs:Literal ;
+        sh:description  "A URI that is a common string prefix of all the entity URIs in a void:Dataset." ;
+        sh:name         "URI space" ;
+        sh:nodeKind     sh:Literal .
+
+<https://astrea.linkeddata.es/shapes#5656cf5bd273e6c9a546297659910424>
+        rdf:type     sh:PropertyShape ;
+        sh:maxCount  1 ;
+        sh:nodeKind  sh:IRIOrLiteral .
+
+<https://astrea.linkeddata.es/shapes#64fc923b7f476bd14ede637ad75911a9>
+        rdf:type     sh:PropertyShape ;
+        rdfs:label   "has a SPARQL endpoint at" ;
+        sh:name      "has a SPARQL endpoint at" ;
+        sh:nodeKind  sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#507c0da62f3f10af7c4400662c00f172>
+        rdf:type     sh:PropertyShape ;
+        sh:maxCount  1 ;
+        sh:nodeKind  sh:IRIOrLiteral .
+
+<https://astrea.linkeddata.es/shapes#08f75ea57df785934b681cf2295e7bcf>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "classes" , "The total number of distinct classes in a void:Dataset. In other words, the number of distinct resources occuring as objects of rdf:type triples in the dataset." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of distinct classes in a void:Dataset. In other words, the number of distinct resources occuring as objects of rdf:type triples in the dataset." ;
+        sh:name         "classes" ;
+        sh:nodeKind     sh:Literal ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#e8415fe833cb0c38db4dac1110669a2e>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "class partition" , "A subset of a void:Dataset that contains only the entities of a certain rdfs:Class." ;
+        sh:class        void:Dataset ;
+        sh:description  "A subset of a void:Dataset that contains only the entities of a certain rdfs:Class." ;
+        sh:name         "class partition" ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#766c8598d27d563e655cd92f85ce6781>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "dataset description" ;
+        sh:description  "A web resource whose foaf:primaryTopic or foaf:topics include void:Datasets." ;
+        sh:name         "dataset description" ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  void:DatasetDescription .

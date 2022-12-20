@@ -1,9 +1,0 @@
-@prefix ex: <http://example.com/> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-
-<http://example.com/base/TriplesMap1/shape> a sh:NodeShape ;
-    sh:nodeKind sh:IRI ;
-    sh:property [ sh:nodeKind sh:IRI ;
-            sh:path ex:description ] ;
-    sh:targetNode ex:BadStudent .
-

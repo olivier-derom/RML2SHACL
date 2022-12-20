@@ -1,0 +1,1 @@
+{rdflib.term.URIRef('http://www.w3.org/ns/shacl#nodeKind'): 23, rdflib.term.URIRef('http://www.w3.org/ns/shacl#class'): 8, rdflib.term.URIRef('http://www.w3.org/ns/shacl#qualifiedMinCount'): 2, rdflib.term.URIRef('http://www.w3.org/ns/shacl#qualifiedValueShape'): 2, rdflib.term.URIRef('http://www.w3.org/ns/shacl#disjoint'): 1}

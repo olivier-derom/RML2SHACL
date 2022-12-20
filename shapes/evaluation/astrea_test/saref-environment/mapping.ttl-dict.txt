@@ -1,0 +1,1 @@
+{rdflib.term.URIRef('http://www.w3.org/ns/shacl#disjoint'): 116, rdflib.term.URIRef('http://www.w3.org/ns/shacl#nodeKind'): 58, rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#isDefinedBy'): 12}

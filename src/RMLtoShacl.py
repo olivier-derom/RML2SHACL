@@ -31,6 +31,7 @@ class RMLtoSHACL:
         self.astreageneratedpath = str(os.getcwd()) + "\\temp\\AstreaGenerated"
         self.temp_imported_onto_folder = str(os.getcwd()) + "\\temp\\imported_ontologies_turtle"
         self.AstreaKG = str(os.getcwd()) + "\\Astrea-KG.ttl"
+        self.astreajarpath = str(os.getcwd()) + "\\Astrea2SHACL.jar"
 
         # temp vars
         # also see lines 268-270, 391,394,397,400,403,406,411,421,424,429, 432-437
@@ -263,7 +264,7 @@ class RMLtoSHACL:
             except:
                 pass
 
-        outputfileName = f"{rml_mapping_file}-mapping-shape.ttl"
+        outputfileName = f"{rml_mapping_file}-output-shape.ttl"
         self.writeShapeToFile(outputfileName)
 
         outputfiledict = f"shapes/{rml_mapping_file}-dict.txt"
@@ -319,12 +320,9 @@ class RMLtoSHACL:
                 self.AstreaArgs += [str(file)]
 
     def convert_ontologies(self):
-        astreajarpath = str(os.getcwd()) + "\\Astrea2SHACL.jar"
-        subprocesscommand = ['java', '-jar', astreajarpath]
-        subprocesscommand.append(self.AstreaKG)
+        subprocesscommand = ['java', '-jar', self.astreajarpath, self.AstreaKG]
         for item in self.AstreaArgs:
             subprocesscommand.append(item)
-        print(subprocesscommand)
         subprocess.call(subprocesscommand, cwd=self.astreageneratedpath)
 
     def enrich_ontology(self, ontology_graph):

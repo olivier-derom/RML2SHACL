@@ -1,0 +1,871 @@
+@prefix geo:   <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix s4envi: <https://saref.etsi.org/saref4envi/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix saref: <https://saref.etsi.org/core/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+@prefix vann:  <http://purl.org/vocab/vann/> .
+
+<https://astrea.linkeddata.es/shapes#087e384f8abcdf5852b5a549efdac983>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "is accesible through"@en , "The relation between a digital representation and the service which it is accesible through."@en ;
+        sh:description  "The relation between a digital representation and the service which it is accesible through."@en ;
+        sh:maxCount     1 ;
+        sh:name         "is accesible through"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI , sh:IRIOrLiteral .
+
+<https://astrea.linkeddata.es/shapes#d976fdddc7602e8e06425c1d14a86242>
+        rdf:type     sh:PropertyShape ;
+        sh:hasValue  s4envi:Period ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      saref:relatesToProperty .
+
+<https://astrea.linkeddata.es/shapes#cc9b0c725ceb7c8fd87b87a25f6d2b96>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      saref:hasDescription .
+
+<https://astrea.linkeddata.es/shapes#f63e19cc10587fc9d3c663f96a2f53eb>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Color"@en ;
+        sh:description  "Color of the emitted light. It might be indicated by named colors or using other type of color values like hexadecimal for RGB, color temperature, etc."@en ;
+        sh:disjoint     s4envi:CommunicationProtocol , s4envi:Light , s4envi:CommunicationInterface , s4envi:DigitalRepresentation , s4envi:CompassDirection , s4envi:Geometry ;
+        sh:name         "Color"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  s4envi:Color .
+
+<https://astrea.linkeddata.es/shapes#41cba472d17ccd9878638328df82dd99>
+        rdf:type     sh:PropertyShape ;
+        sh:class     saref:Measurement ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      saref:makesMeasurement .
+
+<https://astrea.linkeddata.es/shapes#4751427f22617a6865e24a1dbb856c53>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:PeriodMeasurement ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasTransmissionPeriod .
+
+<https://astrea.linkeddata.es/shapes#0c25965a9dc7a2a5069006281270e612>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:DigitalRepresentation ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasDigitalRepresentation .
+
+<https://astrea.linkeddata.es/shapes#d8fcc404ec3569ab405576151e2c63f9>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Property"@en ;
+        sh:description  "An aspect of an entity that can be observable by a sensor."@en ;
+        sh:disjoint     saref:Service , s4envi:Geometry , s4envi:Light , s4envi:CompassDirection , s4envi:CommunicationInterface , s4envi:CommunicationProtocol , saref:UnitOfMeasure ;
+        sh:name         "Property"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  saref:Property .
+
+<https://astrea.linkeddata.es/shapes#4ab0729d32fd67af78b3993f5ede9041>
+        rdf:type                sh:PropertyShape ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 saref:isMeasuredIn ;
+        sh:qualifiedMaxCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedMinCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  s4envi:LengthUnit ] .
+
+<https://astrea.linkeddata.es/shapes#6db6404b6ca72316a7f2ec6b705211de>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "is projected in direction"@en , "A relation between a light and the direction in which it is projected."@en ;
+        sh:description  "A relation between a light and the direction in which it is projected."@en ;
+        sh:name         "is projected in direction"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#f3e0ac5eafa386b1739c9995abddc402>
+        rdf:type                sh:PropertyShape ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 saref:isMeasuredIn ;
+        sh:qualifiedMaxCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedMinCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  time:TemporalUnit ] .
+
+<https://astrea.linkeddata.es/shapes#bc867b713dca43a7f748e54427c233a1>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Photometer"@en ;
+        sh:description  "A photometer, generally, is an instrument that measures light intensity or optical properties of solutions or surfaces."@en ;
+        sh:name         "Photometer"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#7c2f011fe5130dbcd5ee0803bfc54083> ;
+        sh:targetClass  s4envi:Photometer .
+
+<https://astrea.linkeddata.es/shapes#681784445a6988a9297ffd712b02ce40>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Lamppost"@en ;
+        sh:description  "A tall pole with a light at the top."@en ;
+        sh:name         "Lamppost"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#2188f2a7f022cd7156555ca608d55338> , <https://astrea.linkeddata.es/shapes#2d771791f95fe3daf29a6b92491acb20> , <https://astrea.linkeddata.es/shapes#ca9c87e2bb18f631369aca0164575dc3> ;
+        sh:targetClass  s4envi:Lamppost .
+
+<https://astrea.linkeddata.es/shapes#47bdf61391afad22ad70cfda8a974942>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Device"@en ;
+        sh:description  "A thing made or adapted for a particular purpose, especially a piece of mechanical or electronic equipment. For example ‘a measuring device’ (definition taken from https://en.oxforddictionaries.com/definition/device). In this ontology it refers to the devices for environmental purposes."@en ;
+        sh:name         "Device"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#38fcd03c4ea445ceb8c1067bf17e58f0> , <https://astrea.linkeddata.es/shapes#4751427f22617a6865e24a1dbb856c53> , <https://astrea.linkeddata.es/shapes#1e425e87f479df93c3caf7fbd04cf666> , <https://astrea.linkeddata.es/shapes#36e16c6bfec62e81c2e66a96d8a880d9> , <https://astrea.linkeddata.es/shapes#934586672e7d129decdd5788225014f8> , <https://astrea.linkeddata.es/shapes#56a17d421f7993ddf7ef7dda50f3e5c8> ;
+        sh:targetClass  s4envi:Device .
+
+<https://astrea.linkeddata.es/shapes#f2d2269ec30932ea51f35505457cda2c>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Length unit"@en ;
+        sh:description  "Unit of measure for the quantity lenght."@en ;
+        sh:name         "Length unit"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  s4envi:LengthUnit .
+
+<https://astrea.linkeddata.es/shapes#745c78a91777419e6285064d87fcde91>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has transmission period"@en , "The relation between a device and the period in which it transmit information."@en ;
+        sh:description  "The relation between a device and the period in which it transmit information."@en ;
+        sh:name         "has transmission period"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#3a799b2b68f8b0fd8de5b0b71dfdf72b>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "is component of"@en , "A relation between a system and the system it belongs to as a component."@en ;
+        sh:description  "A relation between a system and the system it belongs to as a component."@en ;
+        sh:name         "is component of"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#34a5a8795a3b0bc2e6e90ff6b86a7712>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasIdentifier .
+
+<https://astrea.linkeddata.es/shapes#20bbd860acd919b8cf02ebe18c3563ad>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "TESS (Telescope Encoder and Sky Sensor)"@en ;
+        sh:description  "The Telescope Encoder and Sky Sensor (TESS) is a Sky Brightness and Cloud detector developed as a device for a remote observatory. A TESS can observe the light magnitude and other properties as ambient temperature and sky temperature."@en ;
+        sh:name         "TESS (Telescope Encoder and Sky Sensor)"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  s4envi:TESS .
+
+<https://astrea.linkeddata.es/shapes#4dbe021536fe2df95a1b2bf20860f8b0>
+        rdf:type                sh:PropertyShape ;
+        sh:class                saref:UnitOfMeasure ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 saref:isMeasuredIn ;
+        sh:qualifiedMaxCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedMinCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  saref:UnitOfMeasure ] .
+
+<https://astrea.linkeddata.es/shapes#a21ef0a21270d758e52cf3d70c61600c>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Actuator"@en ;
+        sh:description  "Device that can act over at least one property."@en ;
+        sh:name         "Actuator"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#d4446fbb00505da0a97513d632b3c3f7> ;
+        sh:targetClass  s4envi:Actuator .
+
+<https://astrea.linkeddata.es/shapes#17edd4beed821f4a929d8a634c454e4c>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "projects light"@en , "A relation between a lamppost or a light point and the light (or lights) they might project."@en ;
+        sh:description  "A relation between a lamppost or a light point and the light (or lights) they might project."@en ;
+        sh:name         "projects light"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#1c2014b404012c079de3cf24ce182a43>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:System ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:isComponentOf .
+
+<https://astrea.linkeddata.es/shapes#1991a5d1cb6f05daa576dc7f3c4d2af4>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "affects property"@en , "A relation between an actuator with the property or properties it can act on"@en ;
+        sh:description  "A relation between an actuator with the property or properties it can act on"@en ;
+        sh:name         "affects property"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#6ace7559c09873d57bb26d2909a563c6>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  geo: ;
+        rdfs:label        "Spatial thing"@en ;
+        sh:description    "Anything with spatial extent, i.e. size, shape, or position. e.g. people, places, bowling balls, as well as abstract areas like cubes."@en ;
+        sh:disjoint       s4envi:DigitalRepresentation , saref:Measurement , s4envi:CommunicationProtocol , s4envi:Color , s4envi:CommunicationInterface , s4envi:CompassDirection , saref:Service , s4envi:Geometry ;
+        sh:name           "Spatial thing"@en ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    geo:SpatialThing .
+
+<https://astrea.linkeddata.es/shapes#755f8b4ff0f70ed4b629510f14a8804c>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  saref: ;
+        rdfs:label        "Service"@en ;
+        sh:description    "A service is a representation of a function to a network that makes the function discoverable, registerable, remotely controllable by other devices in the network. A service can represent one or more functions. A Service is offered by a device that wants (a certain set of) its function(s) to be discoverable, registerable, remotely controllable by other devices in the network. A Service must specify the device that is offering the service, the function(s) to be represented, and the (input and output) parameters necessary to operate the service."@en ;
+        sh:disjoint       saref:UnitOfMeasure , s4envi:Color , s4envi:CompassDirection , s4envi:CommunicationProtocol , s4envi:Geometry , s4envi:Light ;
+        sh:name           "Service"@en ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    saref:Service .
+
+<https://astrea.linkeddata.es/shapes#db085280eb44e73456450bcaf4d931b0>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  "https://saref.etsi.org/core/" ;
+        rdfs:label        "is measured in"@en , "A relation between a measurement and the unit of measure in which the measurement value is expressed."@en ;
+        sh:description    "is measured in"@en , "A relation between a measurement and the unit of measure in which the measurement value is expressed."@en ;
+        sh:nodeKind       sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#43e2a54656662451c12e3d9856518bb1>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:CompassDirection ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:isProjectedInDirection .
+
+<https://astrea.linkeddata.es/shapes#f3fe44f0d7f2e4f4d61ab43ea716590f>
+        rdf:type                sh:PropertyShape ;
+        sh:class                saref:Property ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 saref:relatesToProperty ;
+        sh:qualifiedMaxCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedMinCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  saref:Property ] .
+
+<https://astrea.linkeddata.es/shapes#41628a13609bfbed13f12a68bca5555e>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Geometry"@en ;
+        sh:description  "Represents the shape of the light emission. It might be instantiated by individuals like \"spherical\", \"cylindrical\", etc. even though it is open to more comples representation of geometries using other vocabularies."@en ;
+        sh:disjoint     s4envi:Light ;
+        sh:name         "Geometry"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  s4envi:Geometry .
+
+<https://astrea.linkeddata.es/shapes#457c63b955cb33fca78eca333b6b0e94>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "A relationship defining the creation date of an entity (e.g., a digital representation)."@en , "has creation date"@en ;
+        sh:datatype     xsd:dateTime ;
+        sh:description  "A relationship defining the creation date of an entity (e.g., a digital representation)."@en ;
+        sh:maxCount     1 ;
+        sh:name         "has creation date"@en ;
+        sh:nodeKind     sh:IRIOrLiteral , sh:Literal ;
+        sh:pattern      "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?|(24:00:00(\\.0+)?))(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" .
+
+<https://astrea.linkeddata.es/shapes#4fd244263f5e47fe5699f04a193c26ed>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Communication protocol"@en ;
+        sh:description  "A protocol is an agreement between the communicating parties on how communication is to proceed. (Definition taken from \"Tanenbaum, A. S. (2003). Computer networks, 4-th edition. ed: Prentice Hall.\")"@en ;
+        sh:disjoint     s4envi:CompassDirection , s4envi:DigitalRepresentation , s4envi:Geometry , s4envi:Light ;
+        sh:name         "Communication protocol"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  s4envi:CommunicationProtocol .
+
+<https://astrea.linkeddata.es/shapes#92f4eb28c06f9f0d4c55632311e740c8>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has geometry"@en , "A relation between a light emitted and the shape it is projected in."@en ;
+        sh:description  "A relation between a light emitted and the shape it is projected in."@en ;
+        sh:name         "has geometry"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#2188f2a7f022cd7156555ca608d55338>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:boolean ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasShield .
+
+<https://astrea.linkeddata.es/shapes#a97de2b114bce1c610298a11a98b240e>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "System"@en ;
+        sh:description  "A group of related hardware units or programs or both, especially when dedicated to a single application. (Definition taken from https://en.oxforddictionaries.com/definition/system)"@en ;
+        sh:name         "System"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#1c2014b404012c079de3cf24ce182a43> , <https://astrea.linkeddata.es/shapes#893188ccd4bf0e84b79eb9528c91fbd2> , <https://astrea.linkeddata.es/shapes#11548b17e6ac1d45be16b071bc715000> , <https://astrea.linkeddata.es/shapes#a8e3d7c5b0b5519ec7c3bd301ba2b3f3> , <https://astrea.linkeddata.es/shapes#dfe7c8f87c5f069cde9f3dd5cb216f31> ;
+        sh:targetClass  s4envi:System .
+
+<https://astrea.linkeddata.es/shapes#49ac2a760bc9f9d747fe79e103d84c8c>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:boolean ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasFlash .
+
+<https://astrea.linkeddata.es/shapes#3c5924a0e8c76beb2dd0f0ba415db04d>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "uses communication protocol"@en , "A relation between a system and the communication protocol it uses."@en ;
+        sh:description  "A relation between a system and the communication protocol it uses."@en ;
+        sh:name         "uses communication protocol"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#f2aaefbf051a7ba918bac065ec10e8b9>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:PhysicalObject ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:isContainedIn .
+
+<https://astrea.linkeddata.es/shapes#f320c8d829ddc6fc9d7a05cf830ce1c1>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  saref: ;
+        rdfs:label        "has manufacturer"@en , "A relationship identifying the manufacturer of an entity (e.g., device)"@en ;
+        sh:description    "A relationship identifying the manufacturer of an entity (e.g., device)"@en ;
+        sh:name           "has manufacturer"@en ;
+        sh:nodeKind       sh:Literal .
+
+<https://astrea.linkeddata.es/shapes#ca9c87e2bb18f631369aca0164575dc3>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:LightPoint ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasLightPoint .
+
+<https://astrea.linkeddata.es/shapes#b6f666ab8eb3de4b36430841e5be907c>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:dateTime ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasCreationDate .
+
+<https://astrea.linkeddata.es/shapes#379fac401eb29b5c538f9a99a8cf4385>
+        rdf:type     sh:PropertyShape ;
+        sh:class     saref:Property ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      saref:measuresProperty .
+
+<https://astrea.linkeddata.es/shapes#873e2319b80d6750a01783622432dca8>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Frequency unit"@en ;
+        sh:description  "Unit of measure for the quantity frequency."@en ;
+        sh:name         "Frequency unit"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  s4envi:FrequencyUnit .
+
+<https://astrea.linkeddata.es/shapes#38fcd03c4ea445ceb8c1067bf17e58f0>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:PhysicalObject ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:isContainedIn .
+
+<https://astrea.linkeddata.es/shapes#403a22fb80a205e5f9f865ac25e0654b>
+        rdf:type     sh:PropertyShape ;
+        sh:class     saref:Service ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:isAccesibleThrough .
+
+<https://astrea.linkeddata.es/shapes#11548b17e6ac1d45be16b071bc715000>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:CommunicationInterface ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:usesCommunicationInterface .
+
+<https://astrea.linkeddata.es/shapes#176b569e6dbb432a20abba835afa8c22>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:Geometry ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasGeometry .
+
+<https://astrea.linkeddata.es/shapes#c85a1eeaaafb8ee0c15d403950fc48ed>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Light"@en ;
+        sh:description  "A light source, which may be a lantern, a street light, a floodlight, a signal lamp or any other device whose primary purpose is the generation of light. (Definition taken from http://wiki.openstreetmap.org/wiki/Proposed_features/Key:light_source#Description)"@en ;
+        sh:name         "Light"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#49ac2a760bc9f9d747fe79e103d84c8c> , <https://astrea.linkeddata.es/shapes#176b569e6dbb432a20abba835afa8c22> , <https://astrea.linkeddata.es/shapes#beb83b6b0cc8ad13488812b638fff4d7> , <https://astrea.linkeddata.es/shapes#43e2a54656662451c12e3d9856518bb1> , <https://astrea.linkeddata.es/shapes#da11f4da077aff9679d743c45fb9c5bd> , <https://astrea.linkeddata.es/shapes#7d27b31f47b73468317bfd1624de94a4> ;
+        sh:targetClass  s4envi:Light .
+
+<https://astrea.linkeddata.es/shapes#7d27b31f47b73468317bfd1624de94a4>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:float ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasProjectionAngle .
+
+<https://astrea.linkeddata.es/shapes#6437a5c604dd8960fe2f82166fe300a1>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has tag"@en , "A relationship stating the tags that can be assigned to an entity (e.g., a digital representation)."@en ;
+        sh:datatype     xsd:string ;
+        sh:description  "A relationship stating the tags that can be assigned to an entity (e.g., a digital representation)."@en ;
+        sh:name         "has tag"@en ;
+        sh:nodeKind     sh:Literal ;
+        sh:pattern      ".*" .
+
+<https://astrea.linkeddata.es/shapes#c088fd6854acbca9eecaf9b9dec3d43c>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  saref: ;
+        rdfs:label        "has value"@en , "A relationship defining the value of a certain property, e.g., energy or power"@en ;
+        sh:description    "A relationship defining the value of a certain property, e.g., energy or power"@en ;
+        sh:name           "has value"@en ;
+        sh:nodeKind       sh:Literal .
+
+<https://astrea.linkeddata.es/shapes#2b958e942585bacfe07a1d75b91b2e98>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Compass direction"@en ;
+        sh:description  "The four cardinal directions or cardinal points are the directions of north, east, south, and west, commonly denoted by their initials: N, E, S, W. East and west are at right angles to north and south, with east being in the clockwise direction of rotation from north and west being directly opposite east. Intermediate points between the four cardinal directions form the points of the compass. (definition taken from https://en.wikipedia.org/wiki/Cardinal_direction)"@en ;
+        sh:disjoint     s4envi:Light , s4envi:Geometry , s4envi:DigitalRepresentation ;
+        sh:name         "Compass direction"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  s4envi:CompassDirection .
+
+<https://astrea.linkeddata.es/shapes#341ee23bd060c6c1296d1eeaa49eb490>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "is projected from height"@en , "A relation between a light and the height measurement from which it is projected."@en ;
+        sh:description  "A relation between a light and the height measurement from which it is projected."@en ;
+        sh:name         "is projected from height"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#649772e5850cbe141eff265677b09b89>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "is contained in"@en , "A relation between a physical object and the physical object in which it might be contained."@en ;
+        sh:description  "A relation between a physical object and the physical object in which it might be contained."@en ;
+        sh:name         "is contained in"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#0cdd6874a7a73fad014e105a806a15fc>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Light point"@en ;
+        sh:description  "An spatial point from where a light is projected. It might belong to a lamppost."@en ;
+        sh:name         "Light point"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#35b956e4565018ff4a3803af9611770f> , <https://astrea.linkeddata.es/shapes#bf6e0e8fbebd53b2327e6c2b90178969> ;
+        sh:targetClass  s4envi:LightPoint .
+
+<https://astrea.linkeddata.es/shapes#3ef793712378e097aac823894a277e63>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  geo: ;
+        rdfs:label        "Point"@en ;
+        sh:description    "A point, typically described using a coordinate system relative to Earth, such as WGS84. Uniquely identified by lat/long/alt. i.e. spaciallyIntersects(P1, P2) :- lat(P1, LAT), long(P1, LONG), alt(P1, ALT), at(P2, LAT), long(P2, LONG), alt(P2, ALT). sameThing(P1, P2) :- type(P1, Point), type(P2, Point), spaciallyIntersects(P1, P2)."@en ;
+        sh:name           "Point"@en ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    geo:Point .
+
+<https://astrea.linkeddata.es/shapes#61870848fb4f0892229f4f59cd1a85fc>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has projection angle"@en , "A relationship defining the projection angle of an entity (e.g., a light)."@en ;
+        sh:datatype     xsd:float ;
+        sh:description  "A relationship defining the projection angle of an entity (e.g., a light)."@en ;
+        sh:maxCount     1 ;
+        sh:name         "has projection angle"@en ;
+        sh:nodeKind     sh:IRIOrLiteral , sh:Literal ;
+        sh:pattern      "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)([Ee](\\+|-)?[0-9]+)?|(\\+|-)?INF|NaN" .
+
+<https://astrea.linkeddata.es/shapes#bf6e0e8fbebd53b2327e6c2b90178969>
+        rdf:type     sh:PropertyShape ;
+        sh:class     geo:SpatialThing ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      geo:location .
+
+<https://astrea.linkeddata.es/shapes#d4446fbb00505da0a97513d632b3c3f7>
+        rdf:type     sh:PropertyShape ;
+        sh:class     saref:Property ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:affectsProperty .
+
+<https://astrea.linkeddata.es/shapes#cb30137140e88774d64f8e0bf0c867e3>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasVersion .
+
+<https://astrea.linkeddata.es/shapes#64fa52c0b7adcbf451b13e34488a69e2>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:float ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      saref:hasValue .
+
+<https://astrea.linkeddata.es/shapes#eec4d23aa4931a31f6c06688ed638e37>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Communication interface"@en ;
+        sh:description  "An interface defines which primitive operations and services the lower layer makes available to the upper one, when referring to network layers. (Definition adapted from \"Tanenbaum, A. S. (2003). Computer networks, 4-th edition. ed: Prentice Hall.\")"@en ;
+        sh:disjoint     s4envi:CommunicationProtocol , s4envi:Light , s4envi:CompassDirection , s4envi:Geometry , s4envi:DigitalRepresentation ;
+        sh:name         "Communication interface"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#cb30137140e88774d64f8e0bf0c867e3> ;
+        sh:targetClass  s4envi:CommunicationInterface .
+
+<https://astrea.linkeddata.es/shapes#b614747995ca2e7ee17059abb241f3d5>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "contains"@en , "A relation between a physical object and the physical objects that can be contained in it."@en ;
+        sh:description  "A relation between a physical object and the physical objects that can be contained in it."@en ;
+        sh:name         "contains"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#b06825f8e053cb7b73d1856ea2843f5f>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasTag .
+
+<https://astrea.linkeddata.es/shapes#88d3f022bbe5ad4138183c6dd3f64ebf>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  saref: ;
+        rdfs:label        "Device"@en ;
+        sh:description    "A tangible object designed to accomplish a particular task in households, common public buildings or offices. In order to accomplish this task, the device performs one or more functions. For example, a washing machine is designed to wash (task) and to accomplish this task it performs the start and stop function."@en ;
+        sh:name           "Device"@en ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    saref:Device .
+
+<https://astrea.linkeddata.es/shapes#56a17d421f7993ddf7ef7dda50f3e5c8>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasRevisionNumber .
+
+<https://astrea.linkeddata.es/shapes#5f45b59cd03b2a6522fc6a3bec9d8781>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "is connected to"@en , "A relation between a system and the system to which it is connected."@en ;
+        sh:description  "A relation between a system and the system to which it is connected."@en ;
+        sh:name         "is connected to"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#8d2c49a8c9eff00114250758cdd38b4e>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has color"@en , "A relation between a light emitted and its color."@en ;
+        sh:description  "A relation between a light emitted and its color."@en ;
+        sh:name         "has color"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#2265c7e5231ba39c37269b5d1059d08f>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has light point"@en , "A relation between a lamppost and its light points"@en ;
+        sh:description  "A relation between a lamppost and its light points"@en ;
+        sh:name         "has light point"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#da11f4da077aff9679d743c45fb9c5bd>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:HeightMeasurement ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:isProjectedFromHeight .
+
+<https://astrea.linkeddata.es/shapes#08ce1b88c9564a027f81ef488c042d59>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:PhysicalObject ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:contains .
+
+<https://astrea.linkeddata.es/shapes#a8e3d7c5b0b5519ec7c3bd301ba2b3f3>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:System ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasComponent .
+
+<https://astrea.linkeddata.es/shapes#502898d72a77a36190b2820684311a5b>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  "https://saref.etsi.org/core/" ;
+        rdfs:label        "A relationship stating the timestamp of an entity (e.g. a measurement)."@en , "has timestamp"@en ;
+        sh:datatype       xsd:dateTime ;
+        sh:description    "A relationship stating the timestamp of an entity (e.g. a measurement)."@en ;
+        sh:maxCount       1 ;
+        sh:name           "has timestamp"@en ;
+        sh:nodeKind       sh:Literal , sh:IRIOrLiteral ;
+        sh:pattern        "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?|(24:00:00(\\.0+)?))(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" .
+
+<https://astrea.linkeddata.es/shapes#ee7efe1bc70bea5a3c818ac717a1144a>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Physical object"@en ;
+        sh:description  "Any Object that has a proper space region.  (Definition extracted from DUL ontology)"@en ;
+        sh:name         "Physical object"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#646ecbbacf5b00571ab06e1a87e5a4cb> , <https://astrea.linkeddata.es/shapes#cc9b0c725ceb7c8fd87b87a25f6d2b96> , <https://astrea.linkeddata.es/shapes#f2aaefbf051a7ba918bac065ec10e8b9> , <https://astrea.linkeddata.es/shapes#08ce1b88c9564a027f81ef488c042d59> , <https://astrea.linkeddata.es/shapes#0c25965a9dc7a2a5069006281270e612> ;
+        sh:targetClass  s4envi:PhysicalObject .
+
+<https://astrea.linkeddata.es/shapes#00dd6c55f68ca7d72892137aaaa8cb6f>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  "https://saref.etsi.org/core/" ;
+        rdfs:label        "makes measurement"@en , "A relation between a sensor and the measurements it makes. Such measurement will link together the valur of the measurement, its unit of measure and the property to which it relates."@en ;
+        sh:description    "A relation between a sensor and the measurements it makes. Such measurement will link together the valur of the measurement, its unit of measure and the property to which it relates."@en ;
+        sh:name           "makes measurement"@en ;
+        sh:nodeKind       sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#ffa627c90b2f93431bad38fc95750b9e>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  geo: ;
+        rdfs:label        "location"@en , "The relation between something and the point,  or other geometrical thing in space, where it is.  For example, the realtionship between a radio tower and a Point with a given lat and long. Or a relationship between a park and its outline as a closed arc of points, or a road and its location as a arc (a sequence of points). Clearly in practice there will be limit to the accuracy of any such statement, but one would expect an accuracy appropriate for the size of the object and uses such as mapping ."@en ;
+        sh:description    "The relation between something and the point,  or other geometrical thing in space, where it is.  For example, the realtionship between a radio tower and a Point with a given lat and long. Or a relationship between a park and its outline as a closed arc of points, or a road and its location as a arc (a sequence of points). Clearly in practice there will be limit to the accuracy of any such statement, but one would expect an accuracy appropriate for the size of the object and uses such as mapping ."@en ;
+        sh:name           "location"@en ;
+        sh:nodeKind       sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#f279916b8af8693256263e1219bdd87b>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:PhysicalObject ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:encapsulates .
+
+<https://astrea.linkeddata.es/shapes#a30701e4e3e15068af3e608210ce0ed7>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has frequency measurement"@en , "The relation between a device and the frequency in which it makes measurements."@en ;
+        sh:description  "The relation between a device and the frequency in which it makes measurements."@en ;
+        sh:name         "has frequency measurement"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#d7d1e157a10d4c711970040956ced0eb>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  saref: ;
+        rdfs:label        "Sensor"@en ;
+        sh:description    "A device that detects and responds to events or changes in the physical environment such as light, motion, or temperature changes.\r\nA device that has category saref:Sensor and performs a saref:SensingFunction."@en ;
+        sh:name           "Sensor"@en ;
+        sh:nodeKind       sh:IRI ;
+        sh:property       <https://astrea.linkeddata.es/shapes#379fac401eb29b5c538f9a99a8cf4385> , <https://astrea.linkeddata.es/shapes#41cba472d17ccd9878638328df82dd99> ;
+        sh:targetClass    saref:Sensor .
+
+<https://astrea.linkeddata.es/shapes#bd45efbe6072fb4c8f6f784dd6bbbca4>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Period measurement"@en ;
+        sh:description  "Represents the measured value over a period property. It is also linked to the period unit of measure in which the value is expressed and the timestamp of the measurement."@en ;
+        sh:name         "Period measurement"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#f3e0ac5eafa386b1739c9995abddc402> , <https://astrea.linkeddata.es/shapes#d976fdddc7602e8e06425c1d14a86242> ;
+        sh:targetClass  s4envi:PeriodMeasurement .
+
+<https://astrea.linkeddata.es/shapes#85c44987c5a267f42ccb0356a1dc5eec>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  saref: ;
+        rdfs:label        "has description"@en , "A relationship providing a description of an entity (e.g., device)"@en ;
+        sh:description    "A relationship providing a description of an entity (e.g., device)"@en ;
+        sh:name           "has description"@en ;
+        sh:nodeKind       sh:Literal .
+
+<https://astrea.linkeddata.es/shapes#077acb84685bd99e80aa3c2cb374b27d>
+        rdf:type     sh:PropertyShape ;
+        sh:hasValue  s4envi:Height ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      saref:relatesToProperty .
+
+<https://astrea.linkeddata.es/shapes#9649949c2841c3f6af2cc3e16849b564>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "A relationship stating whether a light has flash."@en , "has flash"@en ;
+        sh:datatype     xsd:boolean ;
+        sh:description  "A relationship stating whether a light has flash."@en ;
+        sh:maxCount     1 ;
+        sh:name         "has flash"@en ;
+        sh:nodeKind     sh:IRIOrLiteral , sh:Literal ;
+        sh:pattern      "true|false|0|1" .
+
+<https://astrea.linkeddata.es/shapes#7c2f011fe5130dbcd5ee0803bfc54083>
+        rdf:type     sh:PropertyShape ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      saref:measuresProperty .
+
+<https://astrea.linkeddata.es/shapes#644e833c3eb75bcf2899d3deeb96bab2>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Digital representation"@en ;
+        sh:description  "A digital representation encapsulates a physical object accessible via Web services"@en ;
+        sh:disjoint     s4envi:Light , s4envi:Geometry ;
+        sh:name         "Digital representation"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#f279916b8af8693256263e1219bdd87b> , <https://astrea.linkeddata.es/shapes#b06825f8e053cb7b73d1856ea2843f5f> , <https://astrea.linkeddata.es/shapes#b6f666ab8eb3de4b36430841e5be907c> , <https://astrea.linkeddata.es/shapes#403a22fb80a205e5f9f865ac25e0654b> , <https://astrea.linkeddata.es/shapes#f3c0d6aed2d961d53f559e4b2d3eed7f> , <https://astrea.linkeddata.es/shapes#34a5a8795a3b0bc2e6e90ff6b86a7712> ;
+        sh:targetClass  s4envi:DigitalRepresentation .
+
+<https://astrea.linkeddata.es/shapes#934586672e7d129decdd5788225014f8>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasVersion .
+
+<https://astrea.linkeddata.es/shapes#1f06efba758f9f9ea92b24ea63302aae>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Light property"@en ;
+        sh:description  "An aspect of light that can be observable by a sensor."@en ;
+        sh:name         "Light property"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  s4envi:LightProperty .
+
+<https://astrea.linkeddata.es/shapes#a127bcf04be204a0d97f31c4535170f4>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "encapsulates"@en , "A relation between a digital representation and the physical objects it represents."@en ;
+        sh:description  "A relation between a digital representation and the physical objects it represents."@en ;
+        sh:maxCount     1 ;
+        sh:name         "encapsulates"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI , sh:IRIOrLiteral .
+
+<https://astrea.linkeddata.es/shapes#f3c0d6aed2d961d53f559e4b2d3eed7f>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      saref:hasDescription .
+
+<https://astrea.linkeddata.es/shapes#36e16c6bfec62e81c2e66a96d8a880d9>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      saref:hasManufacturer .
+
+<https://astrea.linkeddata.es/shapes#e4831dbb0bf83e060dd243221283d064>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  "https://saref.etsi.org/core/" ;
+        rdfs:label        "measures property"@en , "A relation between a sensor and the property o properties it can take measurement about."@en ;
+        sh:description    "A relation between a sensor and the property o properties it can take measurement about."@en ;
+        sh:name           "measures property"@en ;
+        sh:nodeKind       sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#0f643073bfc9d4620399ba094b10a510>
+        rdf:type                sh:PropertyShape ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 saref:isMeasuredIn ;
+        sh:qualifiedMaxCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedMinCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  s4envi:FrequencyUnit ] .
+
+<https://astrea.linkeddata.es/shapes#6a038ada94a816e52a6b5db334a66d80>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has component"@en , "A relation between a system and the system in which it might be decomposed."@en ;
+        sh:description  "A relation between a system and the system in which it might be decomposed."@en ;
+        sh:name         "has component"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#a348194b5e298b99e9e3d40fd6c03b03>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "A relationship stating whether a lamppost has a shield."@en , "has shield"@en ;
+        sh:datatype     xsd:boolean ;
+        sh:description  "A relationship stating whether a lamppost has a shield."@en ;
+        sh:maxCount     1 ;
+        sh:name         "has shield"@en ;
+        sh:nodeKind     sh:IRIOrLiteral , sh:Literal ;
+        sh:pattern      "true|false|0|1" .
+
+<https://astrea.linkeddata.es/shapes#14ffc5caa004487c821bf9987d25341b>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Measurement"@en ;
+        sh:description  "Represents the measured value made over a property. It is also linked to the unit of measure in which the value is expressed and the timestamp of the measurement."@en ;
+        sh:disjoint     saref:Service , saref:UnitOfMeasure , s4envi:Light , s4envi:Geometry , s4envi:DigitalRepresentation , s4envi:CompassDirection , s4envi:CommunicationProtocol , saref:Property , s4envi:CommunicationInterface ;
+        sh:name         "Measurement"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#f3fe44f0d7f2e4f4d61ab43ea716590f> , <https://astrea.linkeddata.es/shapes#4dbe021536fe2df95a1b2bf20860f8b0> , <https://astrea.linkeddata.es/shapes#8dcea278f8f5ef5a48f821324db74452> , <https://astrea.linkeddata.es/shapes#64fa52c0b7adcbf451b13e34488a69e2> ;
+        sh:targetClass  saref:Measurement .
+
+<https://astrea.linkeddata.es/shapes#35b956e4565018ff4a3803af9611770f>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:Light ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:projectsLight .
+
+<https://astrea.linkeddata.es/shapes#d20f298b7c2d9c2de13f69561ab29955>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  time: ;
+        rdfs:label        "Temporal unit"@en ;
+        sh:description    "A temporal unit of measure, which provides a scale factor for a time quantity."@en ;
+        sh:name           "Temporal unit"@en ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    time:TemporalUnit .
+
+<https://astrea.linkeddata.es/shapes#a8a67e7b075ba3d074aad9cfb88fc7d5>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has digital representation"@en , "A relation between a physical object and the digital representation in which it is encapsulated."@en ;
+        sh:description  "A relation between a physical object and the digital representation in which it is encapsulated."@en ;
+        sh:inversePath  s4envi:hasDigitalRepresentation ;
+        sh:maxCount     1 ;
+        sh:name         "has digital representation"@en ;
+        sh:nodeKind     sh:IRIOrLiteral , sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#16129eaac0eeb52101540117ed1670f6>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has revision number"@en , "A relationship defining the revision number of a certain entity (e.g., a device)"@en ;
+        sh:datatype     xsd:string ;
+        sh:description  "A relationship defining the revision number of a certain entity (e.g., a device)"@en ;
+        sh:name         "has revision number"@en ;
+        sh:nodeKind     sh:Literal ;
+        sh:pattern      ".*" .
+
+<https://astrea.linkeddata.es/shapes#646ecbbacf5b00571ab06e1a87e5a4cb>
+        rdf:type     sh:PropertyShape ;
+        sh:class     geo:SpatialThing ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      geo:location .
+
+<https://astrea.linkeddata.es/shapes#a15e505003d584597bdbb184c348e38c>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has identifier"@en , "A relationship providing the identifier of an entity (e.g., digital representation)"@en ;
+        sh:datatype     xsd:string ;
+        sh:description  "A relationship providing the identifier of an entity (e.g., digital representation)"@en ;
+        sh:name         "has identifier"@en ;
+        sh:nodeKind     sh:Literal ;
+        sh:pattern      ".*" .
+
+<https://astrea.linkeddata.es/shapes#dfe7c8f87c5f069cde9f3dd5cb216f31>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:System ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:isConnectedTo .
+
+<https://astrea.linkeddata.es/shapes#beb83b6b0cc8ad13488812b638fff4d7>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:Color ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasColor .
+
+<https://astrea.linkeddata.es/shapes#893188ccd4bf0e84b79eb9528c91fbd2>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:CommunicationProtocol ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:usesCommunicationProtocol .
+
+<https://astrea.linkeddata.es/shapes#4725a2b4be22501643456016e1109016>
+        rdf:type     sh:PropertyShape ;
+        sh:hasValue  s4envi:Frequency ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      saref:relatesToProperty .
+
+<https://astrea.linkeddata.es/shapes#2a56a29cd2a841cc9f0297e08792d9bb>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has version"@en , "A relationship defining the version  of a certain entity (e.g., a device)"@en ;
+        sh:datatype     xsd:string ;
+        sh:description  "A relationship defining the version  of a certain entity (e.g., a device)"@en ;
+        sh:maxCount     1 ;
+        sh:name         "has version"@en ;
+        sh:nodeKind     sh:IRIOrLiteral , sh:Literal ;
+        sh:pattern      ".*" .
+
+<https://astrea.linkeddata.es/shapes#7fd858883e55601117acf9441b2384d5>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  "https://saref.etsi.org/core/" ;
+        rdfs:label        "relates to property"@en , "A relation between a measurement and the property such measurement is about."@en ;
+        sh:description    "A relation between a measurement and the property such measurement is about."@en ;
+        sh:name           "relates to property"@en ;
+        sh:nodeKind       sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#94ed6d1fb959a29cb64e8b1533a5daf4>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  saref: ;
+        rdfs:label        "Unit of measure"@en ;
+        sh:description    "The unit of measure is a standard for measurement of a quantity, such as a Property. For example,  Power is a property and Watt is a unit of power that represents a definite predetermined power: when we say 10 Watt, we actually mean 10 times the definite predetermined power called \"watt\". Our definition is based on the definition of unit of measure in the Ontology of units of Measure (OM). We propose here a list of some units of measure that are relevant for the purpose of the Smart Appliances ontology, but this list can be extended."@en ;
+        sh:disjoint       s4envi:Geometry , s4envi:DigitalRepresentation , s4envi:CommunicationInterface , s4envi:CommunicationProtocol , s4envi:CompassDirection , s4envi:Light , s4envi:Color ;
+        sh:name           "Unit of measure"@en ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    saref:UnitOfMeasure .
+
+<https://astrea.linkeddata.es/shapes#72dcc7aa6a5b74c4df986cafac73da60>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Height measurement"@en ;
+        sh:description  "Represents the measured value made over a height property. It is also linked to the height unit of measure in which the value is expressed and the timestamp of the measurement."@en ;
+        sh:name         "Height measurement"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#4ab0729d32fd67af78b3993f5ede9041> , <https://astrea.linkeddata.es/shapes#077acb84685bd99e80aa3c2cb374b27d> ;
+        sh:targetClass  s4envi:HeightMeasurement .
+
+<https://astrea.linkeddata.es/shapes#e899869c4c2ea127737597d0bb9096b6>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "uses communication interface"@en , "A relation between a system and the communication interface it uses."@en ;
+        sh:description  "A relation between a system and the communication interface it uses."@en ;
+        sh:name         "uses communication interface"@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#2d771791f95fe3daf29a6b92491acb20>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:Light ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:projectsLight .
+
+<https://astrea.linkeddata.es/shapes#fcdf50f0516add47cb695abc716eccac>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Frequency measurement"@en ;
+        sh:description  "Represents the measured value made over a frequency property. It is also linked to the frequency unit of measure in which the value is expressed and the timestamp of the measurement."@en ;
+        sh:name         "Frequency measurement"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#0f643073bfc9d4620399ba094b10a510> , <https://astrea.linkeddata.es/shapes#4725a2b4be22501643456016e1109016> ;
+        sh:targetClass  s4envi:FrequencyMeasurement .
+
+<https://astrea.linkeddata.es/shapes#1e425e87f479df93c3caf7fbd04cf666>
+        rdf:type     sh:PropertyShape ;
+        sh:class     s4envi:FrequencyMeasurement ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      s4envi:hasFrequencyMeasurement .
+
+<https://astrea.linkeddata.es/shapes#8dcea278f8f5ef5a48f821324db74452>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:dateTime ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      saref:hasTimestamp .
