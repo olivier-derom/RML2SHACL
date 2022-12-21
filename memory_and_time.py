@@ -4,11 +4,9 @@ import os
 import time
 import matplotlib.pyplot as plt
 import numpy as np
-import tracemalloc
 
 memory = []
 cpu = []
-
 shell_cmd = 'testrun.bat'
 p = subprocess.Popen(["python", "main.py", "evaluation/astrea_test/time/mapping.ttl"], shell=True)
 # p = subprocess.Popen(["evaluation.bat"], shell=True)
@@ -30,17 +28,28 @@ while p.poll() is None:
     except:
         pass
 
-end = time.time()
-ptime = round(end - start, 1)
+ptime = round(time.time() - start, 1)
 x = np.linspace(0, ptime, len(memory))
-fig, axs = plt.subplots(2, 2)
-axs[0, 0].plot(x, memory)
-axs[0, 0].set_title('Memory usage in MiB')
-# axs[0, 0].set_ylabel('Memory [MiB]')
-axs[0, 0].set_xlabel('time [s]')
-axs[0, 1].plot(x, cpu)
-axs[0, 0].set_title('CPU usage in %')
-# axs[0, 1].set_ylabel('CPU usage [%]')
-axs[0, 1].set_xlabel('time [s]')
-print(ptime)
+
+# apply moving average window (size=10) to cpu
+windowsize = 10
+cpu = np.convolve(cpu, np.ones(windowsize)/windowsize, mode='same')
+
+# Memory usage
+plt.figure(1)
+plt.plot(x, memory)
+plt.title('Memory usage in MiB')
+# axs[0].set_ylabel('Memory [MiB]')
+plt.xlabel('time [s]')
+
+# CPU usage
+plt.figure(2)
+plt.plot(x, cpu)
+plt.title('CPU usage in %')
+# axs[1].set_ylabel('CPU usage [%]')
+plt.xlabel('time [s]')
+
+# time
+print('----------------------------------')
+print(f"Total execution time in seconds: {ptime}s")
 plt.show()
