@@ -7,15 +7,13 @@ import numpy as np
 
 memory = []
 cpu = []
-shell_cmd = 'testrun.bat'
 p = subprocess.Popen(["python", "main.py", "evaluation/astrea_test/time/mapping.ttl"], shell=True)
 # p = subprocess.Popen(["evaluation.bat"], shell=True)
-current_process = psutil.Process(os.getpid())
+current_process = psutil.Process(p.pid)
 children = psutil.Process(p.pid).children(recursive=True)
 start = time.time()
 while p.poll() is None:
     try:
-        time.sleep(0.1)
         currentmem = current_process.memory_info()[0]
         currentcpu = current_process.cpu_percent()
         for child in current_process.children(recursive=True):
@@ -30,10 +28,6 @@ while p.poll() is None:
 
 ptime = round(time.time() - start, 1)
 x = np.linspace(0, ptime, len(memory))
-
-# apply moving average window (size=10) to cpu
-windowsize = 10
-cpu = np.convolve(cpu, np.ones(windowsize)/windowsize, mode='same')
 
 # Memory usage
 plt.figure(1)
@@ -53,3 +47,28 @@ plt.xlabel('time [s]')
 print('----------------------------------')
 print(f"Total execution time in seconds: {ptime}s")
 plt.show()
+
+# timelist = []
+# timemax = 0
+# timemin = 9999999
+# for i in range(50):
+#
+#     p = subprocess.Popen(["evaluation1.bat"], shell=True)
+#     current_process = psutil.Process(os.getpid())
+#     children = psutil.Process(p.pid).children(recursive=True)
+#     start = time.time()
+#     while p.poll() is None:
+#         try:
+#             time.sleep(0.1)
+#         except:
+#             pass
+#     ptime = round(time.time() - start, 1)
+#     timelist.append(ptime)
+#     if ptime < timemin:
+#         timemin = (ptime*1)
+#     if ptime > timemax:
+#         timemax = (ptime*1)
+# timeavg = sum(timelist) / len(timelist)
+# print('min:',timemin)
+# print('max:',timemax)
+# print('avg:',timeavg)
