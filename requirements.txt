@@ -2,3 +2,6 @@ pyshacl==0.17.2
 rdflib==6.0.2
 requests==2.22.0
 shaclgen==0.2.5.2
+matplotlib~=3.6.2
+numpy~=1.24.0
+psutil~=5.9.4
