@@ -4,3 +4,4 @@ __pycache__
 .venv/*
 .localtesting/*
 ./WIP/*
+/testing_WIP/*
