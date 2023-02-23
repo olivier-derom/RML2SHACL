@@ -1,0 +1,10 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+<file:///D:/data/school/2de%20master/masterproef/Python/RML2SHACL/evaluation/astrea_test/self2/TriplesMap1/shape> a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://example.com/Student/.*/.*" ;
+    sh:property [ sh:nodeKind sh:Literal ;
+            sh:path foaf:name ] ;
+    sh:targetClass foaf:Person .
+

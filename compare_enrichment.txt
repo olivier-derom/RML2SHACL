@@ -2,7 +2,7 @@
 file: shapesold/astrea_test/time/mapping.ttl-output-shape.ttl
 classes: 20
 Node shapes: 20
-Node constraints: 130
+Node restrictions: 130
 Property shapes: 50
 properties: 145
 Total restrictions: 275
@@ -10,15 +10,15 @@ Total restrictions: 275
 file: shapes/evaluation/astrea_test/time/mapping.ttl-output-shape.ttl
 classes: 20
 Node shapes: 20
-Node constraints: 133
+Node restrictions: 133
 Property shapes: 50
-properties: 162
-Total restrictions: 303
+properties: 221
+Total restrictions: 436
 ------------------------------------------------------------------
 file: shapesold/astrea_test/ssn/mapping.ttl-output-shape.ttl
 classes: 11
 Node shapes: 11
-Node constraints: 44
+Node restrictions: 44
 Property shapes: 0
 properties: 0
 Total restrictions: 44
@@ -26,7 +26,7 @@ Total restrictions: 44
 file: shapes/evaluation/astrea_test/ssn/mapping.ttl-output-shape.ttl
 classes: 11
 Node shapes: 11
-Node constraints: 53
+Node restrictions: 53
 Property shapes: 0
 properties: 0
 Total restrictions: 53
@@ -34,7 +34,7 @@ Total restrictions: 53
 file: shapesold/astrea_test/onem2m/mapping.ttl-output-shape.ttl
 classes: 23
 Node shapes: 23
-Node constraints: 126
+Node restrictions: 126
 Property shapes: 34
 properties: 89
 Total restrictions: 215
@@ -42,15 +42,15 @@ Total restrictions: 215
 file: shapes/evaluation/astrea_test/onem2m/mapping.ttl-output-shape.ttl
 classes: 23
 Node shapes: 23
-Node constraints: 127
+Node restrictions: 127
 Property shapes: 34
-properties: 99
-Total restrictions: 228
+properties: 123
+Total restrictions: 254
 ------------------------------------------------------------------
 file: shapesold/astrea_test/openadr/mapping.ttl-output-shape.ttl
 classes: 77
 Node shapes: 77
-Node constraints: 345
+Node restrictions: 345
 Property shapes: 37
 properties: 95
 Total restrictions: 440
@@ -58,15 +58,15 @@ Total restrictions: 440
 file: shapes/evaluation/astrea_test/openadr/mapping.ttl-output-shape.ttl
 classes: 77
 Node shapes: 77
-Node constraints: 378
+Node restrictions: 378
 Property shapes: 37
-properties: 96
-Total restrictions: 474
+properties: 138
+Total restrictions: 518
 ------------------------------------------------------------------
 file: shapesold/astrea_test/WoT/mapping.ttl-output-shape.ttl
 classes: 10
 Node shapes: 10
-Node constraints: 47
+Node restrictions: 47
 Property shapes: 7
 properties: 19
 Total restrictions: 66
@@ -74,15 +74,15 @@ Total restrictions: 66
 file: shapes/evaluation/astrea_test/WoT/mapping.ttl-output-shape.ttl
 classes: 10
 Node shapes: 10
-Node constraints: 53
+Node restrictions: 52
 Property shapes: 7
-properties: 25
-Total restrictions: 79
+properties: 32
+Total restrictions: 85
 ------------------------------------------------------------------
 file: shapesold/astrea_test/saref-environment/mapping.ttl-output-shape.ttl
 classes: 29
 Node shapes: 29
-Node constraints: 116
+Node restrictions: 116
 Property shapes: 0
 properties: 0
 Total restrictions: 116
@@ -90,7 +90,7 @@ Total restrictions: 116
 file: shapes/evaluation/astrea_test/saref-environment/mapping.ttl-output-shape.ttl
 classes: 29
 Node shapes: 29
-Node constraints: 180
+Node restrictions: 133
 Property shapes: 0
 properties: 0
-Total restrictions: 180
+Total restrictions: 155

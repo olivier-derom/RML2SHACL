@@ -54,11 +54,9 @@
     sh:targetClass ns:ChargeStateSignal .
 
 <http://mapping.example.com/map_triplesMapDatareport_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Specification Profile B" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ sh:class ns:MetadataReport ;
-            sh:node <http://mapping.example.com/map_triplesMapMetadatareport_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapMetadatareport_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:isSpecifiedIn ] ;
     sh:targetClass ns:DataReport .
@@ -129,60 +127,47 @@
     sh:targetClass ns:EnergyPriceSignal .
 
 <http://mapping.example.com/map_triplesMapFeature_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> ;
     sh:nodeKind sh:IRI ;
-    sh:not <https://astrea.linkeddata.es/shapes#16b639b6c59786f5c650e18b0080386b> ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass <http://www.opengis.net/ont/geosparql#Feature> .
 
 <http://mapping.example.com/map_triplesMapGeometry_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "http://www.opengis.net/ont/geosparql" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass <http://www.opengis.net/ont/geosparql#Geometry> .
 
 <http://mapping.example.com/map_triplesMapGreenbuttonreport_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Specification Profile B" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:GreenButtonReport .
 
 <http://mapping.example.com/map_triplesMapHistoryreport_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Specification Profile B" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:HistoryReport .
 
 <http://mapping.example.com/map_triplesMapHistoryusagereport_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Specification Profile B" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:HistoryUsageReport .
 
 <http://mapping.example.com/map_triplesMapInstant_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass <http://www.w3.org/2006/time#Instant> .
 
 <http://mapping.example.com/map_triplesMapInterval_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass <http://www.w3.org/2006/time#Interval> .
 
 <http://mapping.example.com/map_triplesMapItem_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OASIS Energy Market Information Exchange (eMIX) standard" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ sh:datatype xsd:string ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasItemDescription ;
-            sh:pattern ".*" ],
-        [ sh:datatype xsd:string ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasScaleCode ;
-            sh:pattern ".*" ] ;
+    sh:property [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasItemDescription ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasScaleCode ] ;
     sh:targetClass ns:Item .
 
 <http://mapping.example.com/map_triplesMapLoadcontrolcapacitysignal_000/shape> a sh:NodeShape ;
@@ -238,49 +223,37 @@
 <http://mapping.example.com/map_triplesMapNode_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ sh:datatype xsd:string ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasRegistrationNumber ;
-            sh:pattern ".*" ],
-        [ sh:class ns:Event ;
-            sh:node <http://mapping.example.com/map_triplesMapEvent_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapOpt_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:sendsEvent ],
-        [ sh:datatype xsd:string ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasTransportName ;
-            sh:pattern ".*" ],
-        [ sh:class ns:Report ;
-            sh:node <http://mapping.example.com/map_triplesMapReport_000/shape> ;
+            sh:path ns:sendsOpt ],
+        [ sh:node <http://mapping.example.com/map_triplesMapReport_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:sendsReport ],
-        [ sh:datatype xsd:string ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasProfileName ;
-            sh:pattern ".*" ],
-        [ sh:datatype <http://www.w3.org/2002/07/owl#rational> ;
-            sh:nodeKind sh:Literal ;
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasTransportName ],
+        [ sh:nodeKind sh:Literal ;
             sh:path ns:hasNodeName ],
-        [ sh:class ns:Opt ;
-            sh:node <http://mapping.example.com/map_triplesMapOpt_000/shape> ;
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasRegistrationNumber ],
+        [ sh:node <http://mapping.example.com/map_triplesMapEvent_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:sendsOpt ] ;
+            sh:path ns:sendsEvent ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasProfileName ] ;
     sh:targetClass ns:Node .
 
 <http://mapping.example.com/map_triplesMapOptin_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Profile B" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:OptIn .
 
 <http://mapping.example.com/map_triplesMapOptout_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Profile B" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:OptOut .
 
 <http://mapping.example.com/map_triplesMapPoint_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "http://www.w3.org/2003/01/geo/wgs84_pos#" ;
+    rdfs:isDefinedBy <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass <http://www.w3.org/2003/01/geo/wgs84_pos#Point> .
@@ -305,16 +278,13 @@
     sh:pattern "http://www.example.com/.*" ;
     sh:property [ sh:datatype xsd:boolean ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:isOnline ;
-            sh:pattern "true|false|0|1" ],
+            sh:path ns:isOnline ],
         [ sh:datatype xsd:boolean ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:isManualOverride ;
-            sh:pattern "true|false|0|1" ] ;
+            sh:path ns:isManualOverride ] ;
     sh:targetClass ns:ReportStatusPayload .
 
 <http://mapping.example.com/map_triplesMapResource_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Program Implementation Guide" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:Resource .
@@ -324,8 +294,7 @@
     sh:pattern "http://www.example.com/.*" ;
     sh:property [ sh:datatype xsd:boolean ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:isOnChange ;
-            sh:pattern "true|false|0|1" ] ;
+            sh:path ns:isOnChange ] ;
     sh:targetClass ns:SamplingRate .
 
 <http://mapping.example.com/map_triplesMapSchedule_000/shape> a sh:NodeShape ;
@@ -334,11 +303,9 @@
     sh:targetClass ns:Schedule .
 
 <http://mapping.example.com/map_triplesMapSignal_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Program Implementation Guide" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ sh:datatype rdfs:Literal ;
-            sh:nodeKind sh:Literal ;
+    sh:property [ sh:nodeKind sh:Literal ;
             sh:path ns:hasSignalName ] ;
     sh:targetClass ns:Signal .
 
@@ -360,29 +327,33 @@
 <http://mapping.example.com/map_triplesMapSpatialthing_000/shape> a sh:NodeShape ;
     rdfs:isDefinedBy <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
     sh:nodeKind sh:IRI ;
+    sh:not <https://astrea.linkeddata.es/shapes#09e0e026047d6dae5373158edf4a0103>,
+        <https://astrea.linkeddata.es/shapes#42dff92b4355016199856f7a85f969c0>,
+        <https://astrea.linkeddata.es/shapes#6b422bce3fb8d5d2c898c62b7e509535>,
+        <https://astrea.linkeddata.es/shapes#74510a690077c7eb9a37a86054369523>,
+        <https://astrea.linkeddata.es/shapes#7faec1931651a5f474db9331c68d48ee>,
+        <https://astrea.linkeddata.es/shapes#aa942717528b33727aa4ad14cf4313df>,
+        <https://astrea.linkeddata.es/shapes#ef221800e02003a8aaab7079a833400d>,
+        <https://astrea.linkeddata.es/shapes#ff6cf94d2010ad4e7991ab14b6e8cec8> ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
 
 <http://mapping.example.com/map_triplesMapTelemetryreport_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Specification Profile B" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:TelemetryReport .
 
 <http://mapping.example.com/map_triplesMapTelemetrystatusreport_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Specification Profile B" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:TelemetryStatusReport .
 
 <http://mapping.example.com/map_triplesMapTelemetryusagereport_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Specification Profile B" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:TelemetryUsageReport .
 
 <http://mapping.example.com/map_triplesMapTemporalentity_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy <http://www.w3.org/2006/time> ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass <http://www.w3.org/2006/time#TemporalEntity> .
@@ -393,74 +364,58 @@
     sh:targetClass <http://www.wurvoc.org/vocabularies/om-1.8/Unit_of_measure> .
 
 <http://mapping.example.com/map_triplesMapVen_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Program Implementation Guide" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:VEN .
 
 <http://mapping.example.com/map_triplesMapVtn_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Program Implementation Guide" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:VTN .
 
 <http://mapping.example.com/map_triplesMapEvent_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Program Implementation Guide" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ sh:class ns:EventDescriptor ;
-            sh:node <http://mapping.example.com/map_triplesMapEventdescriptor_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:eventDescriptor ],
-        [ sh:class ns:ServiceArea ;
-            sh:node <http://mapping.example.com/map_triplesMapServicearea_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:hasAreaTarget ],
-        [ sh:class ns:EventStatus ;
-            sh:node <http://mapping.example.com/map_triplesMapEventstatus_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapEventstatus_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:hasEventStatus ],
-        [ sh:class ns:Group ;
-            sh:node <http://mapping.example.com/map_triplesMapGroup_000/shape> ;
+        [ sh:node <http://mapping.example.com/map_triplesMapEventdescriptor_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:eventDescriptor ],
+        [ sh:node <http://mapping.example.com/map_triplesMapGroup_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:hasGroupTarget ],
-        [ sh:datatype <http://www.w3.org/2002/07/owl#rational> ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasEventName ] ;
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasEventName ],
+        [ sh:node <http://mapping.example.com/map_triplesMapServicearea_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:hasAreaTarget ] ;
     sh:targetClass ns:Event .
 
 <http://mapping.example.com/map_triplesMapEventdescriptor_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Program Implementation Guide" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ sh:datatype xsd:integer ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasModificationNumber ;
-            sh:pattern "[\\-+]?[0-9]+" ],
-        [ sh:datatype xsd:boolean ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:isTestEvent ;
-            sh:pattern "true|false|0|1" ],
-        [ sh:datatype xsd:integer ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasPriority ;
-            sh:pattern "[\\-+]?[0-9]+" ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:hasModificationReason ;
-            sh:pattern ".*" ],
-        [ sh:datatype xsd:boolean ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:isResponseRequired ;
-            sh:pattern "true|false|0|1" ],
-        [ sh:nodeKind sh:Literal ;
+    sh:property [ sh:nodeKind sh:Literal ;
             sh:path ns:hasModificationDateTime ],
         [ sh:nodeKind sh:Literal ;
-            sh:path ns:hasRandomization ;
-            sh:pattern ".*" ] ;
+            sh:path ns:hasModificationReason ],
+        [ sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:isResponseRequired ],
+        [ sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:isTestEvent ],
+        [ sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasModificationNumber ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasRandomization ],
+        [ sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasPriority ] ;
     sh:targetClass ns:EventDescriptor .
 
 <http://mapping.example.com/map_triplesMapEventstatus_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Program Implementation Guide" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:EventStatus .
@@ -468,96 +423,96 @@
 <http://mapping.example.com/map_triplesMapLoadcontrolstate_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ sh:datatype rdfs:Literal ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasSetPoint ],
-        [ sh:datatype rdfs:Literal ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasLevelOffset ],
-        [ sh:datatype rdfs:Literal ;
-            sh:nodeKind sh:Literal ;
+    sh:property [ sh:nodeKind sh:Literal ;
             sh:path ns:hasCapacity ],
-        [ sh:datatype rdfs:Literal ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasPercentageOffset ] ;
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasPercentageOffset ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasSetPoint ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasLevelOffset ] ;
     sh:targetClass ns:LoadControlState .
 
 <http://mapping.example.com/map_triplesMapMetadatareport_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Specification Profile B",
-        "The metadata report can contain a specification for one or more type of reports, each report having its own set of report descriptors and specifications" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ sh:class ns:ReportDescriptor ;
-            sh:node <http://mapping.example.com/map_triplesMapReportdescriptor_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapReportdescriptor_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:reportDescriptor ] ;
     sh:targetClass ns:MetadataReport .
 
 <http://mapping.example.com/map_triplesMapOpt_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Program Implementation Guide" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:Opt .
 
 <http://mapping.example.com/map_triplesMapReport_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Specification Profile B" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ sh:class ns:Group ;
-            sh:node <http://mapping.example.com/map_triplesMapGroup_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapGroup_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:reportDataSource ],
-        [ sh:datatype xsd:string ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasReportName ;
-            sh:pattern ".*" ],
-        [ sh:class ns:LoadControlState ;
-            sh:node <http://mapping.example.com/map_triplesMapLoadcontrolstate_000/shape> ;
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasReportName ],
+        [ sh:node <http://mapping.example.com/map_triplesMapReportpayload_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:hasLoadControlState ],
-        [ sh:class ns:ReportPayload ;
-            sh:node <http://mapping.example.com/map_triplesMapReportpayload_000/shape> ;
+            sh:path ns:hasReportPayload ],
+        [ sh:node <http://mapping.example.com/map_triplesMapLoadcontrolstate_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:hasReportPayload ] ;
+            sh:path ns:hasLoadControlState ] ;
     sh:targetClass ns:Report .
 
 <http://mapping.example.com/map_triplesMapReportpayload_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ sh:class ns:ReportDescriptor ;
-            sh:node <http://mapping.example.com/map_triplesMapReportdescriptor_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapReportdescriptor_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:isDescribedIn ] ;
     sh:targetClass ns:ReportPayload .
 
 <http://mapping.example.com/map_triplesMapServicearea_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OASIS Energy Market Information Exchange (EMIX)" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:ServiceArea .
 
 <http://mapping.example.com/map_triplesMapSpatialobject_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> ;
-            sh:class <http://www.opengis.net/ont/geosparql#SpatialObject> ;
-            sh:node <http://mapping.example.com/map_triplesMapSpatialobject_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapSpatialobject_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path <http://www.opengis.net/ont/geosparql#sfContains> ] ;
     sh:targetClass <http://www.opengis.net/ont/geosparql#SpatialObject> .
 
-<https://astrea.linkeddata.es/shapes#16b639b6c59786f5c650e18b0080386b> a sh:PropertyShape ;
-    sh:class <http://www.opengis.net/ont/geosparql#Geometry> .
+<https://astrea.linkeddata.es/shapes#09e0e026047d6dae5373158edf4a0103> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/core/Measurement> .
+
+<https://astrea.linkeddata.es/shapes#42dff92b4355016199856f7a85f969c0> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/saref4envi/Color> .
+
+<https://astrea.linkeddata.es/shapes#6b422bce3fb8d5d2c898c62b7e509535> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/saref4envi/DigitalRepresentation> .
+
+<https://astrea.linkeddata.es/shapes#74510a690077c7eb9a37a86054369523> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/saref4envi/CompassDirection> .
+
+<https://astrea.linkeddata.es/shapes#7faec1931651a5f474db9331c68d48ee> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/saref4envi/Geometry> .
+
+<https://astrea.linkeddata.es/shapes#aa942717528b33727aa4ad14cf4313df> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/saref4envi/CommunicationProtocol> .
+
+<https://astrea.linkeddata.es/shapes#ef221800e02003a8aaab7079a833400d> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/saref4envi/CommunicationInterface> .
+
+<https://astrea.linkeddata.es/shapes#ff6cf94d2010ad4e7991ab14b6e8cec8> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/core/Service> .
 
 <http://mapping.example.com/map_triplesMapGroup_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "Target of a signal or event" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:Group .
 
 <http://mapping.example.com/map_triplesMapReportdescriptor_000/shape> a sh:NodeShape ;
-    rdfs:isDefinedBy "OpenADR 2.0 Demand Response Program Implementation Guide" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:targetClass ns:ReportDescriptor .

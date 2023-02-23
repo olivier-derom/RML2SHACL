@@ -1,1021 +1,264 @@
-@prefix :      <http://www.w3.org/2006/time#> .
-@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix void:  <http://rdfs.org/ns/void#> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix afn:   <http://jena.apache.org/ARQ/function#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix sh:    <http://www.w3.org/ns/shacl#> .
-@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
-@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
-@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann:  <http://purl.org/vocab/vann/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix sdo:   <https://schema.org/> .
 
-<https://astrea.linkeddata.es/shapes#99353e91dda760f245e7ddc669d6b90e>
+<https://astrea.linkeddata.es/shapes#825f708ca105fc8e70042e98eeb6cf50>
         rdf:type        sh:PropertyShape ;
-        rdfs:label      "Valor de intervalo de fecha-hora expresado como un valor estructurado. El principio y el final del intervalo coincide con los límites del elemento más corto en la descripción."@es , "has Date-Time description"@en , "Value of DateTimeInterval expressed as a structured value. The beginning and end of the interval coincide with the limits of the shortest element in the description."@en , "tiene descripción fecha-hora"@es ;
-        sh:class        :GeneralDateTimeDescription ;
-        sh:description  "Valor de intervalo de fecha-hora expresado como un valor estructurado. El principio y el final del intervalo coincide con los límites del elemento más corto en la descripción."@es , "Value of DateTimeInterval expressed as a structured value. The beginning and end of the interval coincide with the limits of the shortest element in the description."@en ;
-        sh:name         "tiene descripción fecha-hora"@es , "has Date-Time description"@en ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
+        rdfs:label      "in dataset" , "Points to the void:Dataset that a document is a part of." ;
+        sh:class        void:Dataset ;
+        sh:description  "Points to the void:Dataset that a document is a part of." ;
+        sh:name         "in dataset" ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         void:inDataset .
 
-<https://astrea.linkeddata.es/shapes#7b047982e409fa32d8598ac24799a77e>
+<https://astrea.linkeddata.es/shapes#4c6fe9ae4c281df56a28ac58073d8743>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Data Dump" , "An RDF dump, partial or complete, of a void:Dataset." ;
+        sh:class        rdfs:Resource ;
+        sh:description  "An RDF dump, partial or complete, of a void:Dataset." ;
+        sh:name         "Data Dump" ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         void:dataDump .
+
+<https://astrea.linkeddata.es/shapes#e85f83bb513465614a66c4ebacfab9d7>
         rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :months .
+        rdfs:label   "a link predicate" ;
+        sh:class     rdf:Property ;
+        sh:name      "a link predicate" ;
+        sh:nodeKind  sh:BlankNodeOrIRI ;
+        sh:path      void:linkPredicate .
 
-<https://astrea.linkeddata.es/shapes#d408c32ed233896657a98694f4d247c2>
+<https://astrea.linkeddata.es/shapes#35ff777cf20cb215ff2456f17c79511b>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "number of properties" , "The total number of distinct properties in a void:Dataset. In other words, the number of distinct resources that occur in the predicate position of triples in the dataset." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of distinct properties in a void:Dataset. In other words, the number of distinct resources that occur in the predicate position of triples in the dataset." ;
+        sh:name         "number of properties" ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         void:properties ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#c4ea875cf2f85292172d0957239421f7>
+        rdf:type     sh:PropertyShape ;
+        rdfs:label   "example resource of dataset" ;
+        sh:class     rdfs:Resource ;
+        sh:name      "example resource of dataset" ;
+        sh:nodeKind  sh:BlankNodeOrIRI ;
+        sh:path      void:exampleResource .
+
+<https://astrea.linkeddata.es/shapes#55a05e88e2f1bdf8b52fa7d0eb1efeca>
         rdf:type        sh:NodeShape ;
-        rdfs:label      "Date-Time description"@en , "descripción de fecha-tiempo"@es ;
-        sh:description  "Description of date and time structured with separate values for the various elements of a calendar-clock system. The temporal reference system is fixed to Gregorian Calendar, and the range of year, month, day properties restricted to corresponding XML Schema types xsd:gYear, xsd:gMonth and xsd:gDay, respectively."@en , "Descripción de fecha y tiempo estructurada con valores separados para los diferentes elementos de un sistema calendario-reloj. El sistema de referencia temporal está fijado al calendario gregoriano, y el rango de las propiedades año, mes, día restringidas a los correspondientes tipos del XML Schema xsd:gYear, xsd:gMonth y xsd:gDay respectivamente."@es ;
-        sh:name         "descripción de fecha-tiempo"@es , "Date-Time description"@en ;
-        sh:nodeKind     sh:IRI ;
-        sh:property     <https://astrea.linkeddata.es/shapes#9cbd2170836b1c1f99f1092ae903eaed> , <https://astrea.linkeddata.es/shapes#e00887eb7b2f63ee7d5071cdd765ba12> , <https://astrea.linkeddata.es/shapes#4e56b825e029df5d62357e22399780c7> , <https://astrea.linkeddata.es/shapes#1b8b9c358950ec54ad252e3bcb16598f> ;
-        sh:targetClass  :DateTimeDescription .
+        sh:property     <https://astrea.linkeddata.es/shapes#825f708ca105fc8e70042e98eeb6cf50> ;
+        sh:targetClass  foaf:Document .
 
-<https://astrea.linkeddata.es/shapes#3d7bf7e4491cbcd4f3f993650ac311b5>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  0 ;
-        sh:minCount  0 ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :days .
-
-<https://astrea.linkeddata.es/shapes#060db9e05fc47e84e224028607232ad4>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "0"^^xsd:nonNegativeInteger ;
-        sh:minCount  "0"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :second .
-
-<https://astrea.linkeddata.es/shapes#587c71ce55da9098db8b3b60e58589a6>
-        rdf:type     sh:PropertyShape ;
-        sh:hasValue  :unitMonth ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :unitType .
-
-<https://astrea.linkeddata.es/shapes#dd2305dc1e7addb5bb7bbea76872a611>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :year .
-
-<https://astrea.linkeddata.es/shapes#2e19851fb7e01cc3986fa0750f44e515>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  0 ;
-        sh:minCount  0 ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :minutes .
-
-<https://astrea.linkeddata.es/shapes#6aa373a22d028ce72038972958b41a8d>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  0 ;
-        sh:minCount  0 ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :hours .
-
-<https://astrea.linkeddata.es/shapes#8d26f56ec9e75266434f08dc7f5c2047>
+<https://astrea.linkeddata.es/shapes#9183ec4592778e350755956753ed1a12>
         rdf:type        sh:PropertyShape ;
-        rdfs:label      "End of a temporal entity."@en , "Final de una entidad temporal."@es , "tiene fin"@es , "has end"@en ;
-        sh:class        :Instant ;
-        sh:description  "End of a temporal entity."@en , "Final de una entidad temporal."@es ;
-        sh:name         "tiene fin"@es , "has end"@en ;
+        rdfs:label      "number of documents" , "The total number of documents, for datasets that are published as a set of individual documents, such as RDF/XML documents or RDFa-annotated web pages. Non-RDF documents, such as web pages in HTML or images, are usually not included in this count. This property is intended for datasets where the total number of triples or entities is hard to determine. void:triples or void:entities should be preferred where practical." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of documents, for datasets that are published as a set of individual documents, such as RDF/XML documents or RDFa-annotated web pages. Non-RDF documents, such as web pages in HTML or images, are usually not included in this count. This property is intended for datasets where the total number of triples or entities is hard to determine. void:triples or void:entities should be preferred where practical." ;
+        sh:name         "number of documents" ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         void:documents ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#ece05d0ce0885063aca1d6273855e38d>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "property partition" , "A subset of a void:Dataset that contains only the triples of a certain rdf:Property." ;
+        sh:class        void:Dataset ;
+        sh:description  "A subset of a void:Dataset that contains only the triples of a certain rdf:Property." ;
+        sh:name         "property partition" ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         void:propertyPartition .
+
+<https://astrea.linkeddata.es/shapes#9bd910c33d9c3c0ba5f9a1f4fd8f6371>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "vocabulary" , "A vocabulary that is used in the dataset." ;
+        sh:description  "A vocabulary that is used in the dataset." ;
+        sh:name         "vocabulary" ;
         sh:nodeKind     sh:BlankNodeOrIRI .
 
-<https://astrea.linkeddata.es/shapes#0c8945c15b560435f5ecc7abc120d0da>
+<https://astrea.linkeddata.es/shapes#92413d47d30041e0ea7257c800a9e3f5>
+        rdf:type     sh:PropertyShape ;
+        rdfs:label   "feature" ;
+        sh:class     void:TechnicalFeature ;
+        sh:name      "feature" ;
+        sh:nodeKind  sh:BlankNodeOrIRI ;
+        sh:path      void:feature .
+
+<https://astrea.linkeddata.es/shapes#d5ab1dae4827a430540dab1c7895ad4a>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "open search description" , "An OpenSearch description document for a free-text search service over a void:Dataset." ;
+        sh:class        foaf:Document ;
+        sh:description  "An OpenSearch description document for a free-text search service over a void:Dataset." ;
+        sh:name         "open search description" ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         void:openSearchDescription .
+
+<https://astrea.linkeddata.es/shapes#19fbad003b5e8b493087c5591eedc821>
+        rdf:type     sh:PropertyShape ;
+        rdfs:label   "has subset" ;
+        sh:class     void:Dataset ;
+        sh:name      "has subset" ;
+        sh:nodeKind  sh:BlankNodeOrIRI ;
+        sh:path      void:subset .
+
+<https://astrea.linkeddata.es/shapes#52f602fa94ae482025750508e210f4d2>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "number of entities" , "The total number of entities that are described in a void:Dataset." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of entities that are described in a void:Dataset." ;
+        sh:name         "number of entities" ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         void:entities ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#a7f55a797fa1acb8f0b695a74ec14a48>
         rdf:type        sh:NodeShape ;
-        rdfs:label      "Duration description"@en , "descripción de duración"@es ;
-        sh:description  "Descripción de extensión temporal estructurada con valores separados para los distintos elementos de un sistema de horario-calendario. El sistema de referencia temporal se fija al calendario gregoriano, y el intervalo de cada una de las propiedades numéricas se restringe a xsd:decimal."@es , "Description of temporal extent structured with separate values for the various elements of a calendar-clock system. The temporal reference system is fixed to Gregorian Calendar, and the range of each of the numeric properties is restricted to xsd:decimal"@en ;
-        sh:name         "descripción de duración"@es , "Duration description"@en ;
+        rdfs:label      "technical feature" ;
+        sh:description  "A technical feature of a void:Dataset, such as a supported RDF serialization format." ;
+        sh:name         "technical feature" ;
         sh:nodeKind     sh:IRI ;
-        sh:property     <https://astrea.linkeddata.es/shapes#3d3a2a5399ff93e4975e9d961e641968> , <https://astrea.linkeddata.es/shapes#ae7e373602e3f5d1f060bf51f0e34319> , <https://astrea.linkeddata.es/shapes#8522301052690210f2d0f763e693a2bb> , <https://astrea.linkeddata.es/shapes#9faee879f5c6fb2805dd49d88da5dd8f> , <https://astrea.linkeddata.es/shapes#0d11c827fe0a2d8cfa5362af73bfde8d> , <https://astrea.linkeddata.es/shapes#2669dc88730551f95939781400a61fd2> , <https://astrea.linkeddata.es/shapes#8c5d7cf264893582483ca9dc3e2cbf11> , <https://astrea.linkeddata.es/shapes#b10af7d7804d7960dee19d3399747b79> ;
-        sh:targetClass  :DurationDescription .
+        sh:targetClass  void:TechnicalFeature .
 
-<https://astrea.linkeddata.es/shapes#bfb63ae7ffa617b5f22c655e6dda542f>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "0"^^xsd:nonNegativeInteger ;
-        sh:minCount  "0"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :minute .
-
-<https://astrea.linkeddata.es/shapes#bc47e955ac8d7a8a73b22769e8626115>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "The day of week, whose value is a member of the class time:DayOfWeek"@en , "El día de la semana, cuyo valor es un miembro de la clase 'día de la semana'." , "day of week"@en , "día de la semana"@es ;
-        sh:class        :DayOfWeek ;
-        sh:description  "The day of week, whose value is a member of the class time:DayOfWeek"@en , "El día de la semana, cuyo valor es un miembro de la clase 'día de la semana'." ;
-        sh:name         "day of week"@en , "día de la semana"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#acf800bae46ae57c5e5b636dd11e0a64>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "temporal unit type"@en , "The temporal unit which provides the precision of a date-time value or scale of a temporal extent"@en , "La unidad de tiempo que proporciona la precisión de un valor fecha-hora o la escala de una extensión temporal."@es , "tipo de unidad temporal"@es ;
-        sh:class        :TemporalUnit ;
-        sh:description  "La unidad de tiempo que proporciona la precisión de un valor fecha-hora o la escala de una extensión temporal."@es , "The temporal unit which provides the precision of a date-time value or scale of a temporal extent"@en ;
-        sh:name         "temporal unit type"@en , "tipo de unidad temporal"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#8522301052690210f2d0f763e693a2bb>
-        rdf:type     sh:PropertyShape ;
-        sh:datatype  xsd:decimal ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :months .
-
-<https://astrea.linkeddata.es/shapes#ff90430492959c6fd5085a112ed7184b>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  0 ;
-        sh:minCount  0 ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :seconds .
-
-<https://astrea.linkeddata.es/shapes#3e18b0f9fac2d3bdcd51a2fdadcbda53>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "Temporal entity"@en , "entidad temporal"@es ;
-        sh:description  "Un intervalo temporal o un instante."@es , "A temporal interval or instant."@en ;
-        sh:name         "Temporal entity"@en , "entidad temporal"@es ;
-        sh:nodeKind     sh:IRI ;
-        sh:or           ( :InstantShape :IntervalShape ) ;
-        sh:targetClass  :TemporalEntity .
-
-<https://astrea.linkeddata.es/shapes#89e42e0c8077ab6b0636c706e77b0212>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "día de la semana"@es , "Day of week"@en ;
-        sh:description  "The day of week"@en , "El día de la semana"@es ;
-        sh:name         "día de la semana"@es , "Day of week"@en ;
-        sh:nodeKind     sh:IRI ;
-        sh:targetClass  :DayOfWeek .
-
-<https://astrea.linkeddata.es/shapes#1b8b9c358950ec54ad252e3bcb16598f>
-        rdf:type     sh:PropertyShape ;
-        sh:datatype  xsd:gMonth ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :month .
-
-<https://astrea.linkeddata.es/shapes#33add06877b24887ea23cde64400f0c4>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :weeks .
-
-<https://astrea.linkeddata.es/shapes#e3e2e9a9418db674538a9e91287bc0a7>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:minCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :unitType .
-
-<https://astrea.linkeddata.es/shapes#dd25aa2082be707e73e54706aa6e6e58>
-        rdf:type         sh:PropertyShape ;
-        rdfs:label       "semana"@es , "week"@en , "Week number within the year."@en , "Número de semana en el año."@es ;
-        sh:datatype      xsd:nonNegativeInteger ;
-        sh:description   "Week number within the year."@en , "Número de semana en el año."@es ;
-        sh:minInclusive  0 ;
-        sh:name          "week"@en , "semana"@es ;
-        sh:nodeKind      sh:Literal ;
-        sh:pattern       "[\\-+]?[0-9]+" .
-
-<https://astrea.linkeddata.es/shapes#75b684fc1c2b1d96cee32ddf1e4e2934>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "tiene duración XSD"@es , "Extent of a temporal entity, expressed using xsd:duration"@en , "Extensión de una entidad temporal, expresada utilizando xsd:duration."@es , "has XSD duration"@en ;
-        sh:datatype     xsd:duration ;
-        sh:description  "Extent of a temporal entity, expressed using xsd:duration"@en , "Extensión de una entidad temporal, expresada utilizando xsd:duration."@es ;
-        sh:name         "tiene duración XSD"@es , "has XSD duration"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "-?P((([0-9]+Y([0-9]+M)?([0-9]+D)?|([0-9]+M)([0-9]+D)?|([0-9]+D))(T(([0-9]+H)([0-9]+M)?([0-9]+(\\.[0-9]+)?S)?|([0-9]+M)([0-9]+(\\.[0-9]+)?S)?|([0-9]+(\\.[0-9]+)?S)))?)|(T(([0-9]+H)([0-9]+M)?([0-9]+(\\.[0-9]+)?S)?|([0-9]+M)([0-9]+(\\.[0-9]+)?S)?|([0-9]+(\\.[0-9]+)?S))))" .
-
-<https://astrea.linkeddata.es/shapes#9faee879f5c6fb2805dd49d88da5dd8f>
-        rdf:type     sh:PropertyShape ;
-        sh:datatype  xsd:decimal ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :seconds .
-
-<https://astrea.linkeddata.es/shapes#b00edb847096a437c84ade3c5a07f8bf>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "minutos"@es , "minutes"@en , "length, or element of, a temporal extent expressed in minutes"@en , "Longitud de, o elemento de la longitud de, una extensión temporal expresada en minutos."@es ;
-        sh:datatype     xsd:decimal ;
-        sh:description  "Longitud de, o elemento de la longitud de, una extensión temporal expresada en minutos."@es , "length, or element of, a temporal extent expressed in minutes"@en ;
-        sh:name         "minutos"@es , "minutes"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" .
-
-<https://astrea.linkeddata.es/shapes#2669dc88730551f95939781400a61fd2>
-        rdf:type     sh:PropertyShape ;
-        sh:datatype  xsd:decimal ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :years .
-
-<https://astrea.linkeddata.es/shapes#2532894d090d3f1667f7f7b6da65df98>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "tiene principio"@es , "has beginning"@en , "Comienzo de una entidad temporal."@es , "Beginning of a temporal entity"@en ;
-        sh:class        :Instant ;
-        sh:description  "Comienzo de una entidad temporal."@es , "Beginning of a temporal entity"@en ;
-        sh:name         "has beginning"@en , "tiene principio"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#f12701961e8b5abc1439eaac3a39bf20>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :hours .
-
-<https://astrea.linkeddata.es/shapes#7dc8fd3a0404e02b3dc34d6d1a444872>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "intervalo se encuentra"@es , "Si un intervalo propio T1 se encuentra con otro intervalo propio T2, entonces el final de T1 coincide con el principio de T2."@es , "If a proper interval T1 is intervalMeets another proper interval T2, then the end of T1 is coincident with the beginning of T2."@en , "interval meets"@en ;
-        sh:class        :ProperInterval ;
-        sh:description  "Si un intervalo propio T1 se encuentra con otro intervalo propio T2, entonces el final de T1 coincide con el principio de T2."@es , "If a proper interval T1 is intervalMeets another proper interval T2, then the end of T1 is coincident with the beginning of T2."@en ;
-        sh:name         "interval meets"@en , "intervalo se encuentra"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#dc2b0a317baee602614d50eedaf4851c>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Si un intervalo propio T1 está antes que otro intervalo propio T2, entonces el final de T1 está antes que el principio de T2."@es , "intervalo anterior"@es , "interval before"@en , "If a proper interval T1 is intervalBefore another proper interval T2, then the end of T1 is before the beginning of T2."@en ;
-        sh:class        :ProperInterval ;
-        sh:description  "Si un intervalo propio T1 está antes que otro intervalo propio T2, entonces el final de T1 está antes que el principio de T2."@es , "If a proper interval T1 is intervalBefore another proper interval T2, then the end of T1 is before the beginning of T2."@en ;
-        sh:name         "interval before"@en , "intervalo anterior"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#90d8aef2f1bd778682f0a2b55286a36d>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Position of an instant, expressed using a structured description"@en , "en descripción de fecha-hora"@es , "Posición de un instante, expresada utilizando una descripción estructurada."@es , "in date-time description"@en ;
-        sh:class        :GeneralDateTimeDescription ;
-        sh:description  "Position of an instant, expressed using a structured description"@en , "Posición de un instante, expresada utilizando una descripción estructurada."@es ;
-        sh:name         "en descripción de fecha-hora"@es , "in date-time description"@en ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#b138dcf744ce2a146efedf00d07b1bbf>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "posición de tiempo"@es , "Time position"@en ;
-        sh:description  "Una posición temporal descrita utilizando bien un valor (nominal) de un sistema de referencia ordinal, o un valor (numérico) en un sistema de coordenadas temporales."@es , "A temporal position described using either a (nominal) value from an ordinal reference system, or a (numeric) value in a temporal coordinate system. "@en ;
-        sh:name         "posición de tiempo"@es , "Time position"@en ;
-        sh:nodeKind     sh:IRI ;
-        sh:targetClass  :TimePosition .
-
-<https://astrea.linkeddata.es/shapes#4e56b825e029df5d62357e22399780c7>
-        rdf:type     sh:PropertyShape ;
-        sh:hasValue  <http://www.opengis.net/def/uom/ISO-8601/0/Gregorian> ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :hasTRS .
-
-<https://astrea.linkeddata.es/shapes#65cc53835f670a374bfb6da10f080d2f>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "duración temporal"@es , "Temporal duration"@en ;
-        sh:description  "Extensión de tiempo; duración de un intervalo de tiempo independiente de su posición de inicio particular."@es , "Time extent; duration of a time interval separate from its particular start position"@en ;
-        sh:name         "duración temporal"@es , "Temporal duration"@en ;
-        sh:nodeKind     sh:IRI ;
-        sh:targetClass  :TemporalDuration .
-
-<https://astrea.linkeddata.es/shapes#86060dad8e610cc630f8338c216d2e0a>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "intervalo solapado por"@es , "Si un intervalo propio T1 es 'intervalo solapado por' otro intervalo propio T2, entonces el principio de T1 es posterior al principio de T2, y el principio de T1 es anterior al final de T2, y el final de T1 es posterior al final de T2."@es , "If a proper interval T1 is intervalOverlappedBy another proper interval T2, then the beginning of T1 is after the beginning of T2, the beginning of T1 is before the end of T2, and the end of T1 is after the end of T2."@en , "interval overlapped by"@en ;
-        sh:class        :ProperInterval ;
-        sh:description  "If a proper interval T1 is intervalOverlappedBy another proper interval T2, then the beginning of T1 is after the beginning of T2, the beginning of T1 is before the end of T2, and the end of T1 is after the end of T2."@en , "Si un intervalo propio T1 es 'intervalo solapado por' otro intervalo propio T2, entonces el principio de T1 es posterior al principio de T2, y el principio de T1 es anterior al final de T2, y el final de T1 es posterior al final de T2."@es ;
-        sh:name         "interval overlapped by"@en , "intervalo solapado por"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#dc24c4066862bdc7332888fa7a79e16f>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "intervalo se solapa"@es , "If a proper interval T1 is intervalOverlaps another proper interval T2, then the beginning of T1 is before the beginning of T2, the end of T1 is after the beginning of T2, and the end of T1 is before the end of T2."@en , "Asume una dirección en el tiempo. Si una entidad temporal T1 está después de otra entidad temporal T2, entonces el principio de T1 está después del final de T2."@es , "interval overlaps"@en , "Si un intervalo propio T1 se solapa con otro intervalo propio T2, entonces el principio de T1 es anterior al principio de T2, el final de T1 es posterior al principio de T2, y el final de T1 es anterior al final de T2."@es ;
-        sh:class        :ProperInterval ;
-        sh:description  "If a proper interval T1 is intervalOverlaps another proper interval T2, then the beginning of T1 is before the beginning of T2, the end of T1 is after the beginning of T2, and the end of T1 is before the end of T2."@en , "Asume una dirección en el tiempo. Si una entidad temporal T1 está después de otra entidad temporal T2, entonces el principio de T1 está después del final de T2."@es , "Si un intervalo propio T1 se solapa con otro intervalo propio T2, entonces el principio de T1 es anterior al principio de T2, el final de T1 es posterior al principio de T2, y el final de T1 es anterior al final de T2."@es ;
-        sh:name         "interval overlaps"@en , "intervalo se solapa"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#9e79b5e219290a5e9fb5027725c82561>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "If a proper interval T1 is intervalIn another proper interval T2, then the beginning of T1 is after the beginning of T2 or is coincident with the beginning of T2, and the end of T1 is before the end of T2, or is coincident with the end of T2, except that end of T1 may not be coincident with the end of T2 if the beginning of T1 is coincident with the beginning of T2."@en , "interval in"@en , "Si un intervalo propio T1 es un intervalo interior a otro intervalo propio T2, entonces el principio de T1 está después del principio de T2 o coincide con el principio de T2, y el final de T1 está antes que el final de T2, o coincide con el final de T2, excepto que el final de T1 puede no coincidir con el final de T2 si el principio de T1 coincide con el principio de T2."@es , "intervalo interior"@es ;
-        sh:class        :ProperInterval ;
-        sh:description  "Si un intervalo propio T1 es un intervalo interior a otro intervalo propio T2, entonces el principio de T1 está después del principio de T2 o coincide con el principio de T2, y el final de T1 está antes que el final de T2, o coincide con el final de T2, excepto que el final de T1 puede no coincidir con el final de T2 si el principio de T1 coincide con el principio de T2."@es , "If a proper interval T1 is intervalIn another proper interval T2, then the beginning of T1 is after the beginning of T2 or is coincident with the beginning of T2, and the end of T1 is before the end of T2, or is coincident with the end of T2, except that end of T1 may not be coincident with the end of T2 if the beginning of T1 is coincident with the beginning of T2."@en ;
-        sh:name         "interval in"@en , "intervalo interior"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#4012686c84815fd55c7e1c4bc133b40d>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "Proper interval"@en , "intervalo propio"@es ;
-        sh:description  "Una entidad temporal con extensión o duración distinta de cero, es decir, para la cual los valores de principio y fin del intervalo son diferentes."@es , "A temporal entity with non-zero extent or duration, i.e. for which the value of the beginning and end are different"@en ;
-        sh:disjoint     :Instant ;
-        sh:name         "Proper interval"@en , "intervalo propio"@es ;
-        sh:nodeKind     sh:IRI ;
-        sh:targetClass  :ProperInterval .
-
-<https://astrea.linkeddata.es/shapes#936a38f91ba515f10125e4990db905ab>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "Time Zone"@en , "huso horario"@es ;
-        sh:description  "Un huso horario especifica la cantidad en que la hora local está desplazada con respecto a UTC.\n        Un huso horario normalmente se denota geográficamente (p.ej. el horario de verano del este de Australia), con un valor constante en una región dada.\n        La región donde aplica y el desplazamiento desde UTC las especifica una autoridad gubernamental localmente reconocida."@es , "A Time Zone specifies the amount by which the local time is offset from UTC. \n\tA time zone is usually denoted geographically (e.g. Australian Eastern Daylight Time), with a constant value in a given region. \nThe region where it applies and the offset from UTC are specified by a locally recognised governing authority."@en ;
-        sh:name         "Time Zone"@en , "huso horario"@es ;
-        sh:nodeKind     sh:IRI ;
-        sh:targetClass  :TimeZone .
-
-<https://astrea.linkeddata.es/shapes#5580a9301e2d7a6ab2e5bb7e3243a9d1>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Longitud de, o elemento de la longitud de, una extensión temporal expresada en años."@es , "length of, or element of the length of, a temporal extent expressed in years"@en , "years duration"@en , "duración en años"@es ;
-        sh:datatype     xsd:decimal ;
-        sh:description  "length of, or element of the length of, a temporal extent expressed in years"@en , "Longitud de, o elemento de la longitud de, una extensión temporal expresada en años."@es ;
-        sh:name         "duración en años"@es , "years duration"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" .
-
-<https://astrea.linkeddata.es/shapes#d5721dbd27a11084227205da6fe2fc31>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:minCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :numericDuration .
-
-<https://astrea.linkeddata.es/shapes#3f59f1b6c34ba4ed74f02d3eeb279ca7>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "en año gregoriano XSD"@es , "Posición de un instante, expresado utilizando xsd:gYear."@es , "Position of an instant, expressed using xsd:gYear"@en , "in XSD g-Year"@en ;
-        sh:datatype     xsd:gYear ;
-        sh:description  "Position of an instant, expressed using xsd:gYear"@en , "Posición de un instante, expresado utilizando xsd:gYear."@es ;
-        sh:name         "en año gregoriano XSD"@es , "in XSD g-Year"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "-?([1-9][0-9]{3,}|0[0-9]{3})(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" .
-
-<https://astrea.linkeddata.es/shapes#52f128cdcfef8aa1c487b4073ecd44bd>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Month position in a calendar-clock system.\n\nThe range of this property is not specified, so can be replaced by any specific representation of a calendar month from any calendar. "@en , "Posición de mes en un sistema calendario-reloj.\n    El rango de esta propiedad no está especificado, por tanto, se puede reemplazar por cualquier representación específica de un mes de calendario de un calendario cualquiera."@es , "mes"@es , "month"@en ;
-        sh:description  "Posición de mes en un sistema calendario-reloj.\n    El rango de esta propiedad no está especificado, por tanto, se puede reemplazar por cualquier representación específica de un mes de calendario de un calendario cualquiera."@es , "Month position in a calendar-clock system.\n\nThe range of this property is not specified, so can be replaced by any specific representation of a calendar month from any calendar. "@en ;
-        sh:name         "month"@en , "mes"@es ;
-        sh:nodeKind     sh:Literal .
-
-<https://astrea.linkeddata.es/shapes#99e9ff3473fd6c306e4f6718173c9137>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Año generalizado"@es , "Número de año - formulado como una cadena de texto con una restricción patrón para reproducir la misma forma léxica que gYear, aunque no está restringido a valores del calendario gregoriano.\n            Nótese que el espacio de valores no está definido, por tanto, un procesador genérico de OWL2 no puede computar relaciones de orden de valores de este tipo."@es , "Generalized year"@en , "Year number - formulated as a text string with a pattern constraint to reproduce the same lexical form as gYear, but not restricted to values from the Gregorian calendar. \nNote that the value-space is not defined, so a generic OWL2 processor cannot compute ordering relationships of values of this type."@en ;
-        sh:description  "Year number - formulated as a text string with a pattern constraint to reproduce the same lexical form as gYear, but not restricted to values from the Gregorian calendar. \nNote that the value-space is not defined, so a generic OWL2 processor cannot compute ordering relationships of values of this type."@en , "Número de año - formulado como una cadena de texto con una restricción patrón para reproducir la misma forma léxica que gYear, aunque no está restringido a valores del calendario gregoriano.\n            Nótese que el espacio de valores no está definido, por tanto, un procesador genérico de OWL2 no puede computar relaciones de orden de valores de este tipo."@es ;
-        sh:name         "Año generalizado"@es , "Generalized year"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "-?([1-9][0-9]{3,}|0[0-9]{3})(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" .
-
-<https://astrea.linkeddata.es/shapes#f5534cfec3ede7c92e42f0f7a6f44f4a>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "duración en semanas"@es , "length of, or element of the length of, a temporal extent expressed in weeks"@en , "weeks duration"@en , "Longitud de, o elemento de la longitud de, una extensión temporal expresada en semanas."@es ;
-        sh:datatype     xsd:decimal ;
-        sh:description  "length of, or element of the length of, a temporal extent expressed in weeks"@en , "Longitud de, o elemento de la longitud de, una extensión temporal expresada en semanas."@es ;
-        sh:name         "weeks duration"@en , "duración en semanas"@es ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" .
-
-<https://astrea.linkeddata.es/shapes#9c26e561e4f0c6832edf255896280e30>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :dayOfYear .
-
-<https://astrea.linkeddata.es/shapes#4c13e0c99639c7be44e125eb171d4cab>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Temporal reference system used"@en , "sistema de referencia temporal utilizado"@es , "El sistema de referencia temporal utilizado por una posición temporal o descripción de extensión."@es , "The temporal reference system used by a temporal position or extent description. "@en ;
-        sh:class        :TRS ;
-        sh:description  "The temporal reference system used by a temporal position or extent description. "@en , "El sistema de referencia temporal utilizado por una posición temporal o descripción de extensión."@es ;
-        sh:maxCount     1 ;
-        sh:name         "sistema de referencia temporal utilizado"@es , "Temporal reference system used"@en ;
-        sh:nodeKind     sh:IRIOrLiteral , sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#b9cb55323b8221c472524244d8de421a>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "Generalized date-time description"@en , "descripción de fecha-hora generalizada"@es ;
-        sh:description  "Description of date and time structured with separate values for the various elements of a calendar-clock system"@en , "Descripción de fecha y hora estructurada con valores separados para los distintos elementos de un sistema calendario-reloj."@es ;
-        sh:name         "descripción de fecha-hora generalizada"@es , "Generalized date-time description"@en ;
-        sh:nodeKind     sh:IRI ;
-        sh:property     <https://astrea.linkeddata.es/shapes#e3e2e9a9418db674538a9e91287bc0a7> , <https://astrea.linkeddata.es/shapes#aa6f1abc5252d8da44eb07c6883e5572> , <https://astrea.linkeddata.es/shapes#cc887d247a35caf5dd54141bfe1a2a47> , <https://astrea.linkeddata.es/shapes#0f4ef71546e356675bf78c9870c1e070> , <https://astrea.linkeddata.es/shapes#3b9b3156ac8a7140aa5826d1614b189d> , <https://astrea.linkeddata.es/shapes#1326eb12765a627b277eb7d85bd5ae27> , <https://astrea.linkeddata.es/shapes#76946b57aedb2f5af9a9fe6eec79c15a> , <https://astrea.linkeddata.es/shapes#9c26e561e4f0c6832edf255896280e30> , <https://astrea.linkeddata.es/shapes#dd2305dc1e7addb5bb7bbea76872a611> , <https://astrea.linkeddata.es/shapes#7704e1a78a2f350b6e341585cadec0e9> , <https://astrea.linkeddata.es/shapes#582369aed934d049d72a08373376d8c2> , <https://astrea.linkeddata.es/shapes#26ac97ba65e5786c94352d3eb5b7507e> ;
-        sh:targetClass  :GeneralDateTimeDescription .
-
-<https://astrea.linkeddata.es/shapes#9cbd2170836b1c1f99f1092ae903eaed>
-        rdf:type     sh:PropertyShape ;
-        sh:datatype  xsd:gYear ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :year .
-
-<https://astrea.linkeddata.es/shapes#2c99f1b0c3185629d4a8567723a34da9>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "Year"@en ;
-        sh:description  "Year duration" ;
-        sh:name         "Year"@en ;
-        sh:nodeKind     sh:IRI ;
-        sh:property     <https://astrea.linkeddata.es/shapes#2e19851fb7e01cc3986fa0750f44e515> , <https://astrea.linkeddata.es/shapes#6aa373a22d028ce72038972958b41a8d> , <https://astrea.linkeddata.es/shapes#036cae4cc17fbcc9a288fd37f47658ff> , <https://astrea.linkeddata.es/shapes#3d7bf7e4491cbcd4f3f993650ac311b5> , <https://astrea.linkeddata.es/shapes#66c34eaa519bc79aa0fa03ddfd08ba63> , <https://astrea.linkeddata.es/shapes#ff90430492959c6fd5085a112ed7184b> , <https://astrea.linkeddata.es/shapes#7c50b4631a0dfeb2244f3207f1c00cb6> ;
-        sh:targetClass  :Year .
-
-<https://astrea.linkeddata.es/shapes#915dacb636a5e06ac1636997bb40f771>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "The (nominal) value indicating temporal position in an ordinal reference system "@en , "Name of temporal position"@en , "nombre de posición temporal"@es , "El valor (nominal) que indica posición temporal en un sistema de referencia ordinal."@es ;
-        sh:datatype     xsd:string ;
-        sh:description  "El valor (nominal) que indica posición temporal en un sistema de referencia ordinal."@es , "The (nominal) value indicating temporal position in an ordinal reference system "@en ;
-        sh:name         "nombre de posición temporal"@es , "Name of temporal position"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      ".*" .
-
-<https://astrea.linkeddata.es/shapes#5ecbef531ad9fc5b270c9cd5dea65d57>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :seconds .
-
-<https://astrea.linkeddata.es/shapes#48490eb6a8c58ed74ea26d5757161174>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "mes del año"@es , "Month of year"@en ;
-        sh:description  "The month of the year"@en , "El mes del año."@es ;
-        sh:name         "mes del año"@es , "Month of year"@en ;
-        sh:nodeKind     sh:IRI ;
-        sh:property     <https://astrea.linkeddata.es/shapes#47427181ba878100c93867a4606fafbb> , <https://astrea.linkeddata.es/shapes#587c71ce55da9098db8b3b60e58589a6> , <https://astrea.linkeddata.es/shapes#62b859ca42e1e23bf6a6564d885ac9ed> , <https://astrea.linkeddata.es/shapes#8b82278178b01acfed6d902b883dd791> , <https://astrea.linkeddata.es/shapes#ad361356f94325106c2581448f2ccc15> , <https://astrea.linkeddata.es/shapes#bfb63ae7ffa617b5f22c655e6dda542f> , <https://astrea.linkeddata.es/shapes#060db9e05fc47e84e224028607232ad4> , <https://astrea.linkeddata.es/shapes#9365c5258bc110ce0005787550ae7292> ;
-        sh:targetClass  :MonthOfYear .
-
-<https://astrea.linkeddata.es/shapes#13f9476a0c7ae2f5dcc4e00710373e41>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Si un intervalo propio T1 es 'intervalo encontrado por' otro intervalo propio T2, entonces el principio de T1 coincide con el final de T2."@es , "interval met by"@en , "If a proper interval T1 is intervalMetBy another proper interval T2, then the beginning of T1 is coincident with the end of T2."@en , "intervalo encontrado por"@es ;
-        sh:class        :ProperInterval ;
-        sh:description  "Si un intervalo propio T1 es 'intervalo encontrado por' otro intervalo propio T2, entonces el principio de T1 coincide con el final de T2."@es , "If a proper interval T1 is intervalMetBy another proper interval T2, then the beginning of T1 is coincident with the end of T2."@en ;
-        sh:name         "intervalo encontrado por"@es , "interval met by"@en ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#6aa33b15e7fe371c1c9f59c92c9c265a>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Valor de 'intervalo de fecha-hora' expresado como un valor compacto."@es , "Value of DateTimeInterval expressed as a compact value."@en , "tiene fecha-hora XSD"@es , "has XSD date-time"@en ;
-        sh:datatype     xsd:dateTime ;
-        sh:description  "Value of DateTimeInterval expressed as a compact value."@en , "Valor de 'intervalo de fecha-hora' expresado como un valor compacto."@es ;
-        sh:name         "has XSD date-time"@en , "tiene fecha-hora XSD"@es ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?|(24:00:00(\\.0+)?))(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" .
-
-<https://astrea.linkeddata.es/shapes#6fdcb6fa74959cc52414f19ced544249>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Posición de un instante, expresado utilizando xsd:dateTimeStamp."@es , "en fecha-sello de tiempo XSD"@es , "in XSD Date-Time-Stamp"@en , "Position of an instant, expressed using xsd:dateTimeStamp"@en ;
-        sh:datatype     xsd:dateTimeStamp ;
-        sh:description  "Position of an instant, expressed using xsd:dateTimeStamp"@en , "Posición de un instante, expresado utilizando xsd:dateTimeStamp."@es ;
-        sh:name         "in XSD Date-Time-Stamp"@en , "en fecha-sello de tiempo XSD"@es ;
-        sh:nodeKind     sh:Literal .
-
-<https://astrea.linkeddata.es/shapes#c158bca83e4fe84d554b4ef79360ea70>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Si un intervalo propio T1 es disjunto con otro intervalo propio T2, entonces el principio de T1 está después del final de T2, o el final de T1 está antes que el principio de T2, es decir, los intervalos no se solapan de ninguna forma, aunque su relación de orden no se conozca."@es , "interval disjoint"@en , "intervalo disjunto"@es , "If a proper interval T1 is intervalDisjoint another proper interval T2, then the beginning of T1 is after the end of T2, or the end of T1 is before the beginning of T2, i.e. the intervals do not overlap in any way, but their ordering relationship is not known."@en ;
-        sh:class        :ProperInterval ;
-        sh:description  "If a proper interval T1 is intervalDisjoint another proper interval T2, then the beginning of T1 is after the end of T2, or the end of T1 is before the beginning of T2, i.e. the intervals do not overlap in any way, but their ordering relationship is not known."@en , "Si un intervalo propio T1 es disjunto con otro intervalo propio T2, entonces el principio de T1 está después del final de T2, o el final de T1 está antes que el principio de T2, es decir, los intervalos no se solapan de ninguna forma, aunque su relación de orden no se conozca."@es ;
-        sh:name         "interval disjoint"@en , "intervalo disjunto"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#4f4d56e35e5114b5f3bda769dc0d8989>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:minCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :hasTRS .
-
-<https://astrea.linkeddata.es/shapes#e00887eb7b2f63ee7d5071cdd765ba12>
-        rdf:type     sh:PropertyShape ;
-        sh:datatype  xsd:gDay ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :day .
-
-<https://astrea.linkeddata.es/shapes#de808d0e62e67da9ae256e6993fb8fdb>
-        rdf:type         sh:PropertyShape ;
-        rdfs:label       "hora"@es , "Hour position in a calendar-clock system."@en , "hour"@en , "Posición de hora en un sistema calendario-reloj."@es ;
-        sh:datatype      xsd:nonNegativeInteger ;
-        sh:description   "Posición de hora en un sistema calendario-reloj."@es , "Hour position in a calendar-clock system."@en ;
-        sh:minInclusive  0 ;
-        sh:name          "hora"@es , "hour"@en ;
-        sh:nodeKind      sh:Literal ;
-        sh:pattern       "[\\-+]?[0-9]+" .
-
-<https://astrea.linkeddata.es/shapes#cecd23353917812e5885792d2fd27029>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "posición temporal"@es , "Temporal position"@en ;
-        sh:description  "Una posición sobre una línea de tiempo."@es , "A position on a time-line"@en ;
-        sh:name         "posición temporal"@es , "Temporal position"@en ;
-        sh:nodeKind     sh:IRI ;
-        sh:property     <https://astrea.linkeddata.es/shapes#4f4d56e35e5114b5f3bda769dc0d8989> ;
-        sh:targetClass  :TemporalPosition .
-
-<https://astrea.linkeddata.es/shapes#d962715fbf72868c0c9961959a58b34e>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "has time"@en , "tiene tiempo"@es , "Supports the association of a temporal entity (instant or interval) to any thing"@en , "Proporciona soporte a la asociación de una entidad temporal (instante o intervalo) a cualquier cosa."@es ;
-        sh:class        :TemporalEntity ;
-        sh:description  "Proporciona soporte a la asociación de una entidad temporal (instante o intervalo) a cualquier cosa."@es , "Supports the association of a temporal entity (instant or interval) to any thing"@en ;
-        sh:name         "has time"@en , "tiene tiempo"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#c7219e4e5e5875a1227ea1a2f1bcb6f1>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "El valor (numérico) que indica posición temporal en un sistema de referencia ordinal."@es , "The (numeric) value indicating position within a temporal coordinate system "@en , "valor numérico de posición temporal"@es , "Numeric value of temporal position"@en ;
-        sh:datatype     xsd:decimal ;
-        sh:description  "The (numeric) value indicating position within a temporal coordinate system "@en , "El valor (numérico) que indica posición temporal en un sistema de referencia ordinal."@es ;
-        sh:name         "valor numérico de posición temporal"@es , "Numeric value of temporal position"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" .
-
-<https://astrea.linkeddata.es/shapes#ad361356f94325106c2581448f2ccc15>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:minCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :month .
-
-<https://astrea.linkeddata.es/shapes#42e9383f73110098b5a3c7d8124eef66>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "intervalo durante"@es , "interval during"@en , "Si un intervalo propio T1 está durante otro intervalo propio T2, entonces del principio de T1 está después del principio de T2, y el final de T1 está antes que el final de T2."@es , "If a proper interval T1 is intervalDuring another proper interval T2, then the beginning of T1 is after the beginning of T2, and the end of T1 is before the end of T2."@en ;
-        sh:class        :ProperInterval ;
-        sh:description  "If a proper interval T1 is intervalDuring another proper interval T2, then the beginning of T1 is after the beginning of T2, and the end of T1 is before the end of T2."@en , "Si un intervalo propio T1 está durante otro intervalo propio T2, entonces del principio de T1 está después del principio de T2, y el final de T1 está antes que el final de T2."@es ;
-        sh:name         "interval during"@en , "intervalo durante"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#26ac97ba65e5786c94352d3eb5b7507e>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :dayOfWeek .
-
-<https://astrea.linkeddata.es/shapes#0a5669f09c8114428ec27cd377fa3636>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "interval started by"@en , "Si un intervalo propio T1 es empezado por otro intervalo propio T2, entonces el principio de T1 coincide con el principio de T2, y el final de T1 es posterior al final de T2."@es , "If a proper interval T1 is intervalStarted another proper interval T2, then the beginning of T1 is coincident with the beginning of T2, and the end of T1 is after the end of T2."@en ;
-        sh:class        :ProperInterval ;
-        sh:description  "Si un intervalo propio T1 es empezado por otro intervalo propio T2, entonces el principio de T1 coincide con el principio de T2, y el final de T1 es posterior al final de T2."@es , "If a proper interval T1 is intervalStarted another proper interval T2, then the beginning of T1 is coincident with the beginning of T2, and the end of T1 is after the end of T2."@en ;
-        sh:name         "interval started by"@en ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#f1ed01ff4ad7e0110c28d4231cd9616c>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "intervalo de tiempo"@es , "Time interval"@en ;
-        sh:description  "Una entidad temporal con una extensión o duración."@es , "A temporal entity with an extent or duration"@en ;
-        sh:name         "intervalo de tiempo"@es , "Time interval"@en ;
-        sh:nodeKind     sh:IRI ;
-        sh:targetClass  :Interval .
-
-<https://astrea.linkeddata.es/shapes#2a6076262293386b0f5a33236dd1e1bc>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "después"@es , "Gives directionality to time. If a temporal entity T1 is after another temporal entity T2, then the beginning of T1 is after the end of T2."@en , "after"@en , "Asume una dirección en el tiempo. Si una entidad temporal T1 está después de otra entidad temporal T2, entonces el principio de T1 está después del final de T2."@es ;
-        sh:class        :TemporalEntity ;
-        sh:description  "Gives directionality to time. If a temporal entity T1 is after another temporal entity T2, then the beginning of T1 is after the end of T2."@en , "Asume una dirección en el tiempo. Si una entidad temporal T1 está después de otra entidad temporal T2, entonces el principio de T1 está después del final de T2."@es ;
-        sh:name         "después"@es , "after"@en ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#a1ecba995aef4ada322156e17bc0998c>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "interval equals"@en , "intervalo igual"@es , "If a proper interval T1 is intervalEquals another proper interval T2, then the beginning of T1 is coincident with the beginning of T2, and the end of T1 is coincident with the end of T2."@en , "Si un intervalo propio T1 es igual a otro intervalo propio T2, entonces el principio de T1 coincide con el principio de T2, y el final de T1 coincide con el final de T2."@es ;
-        sh:class        :ProperInterval ;
-        sh:description  "If a proper interval T1 is intervalEquals another proper interval T2, then the beginning of T1 is coincident with the beginning of T2, and the end of T1 is coincident with the end of T2."@en , "Si un intervalo propio T1 es igual a otro intervalo propio T2, entonces el principio de T1 coincide con el principio de T2, y el final de T1 coincide con el final de T2."@es ;
-        sh:name         "interval equals"@en , "intervalo igual"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#e9c6ab846bb09b9da8cebb09d5a663a2>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "has time instant inside"@en , "tiene instante de tiempo dentro"@es , "Un instante que cae dentro del intervalo. Se asume que no es ni el principio ni el final de ningún intervalo."@es , "An instant that falls inside the interval. It is not intended to include beginnings and ends of intervals."@en ;
-        sh:class        :Instant ;
-        sh:description  "Un instante que cae dentro del intervalo. Se asume que no es ni el principio ni el final de ningún intervalo."@es , "An instant that falls inside the interval. It is not intended to include beginnings and ends of intervals."@en ;
-        sh:name         "tiene instante de tiempo dentro"@es , "has time instant inside"@en ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#d7758d98ad6452c77b4006515467321b>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "segundo"@es , "Second position in a calendar-clock system."@en , "Posición de segundo en un sistema calendario-reloj."@es , "second"@en ;
-        sh:datatype     xsd:decimal ;
-        sh:description  "Posición de segundo en un sistema calendario-reloj."@es , "Second position in a calendar-clock system."@en ;
-        sh:name         "segundo"@es , "second"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" .
-
-<https://astrea.linkeddata.es/shapes#a631c84768ff3e5f04fb1d6567ba75be>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "in XSD g-YearMonth"@en , "Posición de un instante, expresado utilizando xsd:gYearMonth."@es , "Position of an instant, expressed using xsd:gYearMonth"@en , "en año-mes gregoriano XSD"@es ;
-        sh:datatype     xsd:gYearMonth ;
-        sh:description  "Position of an instant, expressed using xsd:gYearMonth"@en , "Posición de un instante, expresado utilizando xsd:gYearMonth."@es ;
-        sh:name         "en año-mes gregoriano XSD"@es , "in XSD g-YearMonth"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" .
-
-<https://astrea.linkeddata.es/shapes#992bd07b229ef8b467c2a8f390d8629e>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "en fecha XSD"@es , "Posición de un instante, expresado utilizando xsd:date."@es , "Position of an instant, expressed using xsd:date"@en , "in XSD date"@en ;
-        sh:datatype     xsd:date ;
-        sh:description  "Position of an instant, expressed using xsd:date"@en , "Posición de un instante, expresado utilizando xsd:date."@es ;
-        sh:name         "in XSD date"@en , "en fecha XSD"@es ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" .
-
-<https://astrea.linkeddata.es/shapes#9365c5258bc110ce0005787550ae7292>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "0"^^xsd:nonNegativeInteger ;
-        sh:minCount  "0"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :hour .
-
-<https://astrea.linkeddata.es/shapes#2a10690529a4e7e76675218f9029b8c0>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Numeric value of temporal duration"@en , "Valor de una extensión temporal expresada como un número decimal escalado por una unidad de tiempo."@es , "valor numérico de duración temporal"@es , "Value of a temporal extent expressed as a decimal number scaled by a temporal unit"@en ;
-        sh:datatype     xsd:decimal ;
-        sh:description  "Valor de una extensión temporal expresada como un número decimal escalado por una unidad de tiempo."@es , "Value of a temporal extent expressed as a decimal number scaled by a temporal unit"@en ;
-        sh:name         "Numeric value of temporal duration"@en , "valor numérico de duración temporal"@es ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" .
-
-<https://astrea.linkeddata.es/shapes#0d11c827fe0a2d8cfa5362af73bfde8d>
-        rdf:type     sh:PropertyShape ;
-        sh:datatype  xsd:decimal ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :weeks .
-
-<https://astrea.linkeddata.es/shapes#d6efb261b7a1e80079ec25dc50003c3a>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "January" ;
-        sh:name         "January" ;
-        sh:nodeKind     sh:IRI ;
-        sh:property     <https://astrea.linkeddata.es/shapes#e3fac37e893a8f3ab5ed7a1eced402c4> , <https://astrea.linkeddata.es/shapes#4867b27706b1ad61e7b534678f3ddb91> ;
-        sh:targetClass  :January .
-
-<https://astrea.linkeddata.es/shapes#47427181ba878100c93867a4606fafbb>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "0"^^xsd:nonNegativeInteger ;
-        sh:minCount  "0"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :week .
-
-<https://astrea.linkeddata.es/shapes#284467f5e7672589bd978155395c4ebb>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Longitud de, o elemento de la longitud de, una extensión temporal expresada en meses."@es , "months duration"@en , "length of, or element of the length of, a temporal extent expressed in months"@en , "duración en meses"@es ;
-        sh:datatype     xsd:decimal ;
-        sh:description  "length of, or element of the length of, a temporal extent expressed in months"@en , "Longitud de, o elemento de la longitud de, una extensión temporal expresada en meses."@es ;
-        sh:name         "duración en meses"@es , "months duration"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" .
-
-<https://astrea.linkeddata.es/shapes#08d83502c5d6405b7401fbcd276eaae8>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "length of, or element of the length of, a temporal extent expressed in days"@en , "Longitud de, o elemento de la longitud de, una extensión temporal expresada en días."@es , "days duration"@en , "duración en días"@es ;
-        sh:datatype     xsd:decimal ;
-        sh:description  "length of, or element of the length of, a temporal extent expressed in days"@en , "Longitud de, o elemento de la longitud de, una extensión temporal expresada en días."@es ;
-        sh:name         "days duration"@en , "duración en días"@es ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" .
-
-<https://astrea.linkeddata.es/shapes#5c065fa559ca2ddccc8a10f13b91dbaf>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "posición de tiempo"@es , "Position of an instant, expressed as a temporal coordinate or nominal value"@en , "Time position"@en , "Posición de un instante, expresada como una coordenada temporal o un valor nominal."@es ;
-        sh:class        :TimePosition ;
-        sh:description  "Position of an instant, expressed as a temporal coordinate or nominal value"@en , "Posición de un instante, expresada como una coordenada temporal o un valor nominal."@es ;
-        sh:name         "posición de tiempo"@es , "Time position"@en ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#cc887d247a35caf5dd54141bfe1a2a47>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :timeZone .
-
-<https://astrea.linkeddata.es/shapes#582369aed934d049d72a08373376d8c2>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :minute .
-
-<https://astrea.linkeddata.es/shapes#b88fb6d8e93bd7f9ee36f24b5217f709>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "If a proper interval T1 is intervalFinishedBy another proper interval T2, then the beginning of T1 is before the beginning of T2, and the end of T1 is coincident with the end of T2."@en , "Si un intervalo propio T1 está terminado por otro intervalo propio T2, entonces el principio de T1 está antes que el principio de T2, y el final de T1 coincide con el final de T2."@es , "intervalo terminado por"@es , "interval finished by"@en ;
-        sh:class        :ProperInterval ;
-        sh:description  "Si un intervalo propio T1 está terminado por otro intervalo propio T2, entonces el principio de T1 está antes que el principio de T2, y el final de T1 coincide con el final de T2."@es , "If a proper interval T1 is intervalFinishedBy another proper interval T2, then the beginning of T1 is before the beginning of T2, and the end of T1 is coincident with the end of T2."@en ;
-        sh:name         "intervalo terminado por"@es , "interval finished by"@en ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#a4ea75b59108a12eb951878bc6832cff>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :minutes .
-
-<https://astrea.linkeddata.es/shapes#667f96646acc77b4933b121f900b1456>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "interval starts"@en , "intervalo empieza"@es , "If a proper interval T1 is intervalStarts another proper interval T2, then the beginning of T1 is coincident with the beginning of T2, and the end of T1 is before the end of T2."@en , "Si un intervalo propio T1 empieza otro intervalo propio T2, entonces del principio de T1 con el principio de T2, y el final de T1 es anterior al final de T2."@es ;
-        sh:class        :ProperInterval ;
-        sh:description  "If a proper interval T1 is intervalStarts another proper interval T2, then the beginning of T1 is coincident with the beginning of T2, and the end of T1 is before the end of T2."@en , "Si un intervalo propio T1 empieza otro intervalo propio T2, entonces del principio de T1 con el principio de T2, y el final de T1 es anterior al final de T2."@es ;
-        sh:name         "interval starts"@en , "intervalo empieza"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#7704e1a78a2f350b6e341585cadec0e9>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :week .
-
-<https://astrea.linkeddata.es/shapes#0e51b9e815d73496521c00326cef236b>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Day of month - formulated as a text string with a pattern constraint to reproduce the same lexical form as gDay, except that values up to 99 are permitted, in order to support calendars with more than 31 days in a month. \nNote that the value-space is not defined, so a generic OWL2 processor cannot compute ordering relationships of values of this type."@en , "Día generalizado"@es , "Día del mes - formulado como una cadena de texto con una restricción patrón para reproducir la misma forma léxica que gDay, excepto que se permiten valores hasta el 99, con el propósito de proporcionar soporte a calendarios con meses con más de 31 días.\n            Nótese que el espacio de valores no está definido, por tanto, un procesador genérico de OWL2 no puede computar relaciones de orden de valores de este tipo."@es , "Generalized day"@en ;
-        sh:description  "Day of month - formulated as a text string with a pattern constraint to reproduce the same lexical form as gDay, except that values up to 99 are permitted, in order to support calendars with more than 31 days in a month. \nNote that the value-space is not defined, so a generic OWL2 processor cannot compute ordering relationships of values of this type."@en , "Día del mes - formulado como una cadena de texto con una restricción patrón para reproducir la misma forma léxica que gDay, excepto que se permiten valores hasta el 99, con el propósito de proporcionar soporte a calendarios con meses con más de 31 días.\n            Nótese que el espacio de valores no está definido, por tanto, un procesador genérico de OWL2 no puede computar relaciones de orden de valores de este tipo."@es ;
-        sh:name         "Día generalizado"@es , "Generalized day"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "---(0[1-9]|[1-9][0-9])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" .
-
-<https://astrea.linkeddata.es/shapes#0f4ef71546e356675bf78c9870c1e070>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :monthOfYear .
-
-<https://astrea.linkeddata.es/shapes#3b9b3156ac8a7140aa5826d1614b189d>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :second .
-
-<https://astrea.linkeddata.es/shapes#a4d7683be1f58a3f34dc2af71883abf4>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Generalized month"@en , "Month of year - formulated as a text string with a pattern constraint to reproduce the same lexical form as gMonth, except that values up to 20 are permitted, in order to support calendars with more than 12 months in the year. \nNote that the value-space is not defined, so a generic OWL2 processor cannot compute ordering relationships of values of this type."@en , "Mes generalizado"@es , "Mes del año - formulado como una cadena de texto con una restricción patrón para reproducir la misma forma léxica que gMonth, excepto que se permiten valores hasta el 20, con el propósito de proporcionar soporte a calendarios con años con más de 12 meses.\n            Nótese que el espacio de valores no está definido, por tanto, un procesador genérico de OWL2 no puede computar relaciones de orden de valores de este tipo."@es ;
-        sh:description  "Mes del año - formulado como una cadena de texto con una restricción patrón para reproducir la misma forma léxica que gMonth, excepto que se permiten valores hasta el 20, con el propósito de proporcionar soporte a calendarios con años con más de 12 meses.\n            Nótese que el espacio de valores no está definido, por tanto, un procesador genérico de OWL2 no puede computar relaciones de orden de valores de este tipo."@es , "Month of year - formulated as a text string with a pattern constraint to reproduce the same lexical form as gMonth, except that values up to 20 are permitted, in order to support calendars with more than 12 months in the year. \nNote that the value-space is not defined, so a generic OWL2 processor cannot compute ordering relationships of values of this type."@en ;
-        sh:name         "Mes generalizado"@es , "Generalized month"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "--(0[1-9]|1[0-9]|20)(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" .
-
-<https://astrea.linkeddata.es/shapes#5a3ff89436d3af704599082a177ee619>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "year"@en , "Posición de año en un sistema calendario-reloj.\n\nl rango de esta propiedad no está especificado, por tanto, se puede reemplazar por cualquier representación específica de un año de calendario de un calendario cualquiera."@es , "Year position in a calendar-clock system.\n\nThe range of this property is not specified, so can be replaced by any specific representation of a calendar year from any calendar. "@en ;
-        sh:description  "Posición de año en un sistema calendario-reloj.\n\nl rango de esta propiedad no está especificado, por tanto, se puede reemplazar por cualquier representación específica de un año de calendario de un calendario cualquiera."@es , "Year position in a calendar-clock system.\n\nThe range of this property is not specified, so can be replaced by any specific representation of a calendar year from any calendar. "@en ;
-        sh:name         "year"@en ;
-        sh:nodeKind     sh:Literal .
-
-<https://astrea.linkeddata.es/shapes#13a72396636b182446e477a5e336d9b7>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:minCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :hasTRS .
-
-<https://astrea.linkeddata.es/shapes#f2526c45dc254ba90dc191589bdcc37f>
-        rdf:type         sh:PropertyShape ;
-        rdfs:label       "The number of the day within the year"@en , "day of year"@en , "día del año"@es , "El número de día en el año."@es ;
-        sh:datatype      xsd:nonNegativeInteger ;
-        sh:description   "El número de día en el año."@es , "The number of the day within the year"@en ;
-        sh:minInclusive  0 ;
-        sh:name          "día del año"@es , "day of year"@en ;
-        sh:nodeKind      sh:Literal ;
-        sh:pattern       "[\\-+]?[0-9]+" .
-
-<https://astrea.linkeddata.es/shapes#e3fac37e893a8f3ab5ed7a1eced402c4>
-        rdf:type     sh:PropertyShape ;
-        sh:hasValue  "--01" ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :month .
-
-<https://astrea.linkeddata.es/shapes#7c50b4631a0dfeb2244f3207f1c00cb6>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  0 ;
-        sh:minCount  0 ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :months .
-
-<https://astrea.linkeddata.es/shapes#66db84953a4f9884210488c9343494b9>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "in time zone"@en , "en huso horario"@es , "The time zone for clock elements in the temporal position"@en ;
-        sh:class        :TimeZone ;
-        sh:description  "The time zone for clock elements in the temporal position"@en ;
-        sh:name         "in time zone"@en , "en huso horario"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#bca921e601d6ae30d612ecd793bccd83>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "duración en segundos"@es , "seconds duration"@en , "length of, or element of the length of, a temporal extent expressed in seconds"@en , "Longitud de, o elemento de la longitud de, una extensión temporal expresada en segundos."@es ;
-        rdfs:seeAlso    <http://www.bipm.org/en/publications/si-brochure/second.html> ;
-        sh:datatype     xsd:decimal ;
-        sh:description  "length of, or element of the length of, a temporal extent expressed in seconds"@en , "Longitud de, o elemento de la longitud de, una extensión temporal expresada en segundos."@es ;
-        sh:name         "duración en segundos"@es , "seconds duration"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" .
-
-<https://astrea.linkeddata.es/shapes#76946b57aedb2f5af9a9fe6eec79c15a>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :hour .
-
-<https://astrea.linkeddata.es/shapes#ac20b9ffbdb3e2db130f042d629b582d>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :years .
-
-<https://astrea.linkeddata.es/shapes#2d30aef6f4782c405ffc925d881d09d4>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Posición de día en un sistema calendario-reloj."@es , "day"@en , "Day position in a calendar-clock system.\n\nThe range of this property is not specified, so can be replaced by any specific representation of a calendar day from any calendar. "@en , "día"@es ;
-        sh:description  "Posición de día en un sistema calendario-reloj."@es , "Day position in a calendar-clock system.\n\nThe range of this property is not specified, so can be replaced by any specific representation of a calendar day from any calendar. "@en ;
-        sh:name         "day"@en , "día"@es ;
-        sh:nodeKind     sh:Literal .
-
-<https://astrea.linkeddata.es/shapes#ae7e373602e3f5d1f060bf51f0e34319>
-        rdf:type     sh:PropertyShape ;
-        sh:datatype  xsd:decimal ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :days .
-
-<https://astrea.linkeddata.es/shapes#7cc487bd4f98a705f977312f91ec1577>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "intervalo de fecha-hora"@es , "Date-time interval"@en ;
-        sh:description  "DateTimeInterval is a subclass of ProperInterval, defined using the multi-element DateTimeDescription."@en , "'intervalo de fecha-hora' es una subclase de 'intervalo propio', definida utilizando el multi-elemento 'descripción de fecha-hora'."@es ;
-        sh:name         "intervalo de fecha-hora"@es , "Date-time interval"@en ;
-        sh:nodeKind     sh:IRI ;
-        sh:targetClass  :DateTimeInterval .
-
-<https://astrea.linkeddata.es/shapes#036cae4cc17fbcc9a288fd37f47658ff>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  0 ;
-        sh:minCount  0 ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :weeks .
-
-<https://astrea.linkeddata.es/shapes#c9d36d72813a9f9d52557d884a394687>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "If a proper interval T1 is intervalAfter another proper interval T2, then the beginning of T1 is after the end of T2."@en , "interval after"@en , "Si un intervalo propio T1 es posterior a otro intervalo propio T2, entonces el principio de T1 está después que el final de T2." , "intervalo posterior"@es ;
-        sh:class        :ProperInterval ;
-        sh:description  "If a proper interval T1 is intervalAfter another proper interval T2, then the beginning of T1 is after the end of T2."@en , "Si un intervalo propio T1 es posterior a otro intervalo propio T2, entonces el principio de T1 está después que el final de T2." ;
-        sh:name         "intervalo posterior"@es , "interval after"@en ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#62b859ca42e1e23bf6a6564d885ac9ed>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "0"^^xsd:nonNegativeInteger ;
-        sh:minCount  "0"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :year .
-
-<https://astrea.linkeddata.es/shapes#4867b27706b1ad61e7b534678f3ddb91>
-        rdf:type     sh:PropertyShape ;
-        sh:hasValue  :unitMonth ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :unitType .
-
-<https://astrea.linkeddata.es/shapes#900d286b872c375c48e3f0a772ccd9c7>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "length of, or element of the length of, a temporal extent expressed in hours"@en , "Longitud de, o elemento de la longitud de, una extensión temporal expresada en horas."@es , "hours duration"@en , "duración en horas"@es ;
-        sh:datatype     xsd:decimal ;
-        sh:description  "length of, or element of the length of, a temporal extent expressed in hours"@en , "Longitud de, o elemento de la longitud de, una extensión temporal expresada en horas."@es ;
-        sh:name         "hours duration"@en , "duración en horas"@es ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" .
-
-<https://astrea.linkeddata.es/shapes#bbd81b2a447a4f83adb7050dd5ef40f9>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "antes"@es , "Asume una dirección en el tiempo. Si una entidad temporal T1 está antes que otra entidad temporal T2, entonces el final de T1 está antes que el principio de T2. Así, \"antes\" se puede considerar básica para instantes y derivada para intervalos."@es , "Gives directionality to time. If a temporal entity T1 is before another temporal entity T2, then the end of T1 is before the beginning of T2. Thus, \"before\" can be considered to be basic to instants and derived for intervals."@en , "before"@en ;
-        sh:class        :TemporalEntity ;
-        sh:description  "Asume una dirección en el tiempo. Si una entidad temporal T1 está antes que otra entidad temporal T2, entonces el final de T1 está antes que el principio de T2. Así, \"antes\" se puede considerar básica para instantes y derivada para intervalos."@es , "Gives directionality to time. If a temporal entity T1 is before another temporal entity T2, then the end of T1 is before the beginning of T2. Thus, \"before\" can be considered to be basic to instants and derived for intervals."@en ;
-        sh:name         "antes"@es , "before"@en ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#6faafb04de1902ec015ef1a42136f6f4>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "sistema de referencia temporal"@es , "Temporal Reference System"@en ;
-        sh:description  "Un sistema de referencia temporal, tal como un sistema de coordenadas temporales (con un origen, una dirección y una escala), una combinación calendario-reloj, o un sistema ordinal (posiblemente jerárquico).\n        Esta clase comodín representa el conjunto de todos los sistemas de referencia temporal."@es , "A temporal reference system, such as a temporal coordinate system (with an origin, direction, and scale), a calendar-clock combination, or a (possibly hierarchical) ordinal system. \n\nThis is a stub class, representing the set of all temporal reference systems."@en ;
-        sh:name         "sistema de referencia temporal"@es , "Temporal Reference System"@en ;
-        sh:nodeKind     sh:IRI ;
-        sh:targetClass  :TRS .
-
-<https://astrea.linkeddata.es/shapes#a16265634ac997240a1878dfd5416e61>
-        rdf:type         sh:PropertyShape ;
-        rdfs:label       "Posición de minuto en un sistema calendario-reloj."@es , "Minute position in a calendar-clock system."@en , "minute"@en , "minuto"@es ;
-        sh:datatype      xsd:nonNegativeInteger ;
-        sh:description   "Posición de minuto en un sistema calendario-reloj."@es , "Minute position in a calendar-clock system."@en ;
-        sh:minInclusive  0 ;
-        sh:name          "minute"@en , "minuto"@es ;
-        sh:nodeKind      sh:Literal ;
-        sh:pattern       "[\\-+]?[0-9]+" .
-
-<https://astrea.linkeddata.es/shapes#54d31883388335bc143215bf49c965ea>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Position of an instant, expressed using xsd:dateTime"@en , "in XSD Date-Time"@en , "Posición de un instante, expresado utilizando xsd:dateTime."@es , "en fecha-tiempo XSD"@es ;
-        sh:datatype     xsd:dateTime ;
-        sh:description  "Posición de un instante, expresado utilizando xsd:dateTime."@es , "Position of an instant, expressed using xsd:dateTime"@en ;
-        sh:name         "en fecha-tiempo XSD"@es , "in XSD Date-Time"@en ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?|(24:00:00(\\.0+)?))(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" .
-
-<https://astrea.linkeddata.es/shapes#b10af7d7804d7960dee19d3399747b79>
-        rdf:type     sh:PropertyShape ;
-        sh:datatype  xsd:decimal ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :hours .
-
-<https://astrea.linkeddata.es/shapes#bd851bd791b544c23ccdcb0180fd0e3b>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "Time duration"@en , "duración de tiempo" ;
-        sh:description  "Duration of a temporal extent expressed as a number scaled by a temporal unit"@en , "Duración de una extensión temporal expresada como un número escalado por una unidad temporal."@es ;
-        sh:name         "Time duration"@en , "duración de tiempo" ;
-        sh:nodeKind     sh:IRI ;
-        sh:property     <https://astrea.linkeddata.es/shapes#d5721dbd27a11084227205da6fe2fc31> , <https://astrea.linkeddata.es/shapes#26cef1edc28009d541e5d025108c8d51> ;
-        sh:targetClass  :Duration .
-
-<https://astrea.linkeddata.es/shapes#3a395ec3e21b248e5090ab7f46684af0>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "intervalo termina"@es , "Si un intervalo propio T1 termina otro intervalo propio T2, entonces del principio de T1 está después del principio de T2, y el final de T1 coincide con el final de T2."@es , "If a proper interval T1 is intervalFinishes another proper interval T2, then the beginning of T1 is after the beginning of T2, and the end of T1 is coincident with the end of T2."@en , "interval finishes"@en ;
-        sh:class        :ProperInterval ;
-        sh:description  "Si un intervalo propio T1 termina otro intervalo propio T2, entonces del principio de T1 está después del principio de T2, y el final de T1 coincide con el final de T2."@es , "If a proper interval T1 is intervalFinishes another proper interval T2, then the beginning of T1 is after the beginning of T2, and the end of T1 is coincident with the end of T2."@en ;
-        sh:name         "interval finishes"@en , "intervalo termina"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#d20f298b7c2d9c2de13f69561ab29955>
-        rdf:type        sh:NodeShape ;
-        rdfs:label      "unidad de tiempo"@es , "Temporal unit"@en ;
-        sh:description  "A standard duration, which provides a scale factor for a time extent, or the granularity or precision for a time position."@en , "Una duración estándar, que proporciona un factor de escala para una extensión de tiempo, o la granularidad o precisión para una posición de tiempo."@es ;
-        sh:name         "unidad de tiempo"@es , "Temporal unit"@en ;
-        sh:nodeKind     sh:IRI ;
-        sh:targetClass  :TemporalUnit .
-
-<https://astrea.linkeddata.es/shapes#9884dba3e44bfae2b0e2dfc9032c8bfd>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "has duration"@en , "tiene duración"@es , "Duration of a temporal entity, expressed as a scaled value or nominal value"@en , "Duración de una entidad temporal, expresada como un valor escalado o un valor nominal."@es ;
-        sh:class        :Duration ;
-        sh:description  "Duración de una entidad temporal, expresada como un valor escalado o un valor nominal."@es , "Duration of a temporal entity, expressed as a scaled value or nominal value"@en ;
-        sh:name         "has duration"@en , "tiene duración"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#eeaeecda11b1753c4667bfe272b9e38c>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Duration of a temporal entity, expressed using a structured description"@en , "has duration description"@en , "Duración de una entidad temporal, expresada utilizando una descripción estructurada."@es , "tiene descripción de duración"@es ;
-        sh:class        :GeneralDurationDescription ;
-        sh:description  "Duration of a temporal entity, expressed using a structured description"@en , "Duración de una entidad temporal, expresada utilizando una descripción estructurada."@es ;
-        sh:name         "has duration description"@en , "tiene descripción de duración"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#7b8cb5945507570d890e9126919026b1>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "interval contains"@en , "If a proper interval T1 is intervalContains another proper interval T2, then the beginning of T1 is before the beginning of T2, and the end of T1 is after the end of T2."@en , "intervalo contiene"@es , "Si un intervalo propio T1 contiene otro intervalo propio T2, entonces el principio de T1 está antes que el principio de T2, y el final de T1 está después del final de T2."@es ;
-        sh:class        :ProperInterval ;
-        sh:description  "Si un intervalo propio T1 contiene otro intervalo propio T2, entonces el principio de T1 está antes que el principio de T2, y el final de T1 está después del final de T2."@es , "If a proper interval T1 is intervalContains another proper interval T2, then the beginning of T1 is before the beginning of T2, and the end of T1 is after the end of T2."@en ;
-        sh:name         "intervalo contiene"@es , "interval contains"@en ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#8c5d7cf264893582483ca9dc3e2cbf11>
-        rdf:type     sh:PropertyShape ;
-        sh:hasValue  <http://www.opengis.net/def/uom/ISO-8601/0/Gregorian> ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :hasTRS .
-
-<https://astrea.linkeddata.es/shapes#fd7177546235bf137596779a94c31bff>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :days .
-
-<https://astrea.linkeddata.es/shapes#66c34eaa519bc79aa0fa03ddfd08ba63>
+<https://astrea.linkeddata.es/shapes#a9be4a45c3bfde1f4fb9acb6e19d42bf>
         rdf:type     sh:PropertyShape ;
         sh:maxCount  1 ;
-        sh:minCount  1 ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :years .
+        sh:nodeKind  sh:IRIOrLiteral .
 
-<https://astrea.linkeddata.es/shapes#5171c4517b75c621005040671d4646bb>
+<https://astrea.linkeddata.es/shapes#7da37c2a61e840b55aef998a6a184512>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "root resource" , "A top concept or entry point for a void:Dataset that is structured in a tree-like fashion. All resources in a dataset can be reached by following links from its root resources in a small number of steps." ;
+        sh:description  "A top concept or entry point for a void:Dataset that is structured in a tree-like fashion. All resources in a dataset can be reached by following links from its root resources in a small number of steps." ;
+        sh:name         "root resource" ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#79642af4a4c82f9c90611a6dc81fe11d>
+        rdf:type     sh:PropertyShape ;
+        sh:maxCount  1 ;
+        sh:nodeKind  sh:IRIOrLiteral .
+
+<https://astrea.linkeddata.es/shapes#3a190925aa3c02eab10d24a0904d162d>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "distinct objects" , "The total number of distinct objects in a void:Dataset. In other words, the number of distinct resources that occur in the object position of triples in the dataset. Literals are included in this count." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of distinct objects in a void:Dataset. In other words, the number of distinct resources that occur in the object position of triples in the dataset. Literals are included in this count." ;
+        sh:name         "distinct objects" ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         void:distinctObjects ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#ec60de5b1e189251b0dd387e437e60e0>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Target" , "One of the two datasets linked by the Linkset." ;
+        sh:class        void:Dataset ;
+        sh:description  "One of the two datasets linked by the Linkset." ;
+        sh:name         "Target" ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         void:target .
+
+<https://astrea.linkeddata.es/shapes#3fb6ff86370e59e28c2d3851e5b3f004>
         rdf:type        sh:NodeShape ;
-        rdfs:label      "Generalized duration description"@en , "descripción de duración generalizada"@es ;
-        sh:description  "Descripción de extensión temporal estructurada con valores separados para los distintos elementos de un sistema de horario-calendario."@es , "Description of temporal extent structured with separate values for the various elements of a calendar-clock system."@en ;
-        sh:name         "descripción de duración generalizada"@es , "Generalized duration description"@en ;
+        rdfs:label      "dataset" ;
+        sh:description  "A set of RDF triples that are published, maintained or aggregated by a single provider." ;
+        sh:name         "dataset" ;
         sh:nodeKind     sh:IRI ;
-        sh:property     <https://astrea.linkeddata.es/shapes#13a72396636b182446e477a5e336d9b7> , <https://astrea.linkeddata.es/shapes#5ecbef531ad9fc5b270c9cd5dea65d57> , <https://astrea.linkeddata.es/shapes#7b047982e409fa32d8598ac24799a77e> , <https://astrea.linkeddata.es/shapes#ac20b9ffbdb3e2db130f042d629b582d> , <https://astrea.linkeddata.es/shapes#f12701961e8b5abc1439eaac3a39bf20> , <https://astrea.linkeddata.es/shapes#33add06877b24887ea23cde64400f0c4> , <https://astrea.linkeddata.es/shapes#fd7177546235bf137596779a94c31bff> , <https://astrea.linkeddata.es/shapes#a4ea75b59108a12eb951878bc6832cff> ;
-        sh:targetClass  :GeneralDurationDescription .
+        sh:property     <https://astrea.linkeddata.es/shapes#35ff777cf20cb215ff2456f17c79511b> , <https://astrea.linkeddata.es/shapes#d5ab1dae4827a430540dab1c7895ad4a> , <https://astrea.linkeddata.es/shapes#3a190925aa3c02eab10d24a0904d162d> , <https://astrea.linkeddata.es/shapes#19fbad003b5e8b493087c5591eedc821> , <https://astrea.linkeddata.es/shapes#b5b091375b417dae7dbeaa5023094649> , <https://astrea.linkeddata.es/shapes#e8415fe833cb0c38db4dac1110669a2e> , <https://astrea.linkeddata.es/shapes#c4ea875cf2f85292172d0957239421f7> , <https://astrea.linkeddata.es/shapes#52f602fa94ae482025750508e210f4d2> , <https://astrea.linkeddata.es/shapes#08f75ea57df785934b681cf2295e7bcf> , <https://astrea.linkeddata.es/shapes#4c6fe9ae4c281df56a28ac58073d8743> , <https://astrea.linkeddata.es/shapes#9fe4bbe8211c6c07df05b0bd55772fb2> , <https://astrea.linkeddata.es/shapes#9183ec4592778e350755956753ed1a12> , <https://astrea.linkeddata.es/shapes#a7c4971a4e53cdff4a576c265161294f> , <https://astrea.linkeddata.es/shapes#92413d47d30041e0ea7257c800a9e3f5> , <https://astrea.linkeddata.es/shapes#ece05d0ce0885063aca1d6273855e38d> ;
+        sh:targetClass  void:Dataset .
 
-<https://astrea.linkeddata.es/shapes#aac0fca4f06adcfd03a59ed4e468ce5d>
+<https://astrea.linkeddata.es/shapes#a7c4971a4e53cdff4a576c265161294f>
         rdf:type        sh:PropertyShape ;
-        rdfs:label      "Duración de una entidad temporal."@es , "tiene duración temporal"@es , "has temporal duration"@en , "Duration of a temporal entity."@en ;
-        sh:class        :TemporalDuration ;
-        sh:description  "Duración de una entidad temporal."@es , "Duration of a temporal entity."@en ;
-        sh:name         "tiene duración temporal"@es , "has temporal duration"@en ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
+        rdfs:label      "distinct subjects" , "The total number of distinct subjects in a void:Dataset. In other words, the number of distinct resources that occur in the subject position of triples in the dataset." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of distinct subjects in a void:Dataset. In other words, the number of distinct resources that occur in the subject position of triples in the dataset." ;
+        sh:name         "distinct subjects" ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         void:distinctSubjects ;
+        sh:pattern      "[\\-+]?[0-9]+" .
 
-<https://astrea.linkeddata.es/shapes#26cef1edc28009d541e5d025108c8d51>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:minCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :unitType .
-
-<https://astrea.linkeddata.es/shapes#3d3a2a5399ff93e4975e9d961e641968>
-        rdf:type     sh:PropertyShape ;
-        sh:datatype  xsd:decimal ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :minutes .
-
-<https://astrea.linkeddata.es/shapes#1ee7441db13b9bb9f861a412312baac6>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "posición temporal"@es , "Temporal position"@en , "Posición de un instante de tiempo."@es , "Position of a time instant"@en ;
-        sh:class        :TemporalPosition ;
-        sh:description  "Posición de un instante de tiempo."@es , "Position of a time instant"@en ;
-        sh:name         "Temporal position"@en , "posición temporal"@es ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#1277b387effe1ea8b7cf6171d6155a1b>
+<https://astrea.linkeddata.es/shapes#583ee322e80e919bce2a2e4ebed8473b>
         rdf:type        sh:NodeShape ;
-        rdfs:label      "instante de tiempo."@es , "Time instant"@en ;
-        sh:description  "Una entidad temporal con una extensión o duración cero."@es , "A temporal entity with zero extent or duration"@en ;
-        sh:name         "instante de tiempo."@es , "Time instant"@en ;
+        rdfs:label      "linkset" ;
+        sh:description  "A collection of RDF links between two void:Datasets." ;
+        sh:name         "linkset" ;
         sh:nodeKind     sh:IRI ;
-        sh:targetClass  :Instant .
+        sh:property     <https://astrea.linkeddata.es/shapes#e85f83bb513465614a66c4ebacfab9d7> , <https://astrea.linkeddata.es/shapes#ec60de5b1e189251b0dd387e437e60e0> ;
+        sh:targetClass  void:Linkset .
 
-<https://astrea.linkeddata.es/shapes#8a1d05066209db0b729f71ffd7415c55>
+<https://astrea.linkeddata.es/shapes#b5b091375b417dae7dbeaa5023094649>
         rdf:type        sh:PropertyShape ;
-        rdfs:label      "mes del año"@es , "month of year"@en , "El mes del año, cuyo valor es un miembro de la clase 'mes del año'."@es , "The month of the year, whose value is a member of the class time:MonthOfYear"@en ;
-        sh:class        :MonthOfYear ;
-        sh:description  "El mes del año, cuyo valor es un miembro de la clase 'mes del año'."@es , "The month of the year, whose value is a member of the class time:MonthOfYear"@en ;
-        sh:name         "mes del año"@es , "month of year"@en ;
+        rdfs:label      "number of triples" , "The total number of triples contained in a void:Dataset." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of triples contained in a void:Dataset." ;
+        sh:name         "number of triples" ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         void:triples ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#5e0fc15985673a3dd0c18bf29eebc395>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "has an URI look-up endpoint at" , "Defines a simple URI look-up protocol for accessing a dataset." ;
+        sh:description  "Defines a simple URI look-up protocol for accessing a dataset." ;
+        sh:name         "has an URI look-up endpoint at" ;
         sh:nodeKind     sh:BlankNodeOrIRI .
 
-<https://astrea.linkeddata.es/shapes#8b82278178b01acfed6d902b883dd791>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  "0"^^xsd:nonNegativeInteger ;
-        sh:minCount  "0"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :day .
+<https://astrea.linkeddata.es/shapes#9fe4bbe8211c6c07df05b0bd55772fb2>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "URI space" , "A URI that is a common string prefix of all the entity URIs in a void:Dataset." ;
+        sh:datatype     rdfs:Literal ;
+        sh:description  "A URI that is a common string prefix of all the entity URIs in a void:Dataset." ;
+        sh:name         "URI space" ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         void:uriSpace .
 
-<https://astrea.linkeddata.es/shapes#aa6f1abc5252d8da44eb07c6883e5572>
+<https://astrea.linkeddata.es/shapes#5656cf5bd273e6c9a546297659910424>
         rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :month .
+        sh:maxCount  1 ;
+        sh:nodeKind  sh:IRIOrLiteral .
 
-<https://astrea.linkeddata.es/shapes#1326eb12765a627b277eb7d85bd5ae27>
+<https://astrea.linkeddata.es/shapes#507c0da62f3f10af7c4400662c00f172>
         rdf:type     sh:PropertyShape ;
-        sh:maxCount  "1"^^xsd:nonNegativeInteger ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      :day .
+        sh:maxCount  1 ;
+        sh:nodeKind  sh:IRIOrLiteral .
+
+<https://astrea.linkeddata.es/shapes#08f75ea57df785934b681cf2295e7bcf>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "classes" , "The total number of distinct classes in a void:Dataset. In other words, the number of distinct resources occuring as objects of rdf:type triples in the dataset." ;
+        sh:datatype     xsd:integer ;
+        sh:description  "The total number of distinct classes in a void:Dataset. In other words, the number of distinct resources occuring as objects of rdf:type triples in the dataset." ;
+        sh:name         "classes" ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         void:classes ;
+        sh:pattern      "[\\-+]?[0-9]+" .
+
+<https://astrea.linkeddata.es/shapes#64fc923b7f476bd14ede637ad75911a9>
+        rdf:type     sh:PropertyShape ;
+        rdfs:label   "has a SPARQL endpoint at" ;
+        sh:name      "has a SPARQL endpoint at" ;
+        sh:nodeKind  sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#e8415fe833cb0c38db4dac1110669a2e>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "class partition" , "A subset of a void:Dataset that contains only the entities of a certain rdfs:Class." ;
+        sh:class        void:Dataset ;
+        sh:description  "A subset of a void:Dataset that contains only the entities of a certain rdfs:Class." ;
+        sh:name         "class partition" ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         void:classPartition .
+
+<https://astrea.linkeddata.es/shapes#766c8598d27d563e655cd92f85ce6781>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "dataset description" ;
+        sh:description  "A web resource whose foaf:primaryTopic or foaf:topics include void:Datasets." ;
+        sh:name         "dataset description" ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  void:DatasetDescription .

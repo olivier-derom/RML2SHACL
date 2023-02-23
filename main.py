@@ -25,6 +25,8 @@ if __name__ == "__main__":
                         help="RML mapping file to be converted into SHACL shapes.")
     parser.add_argument("--ONTOLOGY_DIR", "-o", type=str,
                         help="Directory with additional ontology files to be converted into SHACL shapes.")
+    parser.add_argument("--SCHEMA_DIR", "-s", type=str,
+                        help="Directory with schema files to be converted into SHACL shapes. (supported schemas: XSD)")
     parser.add_argument("-logLevel", "-l", type=str, default="INFO",
                         help="Logging level of this script")
 
@@ -38,12 +40,19 @@ if __name__ == "__main__":
 
     start = time.time()
     if args.MAPPING_FILE is None:
+        print("please provide an RML mapping")
         exit()
     else:
         if args.ONTOLOGY_DIR is None:
-            RtoS.evaluate_files(args.MAPPING_FILE)
+            if args.SCHEMA_DIR is None:
+                RtoS.evaluate_files(args.MAPPING_FILE, None, None)
+            else:
+                RtoS.evaluate_files(args.MAPPING_FILE, None, args.SCHEMA_DIR)
         else:
-            RtoS.evaluate_files(args.MAPPING_FILE, args.ONTOLOGY_DIR)
+            if args.SCHEMA_DIR is None:
+                RtoS.evaluate_files(args.MAPPING_FILE, args.ONTOLOGY_DIR, None)
+            else:
+                RtoS.evaluate_files(args.MAPPING_FILE, args.ONTOLOGY_DIR, args.SCHEMA_DIR)
 
     end = time.time()
 

@@ -1,238 +1,423 @@
-@prefix void:  <http://rdfs.org/ns/void#> .
-@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix :      <http://www.w3.org/ns/r2rml#> .
+@prefix cc:    <http://creativecommons.org/ns#> .
+@prefix vaem:  <http://www.linkedmodel.org/schema/vaem#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix afn:   <http://jena.apache.org/ARQ/function#> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix r2rml: <http://www.w3.org/ns/r2rml#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
 @prefix vann:  <http://purl.org/vocab/vann/> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
 @prefix dc:    <http://purl.org/dc/elements/1.1/> .
-@prefix sdo:   <https://schema.org/> .
 
-<https://astrea.linkeddata.es/shapes#825f708ca105fc8e70042e98eeb6cf50>
+<https://astrea.linkeddata.es/shapes#bd73d3bfe28cdab7004b0a6b0f33d22e>
+        rdf:type        sh:NodeShape ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#2250a2a84f83c5e0365502becb707bd0> ;
+        sh:targetClass  r2rml:BaseTableOrView .
+
+<https://astrea.linkeddata.es/shapes#9ca9ec2d12960e8d5ce7b9248665e59c>
         rdf:type        sh:PropertyShape ;
-        rdfs:label      "in dataset" , "Points to the void:Dataset that a document is a part of." ;
-        sh:class        void:Dataset ;
-        sh:description  "Points to the void:Dataset that a document is a part of." ;
-        sh:name         "in dataset" ;
+        rdfs:label      "An IRI reference for use as the graph name of all triples generated with the GraphMap."@en ;
+        sh:description  "An IRI reference for use as the graph name of all triples generated with the GraphMap."@en ;
         sh:nodeKind     sh:BlankNodeOrIRI .
 
-<https://astrea.linkeddata.es/shapes#4c6fe9ae4c281df56a28ac58073d8743>
+<https://astrea.linkeddata.es/shapes#ba260498eb5f0ec88a4655e6e9711929>
         rdf:type        sh:PropertyShape ;
-        rdfs:label      "Data Dump" , "An RDF dump, partial or complete, of a void:Dataset." ;
+        rdfs:label      "A SubjectMap element to generate a subject from a logical table row."@en ;
+        sh:class        r2rml:SubjectMap ;
+        sh:description  "A SubjectMap element to generate a subject from a logical table row."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         r2rml:subjectMap .
+
+<https://astrea.linkeddata.es/shapes#2250a2a84f83c5e0365502becb707bd0>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Schema-qualified name of a table or view."@en ;
+        sh:datatype     xsd:string ;
+        sh:description  "Schema-qualified name of a table or view."@en ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         r2rml:tableName ;
+        sh:pattern      ".*" .
+
+<https://astrea.linkeddata.es/shapes#ad808933a855b5113f5840f343578761>
+        rdf:type        sh:NodeShape ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  rdfs:Class .
+
+<https://astrea.linkeddata.es/shapes#0d508a70e01334ca37383ecc4f082f1a>
+        rdf:type        sh:NodeShape ;
+        sh:description  "Represents an object map."@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#1cb2c544a3013158fee3101b9dac17de> , <https://astrea.linkeddata.es/shapes#a185ae7740411e9d6b04f8816c3d5065> , <https://astrea.linkeddata.es/shapes#56a2ce9c4a22c65940591f45a53def3c> , <https://astrea.linkeddata.es/shapes#535d4fd5e0c9ac45272332bdf30ecb60> , <https://astrea.linkeddata.es/shapes#9a881ff153f8d510ddad690631d07e0e> ;
+        sh:targetClass  r2rml:ObjectMap .
+
+<https://astrea.linkeddata.es/shapes#17f19b0f9d98c0f708c17ace64bb73a6>
+        rdf:type                sh:PropertyShape ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 r2rml:objectMap ;
+        sh:qualifiedMaxCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedMinCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  r2rml:ObjectMap ] .
+
+<https://astrea.linkeddata.es/shapes#d159ab1c00dca0519a351ac9ccbb039f>
+        rdf:type        sh:NodeShape ;
+        sh:description  "Represents a graph map."@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  r2rml:GraphMap .
+
+<https://astrea.linkeddata.es/shapes#15c1764305a22e03e3c6025f89f9fdca>
+        rdf:type                sh:PropertyShape ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 r2rml:logicalTable ;
+        sh:qualifiedMaxCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedMinCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  r2rml:LogicalTable ] .
+
+<https://astrea.linkeddata.es/shapes#9a881ff153f8d510ddad690631d07e0e>
+        rdf:type                sh:PropertyShape ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 r2rml:object ;
+        sh:qualifiedMaxCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedMinCount    "0"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  rdfs:Resource ] ;
+        sh:qualifiedValueShape  [ sh:class  rdfs:Resource ] .
+
+<https://astrea.linkeddata.es/shapes#00d17000f034499357abfcbc027a67c0>
+        rdf:type        sh:NodeShape ;
+        sh:description  "Represents a predicate-object map."@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#3ff91bbb359bc60da76886bfd3de3ba3> , <https://astrea.linkeddata.es/shapes#17f19b0f9d98c0f708c17ace64bb73a6> , <https://astrea.linkeddata.es/shapes#f212ed91a9aebba8afea7ae5f696ae22> , <https://astrea.linkeddata.es/shapes#12aaeacf065f89691d8fc2d7e812f81f> ;
+        sh:targetClass  r2rml:PredicateObjectMap .
+
+<https://astrea.linkeddata.es/shapes#8e8e6a51a4bb8341a9dabe7bd3bd8e91>
+        rdf:type        sh:NodeShape ;
+        sh:description  "Denotes a reference to an object map."@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#6c2a0d33ee46b99559d77f1fe771fb22> , <https://astrea.linkeddata.es/shapes#566c769e006ac43e5d47c8288ef6f172> ;
+        sh:targetClass  r2rml:RefObjectMap .
+
+<https://astrea.linkeddata.es/shapes#1eb2785a4a4148d5b79c43d56a68a536>
+        rdf:type        sh:NodeShape ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#53294bb34d6657f72e67bf8308a8433a> ;
+        sh:targetClass  r2rml:R2RMLView .
+
+<https://astrea.linkeddata.es/shapes#46d802660c256f5f1311aa075c2fab21>
+        rdf:type        sh:NodeShape ;
+        rdfs:label      "Term Map"@en ;
+        sh:description  "A function that generates an RDF term from a logical table row."@en ;
+        sh:name         "Term Map"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#c3d4ef29ba790404767b2ebc4cbe54cd> , <https://astrea.linkeddata.es/shapes#31899867eab0a4ac11fcb31465aee7bf> , <https://astrea.linkeddata.es/shapes#a2192c38b18fe2c4f1e1911dedb20424> ;
+        sh:targetClass  r2rml:TermMap .
+
+<https://astrea.linkeddata.es/shapes#1ce7b7d44a62ccd5547840f8407047f4>
+        rdf:type        sh:NodeShape ;
+        sh:description  "Denotes a blank node, used with termType"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  r2rml:BlankNode .
+
+<https://astrea.linkeddata.es/shapes#afd9573ea60fc4e6d378b8a2f6d8d1e7>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Definition of logical table to be mapped."@en ;
+        sh:class        r2rml:LogicalTable ;
+        sh:description  "Definition of logical table to be mapped."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         r2rml:logicalTable .
+
+<https://astrea.linkeddata.es/shapes#31899867eab0a4ac11fcb31465aee7bf>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "An expression that allows, at query processing time, use of index-based access to the the (underlying) relational tables, instead of simply retrieving the table rows first and then applying a filter. This property is useful for retrieval based on conditions involving subject, predicate, or object generated from logical table column(s) and involves some transformation."@en ;
+        sh:datatype     xsd:string ;
+        sh:description  "An expression that allows, at query processing time, use of index-based access to the the (underlying) relational tables, instead of simply retrieving the table rows first and then applying a filter. This property is useful for retrieval based on conditions involving subject, predicate, or object generated from logical table column(s) and involves some transformation."@en ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         r2rml:inverseExpression ;
+        sh:pattern      ".*" .
+
+<https://astrea.linkeddata.es/shapes#644e8894c8ea25e25773752be654f6eb>
+        rdf:type                sh:PropertyShape ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 r2rml:predicate ;
+        sh:qualifiedMaxCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedMinCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  rdf:Property ] .
+
+<https://astrea.linkeddata.es/shapes#eb1aa0e8c3968e6321a712b0909f6df6>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "An IRI reference for use as subject for all the RDF triples generated from a logical table row."@en ;
+        sh:description  "An IRI reference for use as subject for all the RDF triples generated from a logical table row."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .
+
+<https://astrea.linkeddata.es/shapes#80029ef2380309dbd92f6d593c9c1f20>
+        rdf:type        sh:NodeShape ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  rdf:Property .
+
+<https://astrea.linkeddata.es/shapes#aee641af339b0ab6603443f768390276>
+        rdf:type                sh:PropertyShape ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 r2rml:subjectMap ;
+        sh:qualifiedMaxCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedMinCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  r2rml:SubjectMap ] .
+
+<https://astrea.linkeddata.es/shapes#fe54c11478914c20043a3cb18d2f0e2d>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "The subject value generated for a logical table row will be asserted as an instance of this RDFS class."@en ;
+        sh:class        rdfs:Class ;
+        sh:description  "The subject value generated for a logical table row will be asserted as an instance of this RDFS class."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         r2rml:class .
+
+<https://astrea.linkeddata.es/shapes#575f95013886e2f2eba87242aafe9d9e>
+        rdf:type     sh:PropertyShape ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      r2rml:child .
+
+<https://astrea.linkeddata.es/shapes#a86530a943566ddb388b2500c552f01f>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "A PredicateObjectMap element to generate (predicate, object) pair from a logical table row."@en ;
+        sh:class        r2rml:PredicateObjectMap ;
+        sh:description  "A PredicateObjectMap element to generate (predicate, object) pair from a logical table row."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         r2rml:predicateObjectMap .
+
+<https://astrea.linkeddata.es/shapes#a0005af2635b82beb671b40f25536d31>
+        rdf:type        sh:NodeShape ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  rdfs:Resource .
+
+<https://astrea.linkeddata.es/shapes#3ff91bbb359bc60da76886bfd3de3ba3>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "A PredicateMap element to generate the predicate component of the (predicate, object) pair from a logical table row."@en ;
+        sh:class        r2rml:PredicateMap ;
+        sh:description  "A PredicateMap element to generate the predicate component of the (predicate, object) pair from a logical table row."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         r2rml:predicateMap .
+
+<https://astrea.linkeddata.es/shapes#6eaf557d616ade9eefd8e6efb91a31b9>
+        rdf:type        sh:NodeShape ;
+        sh:description  "Represents a predicate map."@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#644e8894c8ea25e25773752be654f6eb> ;
+        sh:targetClass  r2rml:PredicateMap .
+
+<https://astrea.linkeddata.es/shapes#898c8334384d7aae141e24771169c417>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Specifies the object for the generated triple from the logical table row."@en ;
         sh:class        rdfs:Resource ;
-        sh:description  "An RDF dump, partial or complete, of a void:Dataset." ;
-        sh:name         "Data Dump" ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
+        sh:description  "Specifies the object for the generated triple from the logical table row."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         r2rml:object .
 
-<https://astrea.linkeddata.es/shapes#e85f83bb513465614a66c4ebacfab9d7>
-        rdf:type     sh:PropertyShape ;
-        rdfs:label   "a link predicate" ;
-        sh:class     rdf:Property ;
-        sh:name      "a link predicate" ;
-        sh:nodeKind  sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#35ff777cf20cb215ff2456f17c79511b>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "number of properties" , "The total number of distinct properties in a void:Dataset. In other words, the number of distinct resources that occur in the predicate position of triples in the dataset." ;
-        sh:datatype     xsd:integer ;
-        sh:description  "The total number of distinct properties in a void:Dataset. In other words, the number of distinct resources that occur in the predicate position of triples in the dataset." ;
-        sh:name         "number of properties" ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "[\\-+]?[0-9]+" .
-
-<https://astrea.linkeddata.es/shapes#c4ea875cf2f85292172d0957239421f7>
-        rdf:type     sh:PropertyShape ;
-        rdfs:label   "example resource of dataset" ;
-        sh:class     rdfs:Resource ;
-        sh:name      "example resource of dataset" ;
-        sh:nodeKind  sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#9183ec4592778e350755956753ed1a12>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "number of documents" , "The total number of documents, for datasets that are published as a set of individual documents, such as RDF/XML documents or RDFa-annotated web pages. Non-RDF documents, such as web pages in HTML or images, are usually not included in this count. This property is intended for datasets where the total number of triples or entities is hard to determine. void:triples or void:entities should be preferred where practical." ;
-        sh:datatype     xsd:integer ;
-        sh:description  "The total number of documents, for datasets that are published as a set of individual documents, such as RDF/XML documents or RDFa-annotated web pages. Non-RDF documents, such as web pages in HTML or images, are usually not included in this count. This property is intended for datasets where the total number of triples or entities is hard to determine. void:triples or void:entities should be preferred where practical." ;
-        sh:name         "number of documents" ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "[\\-+]?[0-9]+" .
-
-<https://astrea.linkeddata.es/shapes#ece05d0ce0885063aca1d6273855e38d>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "property partition" , "A subset of a void:Dataset that contains only the triples of a certain rdf:Property." ;
-        sh:class        void:Dataset ;
-        sh:description  "A subset of a void:Dataset that contains only the triples of a certain rdf:Property." ;
-        sh:name         "property partition" ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#9bd910c33d9c3c0ba5f9a1f4fd8f6371>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "vocabulary" , "A vocabulary that is used in the dataset." ;
-        sh:description  "A vocabulary that is used in the dataset." ;
-        sh:name         "vocabulary" ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#92413d47d30041e0ea7257c800a9e3f5>
-        rdf:type     sh:PropertyShape ;
-        rdfs:label   "feature" ;
-        sh:class     void:TechnicalFeature ;
-        sh:name      "feature" ;
-        sh:nodeKind  sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#d5ab1dae4827a430540dab1c7895ad4a>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "open search description" , "An OpenSearch description document for a free-text search service over a void:Dataset." ;
-        sh:class        foaf:Document ;
-        sh:description  "An OpenSearch description document for a free-text search service over a void:Dataset." ;
-        sh:name         "open search description" ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#19fbad003b5e8b493087c5591eedc821>
-        rdf:type     sh:PropertyShape ;
-        rdfs:label   "has subset" ;
-        sh:class     void:Dataset ;
-        sh:name      "has subset" ;
-        sh:nodeKind  sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#a7f55a797fa1acb8f0b695a74ec14a48>
+<https://astrea.linkeddata.es/shapes#9c34590c342144d8e5cc463c72efa655>
         rdf:type        sh:NodeShape ;
-        rdfs:label      "technical feature" ;
-        sh:description  "A technical feature of a void:Dataset, such as a supported RDF serialization format." ;
-        sh:name         "technical feature" ;
+        sh:description  "Represents a join condition."@en ;
         sh:nodeKind     sh:IRI ;
-        sh:targetClass  void:TechnicalFeature .
+        sh:property     <https://astrea.linkeddata.es/shapes#6fab47ea04d4f79201dea4cbe5dfb51b> , <https://astrea.linkeddata.es/shapes#1bbbe8145be34707913b558bafe0c1a1> , <https://astrea.linkeddata.es/shapes#575f95013886e2f2eba87242aafe9d9e> , <https://astrea.linkeddata.es/shapes#b1bb931a418f226ea6fdd53dc7d39fef> ;
+        sh:targetClass  r2rml:Join .
 
-<https://astrea.linkeddata.es/shapes#52f602fa94ae482025750508e210f4d2>
+<https://astrea.linkeddata.es/shapes#535d4fd5e0c9ac45272332bdf30ecb60>
+        rdf:type                sh:PropertyShape ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 r2rml:datatype ;
+        sh:qualifiedMinCount    "0"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  rdfs:Datatype ] .
+
+<https://astrea.linkeddata.es/shapes#1cb2c544a3013158fee3101b9dac17de>
         rdf:type        sh:PropertyShape ;
-        rdfs:label      "number of entities" , "The total number of entities that are described in a void:Dataset." ;
-        sh:datatype     xsd:integer ;
-        sh:description  "The total number of entities that are described in a void:Dataset." ;
-        sh:name         "number of entities" ;
+        rdfs:label      "Specifies the datatype of the object component for the generated triple from a logical table row."@en ;
+        sh:class        rdfs:Datatype ;
+        sh:description  "Specifies the datatype of the object component for the generated triple from a logical table row."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         r2rml:datatype .
+
+<https://astrea.linkeddata.es/shapes#6fab47ea04d4f79201dea4cbe5dfb51b>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Names a column in the parent table of a join."@en ;
+        sh:datatype     xsd:string ;
+        sh:description  "Names a column in the parent table of a join."@en ;
         sh:nodeKind     sh:Literal ;
-        sh:pattern      "[\\-+]?[0-9]+" .
+        sh:path         r2rml:parent ;
+        sh:pattern      ".*" .
 
-<https://astrea.linkeddata.es/shapes#a9be4a45c3bfde1f4fb9acb6e19d42bf>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  1 ;
-        sh:nodeKind  sh:IRIOrLiteral .
-
-<https://astrea.linkeddata.es/shapes#7da37c2a61e840b55aef998a6a184512>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "root resource" , "A top concept or entry point for a void:Dataset that is structured in a tree-like fashion. All resources in a dataset can be reached by following links from its root resources in a small number of steps." ;
-        sh:description  "A top concept or entry point for a void:Dataset that is structured in a tree-like fashion. All resources in a dataset can be reached by following links from its root resources in a small number of steps." ;
-        sh:name         "root resource" ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#79642af4a4c82f9c90611a6dc81fe11d>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  1 ;
-        sh:nodeKind  sh:IRIOrLiteral .
-
-<https://astrea.linkeddata.es/shapes#3a190925aa3c02eab10d24a0904d162d>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "distinct objects" , "The total number of distinct objects in a void:Dataset. In other words, the number of distinct resources that occur in the object position of triples in the dataset. Literals are included in this count." ;
-        sh:datatype     xsd:integer ;
-        sh:description  "The total number of distinct objects in a void:Dataset. In other words, the number of distinct resources that occur in the object position of triples in the dataset. Literals are included in this count." ;
-        sh:name         "distinct objects" ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "[\\-+]?[0-9]+" .
-
-<https://astrea.linkeddata.es/shapes#ec60de5b1e189251b0dd387e437e60e0>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "Target" , "One of the two datasets linked by the Linkset." ;
-        sh:class        void:Dataset ;
-        sh:description  "One of the two datasets linked by the Linkset." ;
-        sh:name         "Target" ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#3fb6ff86370e59e28c2d3851e5b3f004>
+<https://astrea.linkeddata.es/shapes#08ed90311cd9932751a68f063b08282b>
         rdf:type        sh:NodeShape ;
-        rdfs:label      "dataset" ;
-        sh:description  "A set of RDF triples that are published, maintained or aggregated by a single provider." ;
-        sh:name         "dataset" ;
+        sh:description  "Represents a subject map."@en ;
         sh:nodeKind     sh:IRI ;
-        sh:targetClass  void:Dataset .
+        sh:property     <https://astrea.linkeddata.es/shapes#fe54c11478914c20043a3cb18d2f0e2d> , <https://astrea.linkeddata.es/shapes#a05a478cd31be0af5f273db266d7a3d8> , <https://astrea.linkeddata.es/shapes#12aaeacf065f89691d8fc2d7e812f81f> ;
+        sh:targetClass  r2rml:SubjectMap .
 
-<https://astrea.linkeddata.es/shapes#a7c4971a4e53cdff4a576c265161294f>
+<https://astrea.linkeddata.es/shapes#5cc6796d279e7f535e39f957351c102d>
         rdf:type        sh:PropertyShape ;
-        rdfs:label      "distinct subjects" , "The total number of distinct subjects in a void:Dataset. In other words, the number of distinct resources that occur in the subject position of triples in the dataset." ;
-        sh:datatype     xsd:integer ;
-        sh:description  "The total number of distinct subjects in a void:Dataset. In other words, the number of distinct resources that occur in the subject position of triples in the dataset." ;
-        sh:name         "distinct subjects" ;
-        sh:nodeKind     sh:Literal ;
-        sh:pattern      "[\\-+]?[0-9]+" .
+        rdfs:label      "Specifies the predicate for the generated triple from the logical table row."@en ;
+        sh:class        rdf:Property ;
+        sh:description  "Specifies the predicate for the generated triple from the logical table row."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         r2rml:predicate .
 
-<https://astrea.linkeddata.es/shapes#583ee322e80e919bce2a2e4ebed8473b>
+<https://astrea.linkeddata.es/shapes#a05a478cd31be0af5f273db266d7a3d8>
+        rdf:type                sh:PropertyShape ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 r2rml:class ;
+        sh:qualifiedMinCount    "0"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  rdfs:Class ] .
+
+<https://astrea.linkeddata.es/shapes#1466697bc27e9dce25d3fef579dd00db>
         rdf:type        sh:NodeShape ;
-        rdfs:label      "linkset" ;
-        sh:description  "A collection of RDF links between two void:Datasets." ;
-        sh:name         "linkset" ;
+        sh:description  "Denotes a Literal, used with termType."@en ;
         sh:nodeKind     sh:IRI ;
-        sh:targetClass  void:Linkset .
+        sh:targetClass  r2rml:Literal .
 
-<https://astrea.linkeddata.es/shapes#b5b091375b417dae7dbeaa5023094649>
+<https://astrea.linkeddata.es/shapes#53294bb34d6657f72e67bf8308a8433a>
         rdf:type        sh:PropertyShape ;
-        rdfs:label      "number of triples" , "The total number of triples contained in a void:Dataset." ;
-        sh:datatype     xsd:integer ;
-        sh:description  "The total number of triples contained in a void:Dataset." ;
-        sh:name         "number of triples" ;
+        rdfs:label      "A valid SQL query."@en ;
+        sh:datatype     xsd:string ;
+        sh:description  "A valid SQL query."@en ;
         sh:nodeKind     sh:Literal ;
-        sh:pattern      "[\\-+]?[0-9]+" .
+        sh:path         r2rml:sqlQuery ;
+        sh:pattern      ".*" .
 
-<https://astrea.linkeddata.es/shapes#5e0fc15985673a3dd0c18bf29eebc395>
+<https://astrea.linkeddata.es/shapes#a185ae7740411e9d6b04f8816c3d5065>
         rdf:type        sh:PropertyShape ;
-        rdfs:label      "has an URI look-up endpoint at" , "Defines a simple URI look-up protocol for accessing a dataset." ;
-        sh:description  "Defines a simple URI look-up protocol for accessing a dataset." ;
-        sh:name         "has an URI look-up endpoint at" ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#9fe4bbe8211c6c07df05b0bd55772fb2>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "URI space" , "A URI that is a common string prefix of all the entity URIs in a void:Dataset." ;
-        sh:datatype     rdfs:Literal ;
-        sh:description  "A URI that is a common string prefix of all the entity URIs in a void:Dataset." ;
-        sh:name         "URI space" ;
-        sh:nodeKind     sh:Literal .
-
-<https://astrea.linkeddata.es/shapes#5656cf5bd273e6c9a546297659910424>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  1 ;
-        sh:nodeKind  sh:IRIOrLiteral .
-
-<https://astrea.linkeddata.es/shapes#64fc923b7f476bd14ede637ad75911a9>
-        rdf:type     sh:PropertyShape ;
-        rdfs:label   "has a SPARQL endpoint at" ;
-        sh:name      "has a SPARQL endpoint at" ;
-        sh:nodeKind  sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#507c0da62f3f10af7c4400662c00f172>
-        rdf:type     sh:PropertyShape ;
-        sh:maxCount  1 ;
-        sh:nodeKind  sh:IRIOrLiteral .
-
-<https://astrea.linkeddata.es/shapes#08f75ea57df785934b681cf2295e7bcf>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "classes" , "The total number of distinct classes in a void:Dataset. In other words, the number of distinct resources occuring as objects of rdf:type triples in the dataset." ;
-        sh:datatype     xsd:integer ;
-        sh:description  "The total number of distinct classes in a void:Dataset. In other words, the number of distinct resources occuring as objects of rdf:type triples in the dataset." ;
-        sh:name         "classes" ;
+        rdfs:label      "Specified the language for the object component for the generated triple from a logical table row."@en ;
+        sh:datatype     xsd:string ;
+        sh:description  "Specified the language for the object component for the generated triple from a logical table row."@en ;
         sh:nodeKind     sh:Literal ;
-        sh:pattern      "[\\-+]?[0-9]+" .
+        sh:path         r2rml:language ;
+        sh:pattern      ".*" .
 
-<https://astrea.linkeddata.es/shapes#e8415fe833cb0c38db4dac1110669a2e>
-        rdf:type        sh:PropertyShape ;
-        rdfs:label      "class partition" , "A subset of a void:Dataset that contains only the entities of a certain rdfs:Class." ;
-        sh:class        void:Dataset ;
-        sh:description  "A subset of a void:Dataset that contains only the entities of a certain rdfs:Class." ;
-        sh:name         "class partition" ;
-        sh:nodeKind     sh:BlankNodeOrIRI .
-
-<https://astrea.linkeddata.es/shapes#766c8598d27d563e655cd92f85ce6781>
+<https://astrea.linkeddata.es/shapes#e70106cf33c4a8d55f7031297af9b64e>
         rdf:type        sh:NodeShape ;
-        rdfs:label      "dataset description" ;
-        sh:description  "A web resource whose foaf:primaryTopic or foaf:topics include void:Datasets." ;
-        sh:name         "dataset description" ;
         sh:nodeKind     sh:IRI ;
-        sh:targetClass  void:DatasetDescription .
+        sh:targetClass  rdfs:Datatype .
+
+<https://astrea.linkeddata.es/shapes#c3d4ef29ba790404767b2ebc4cbe54cd>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "A template (format string) to specify how to generate a value for a subject, predicate, or object, using one or more columns from a logical table row."@en ;
+        sh:datatype     xsd:string ;
+        sh:description  "A template (format string) to specify how to generate a value for a subject, predicate, or object, using one or more columns from a logical table row."@en ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         r2rml:template ;
+        sh:pattern      ".*" .
+
+<https://astrea.linkeddata.es/shapes#a2192c38b18fe2c4f1e1911dedb20424>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Name of a column in the logical table. When generating RDF triples from a logical table row, value from the specified column is used as the subject, predicate, or object (based upon the specific domain)."@en ;
+        sh:datatype     xsd:string ;
+        sh:description  "Name of a column in the logical table. When generating RDF triples from a logical table row, value from the specified column is used as the subject, predicate, or object (based upon the specific domain)."@en ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         r2rml:column ;
+        sh:pattern      ".*" .
+
+<https://astrea.linkeddata.es/shapes#56a2ce9c4a22c65940591f45a53def3c>
+        rdf:type     sh:PropertyShape ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      r2rml:language .
+
+<https://astrea.linkeddata.es/shapes#f1c308317c2342382926e1e3718f6c86>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "A string indicating whether subject or object generated using the value from column name specified for rr:column should be an IRI reference, blank node, or a literal."@en ;
+        sh:description  "A string indicating whether subject or object generated using the value from column name specified for rr:column should be an IRI reference, blank node, or a literal."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:or           ( [ sh:class  r2rml:BlankNode ;
+                            sh:path   r2rml:termType
+                          ]
+                          [ sh:class  r2rml:IRI ;
+                            sh:path   r2rml:termType
+                          ]
+                          [ sh:class  r2rml:Literal ;
+                            sh:path   r2rml:termType
+                          ]
+                        ) .
+
+<https://astrea.linkeddata.es/shapes#9a44003acd1391ad05c5ba1e6a808d46>
+        rdf:type     sh:PropertyShape ;
+        sh:nodeKind  sh:BlankNodeOrIRI ;
+        sh:path      r2rml:constant .
+
+<https://astrea.linkeddata.es/shapes#5d77c2d6f4cbfad14c5060b46b615941>
+        rdf:type        sh:NodeShape ;
+        sh:description  "Denotes an IRI, used with termpType."@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  r2rml:IRI .
+
+<https://astrea.linkeddata.es/shapes#4e101574ad08e27d0bcc5194fcbc94c2>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "An ObjectMap element to generate the object component of the (predicate, object) pair from a logical table row."@en ;
+        sh:description  "An ObjectMap element to generate the object component of the (predicate, object) pair from a logical table row."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:or           ( [ sh:class  r2rml:ObjectMap ;
+                            sh:path   r2rml:objectMap
+                          ]
+                          [ sh:class  r2rml:RefObjectMap ;
+                            sh:path   r2rml:objectMap
+                          ]
+                        ) .
+
+<https://astrea.linkeddata.es/shapes#566c769e006ac43e5d47c8288ef6f172>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Specifies the TriplesMap element corresponding to the parent logical table of the foreign key constraint."@en ;
+        sh:class        r2rml:TriplesMap ;
+        sh:description  "Specifies the TriplesMap element corresponding to the parent logical table of the foreign key constraint."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         r2rml:parentTriplesMap .
+
+<https://astrea.linkeddata.es/shapes#1bbbe8145be34707913b558bafe0c1a1>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Names a column in the child table of a join."@en ;
+        sh:datatype     xsd:string ;
+        sh:description  "Names a column in the child table of a join."@en ;
+        sh:nodeKind     sh:Literal ;
+        sh:path         r2rml:child ;
+        sh:pattern      ".*" .
+
+<https://astrea.linkeddata.es/shapes#b1bb931a418f226ea6fdd53dc7d39fef>
+        rdf:type     sh:PropertyShape ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      r2rml:parent .
+
+<https://astrea.linkeddata.es/shapes#174e12d6d5a64684e51c866ce2b0fe3b>
+        rdf:type        sh:NodeShape ;
+        sh:description  "Represents a logical table."@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  r2rml:LogicalTable .
+
+<https://astrea.linkeddata.es/shapes#7ef4042515927a988db64446a15dfed8>
+        rdf:type        sh:NodeShape ;
+        sh:description  "Represents a triples map."@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#afd9573ea60fc4e6d378b8a2f6d8d1e7> , <https://astrea.linkeddata.es/shapes#ba260498eb5f0ec88a4655e6e9711929> , <https://astrea.linkeddata.es/shapes#aee641af339b0ab6603443f768390276> , <https://astrea.linkeddata.es/shapes#15c1764305a22e03e3c6025f89f9fdca> ;
+        sh:targetClass  r2rml:TriplesMap .
+
+<https://astrea.linkeddata.es/shapes#6c2a0d33ee46b99559d77f1fe771fb22>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Specifies the join condition for joining the child logical table with the parent logical table of the foreign key constraint."@en ;
+        sh:class        r2rml:Join ;
+        sh:description  "Specifies the join condition for joining the child logical table with the parent logical table of the foreign key constraint."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         r2rml:joinCondition .
+
+<https://astrea.linkeddata.es/shapes#12aaeacf065f89691d8fc2d7e812f81f>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "Specifies a GraphMap. When used with a SubjectMap element, all the RDF triples generated from a logical row will be stored in the specified named graph. Otherwise, the RDF triple generated using the (predicate, object) pair will be stored in the specified named graph."@en ;
+        sh:class        r2rml:GraphMap ;
+        sh:description  "Specifies a GraphMap. When used with a SubjectMap element, all the RDF triples generated from a logical row will be stored in the specified named graph. Otherwise, the RDF triple generated using the (predicate, object) pair will be stored in the specified named graph."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI ;
+        sh:path         r2rml:graphMap .
+
+<https://astrea.linkeddata.es/shapes#f212ed91a9aebba8afea7ae5f696ae22>
+        rdf:type                sh:PropertyShape ;
+        sh:nodeKind             sh:IRIOrLiteral ;
+        sh:path                 r2rml:predicateMap ;
+        sh:qualifiedMinCount    "1"^^xsd:nonNegativeInteger ;
+        sh:qualifiedValueShape  [ sh:class  r2rml:PredicateMap ] .
+
+<https://astrea.linkeddata.es/shapes#c6c2ad415a7c0d6dd9c7084144c1cb6e>
+        rdf:type        sh:PropertyShape ;
+        rdfs:label      "An identifier for a SQL version."@en ;
+        sh:description  "An identifier for a SQL version."@en ;
+        sh:nodeKind     sh:BlankNodeOrIRI .

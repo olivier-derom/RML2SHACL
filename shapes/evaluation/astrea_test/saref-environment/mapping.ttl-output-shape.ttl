@@ -8,40 +8,23 @@
     sh:targetClass ns:Actuator .
 
 <http://mapping.example.com/map_triplesMapColor_000/shape> a sh:NodeShape ;
-    sh:disjoint ns:CommunicationInterface,
-        ns:CommunicationProtocol,
-        ns:CompassDirection,
-        ns:DigitalRepresentation,
-        ns:Geometry,
-        ns:Light ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:Color .
 
 <http://mapping.example.com/map_triplesMapCommunicationinterface_000/shape> a sh:NodeShape ;
-    sh:disjoint ns:CommunicationProtocol,
-        ns:CompassDirection,
-        ns:DigitalRepresentation,
-        ns:Geometry,
-        ns:Light ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:CommunicationInterface .
 
 <http://mapping.example.com/map_triplesMapCommunicationprotocol_000/shape> a sh:NodeShape ;
-    sh:disjoint ns:CompassDirection,
-        ns:DigitalRepresentation,
-        ns:Geometry,
-        ns:Light ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:CommunicationProtocol .
 
 <http://mapping.example.com/map_triplesMapCompassdirection_000/shape> a sh:NodeShape ;
-    sh:disjoint ns:DigitalRepresentation,
-        ns:Geometry,
-        ns:Light ;
     sh:nodeKind sh:IRI ;
+    sh:not <https://astrea.linkeddata.es/shapes#6b422bce3fb8d5d2c898c62b7e509535> ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:CompassDirection .
 
@@ -51,8 +34,6 @@
     sh:targetClass ns:Device .
 
 <http://mapping.example.com/map_triplesMapDigitalrepresentation_000/shape> a sh:NodeShape ;
-    sh:disjoint ns:Geometry,
-        ns:Light ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:DigitalRepresentation .
@@ -68,7 +49,6 @@
     sh:targetClass ns:FrequencyUnit .
 
 <http://mapping.example.com/map_triplesMapGeometry_000/shape> a sh:NodeShape ;
-    sh:disjoint ns:Light ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:Geometry .
@@ -104,16 +84,8 @@
     sh:targetClass ns:LightProperty .
 
 <http://mapping.example.com/map_triplesMapMeasurement_000/shape> a sh:NodeShape ;
-    sh:disjoint <https://saref.etsi.org/core/Property>,
-        <https://saref.etsi.org/core/Service>,
-        <https://saref.etsi.org/core/UnitOfMeasure>,
-        ns:CommunicationInterface,
-        ns:CommunicationProtocol,
-        ns:CompassDirection,
-        ns:DigitalRepresentation,
-        ns:Geometry,
-        ns:Light ;
     sh:nodeKind sh:IRI ;
+    sh:not <https://astrea.linkeddata.es/shapes#5c4d33be837d075d74476b40b9096f4e> ;
     sh:pattern "http://.*" ;
     sh:targetClass <https://saref.etsi.org/core/Measurement> .
 
@@ -139,13 +111,6 @@
     sh:targetClass <http://www.w3.org/2003/01/geo/wgs84_pos#Point> .
 
 <http://mapping.example.com/map_triplesMapProperty_000/shape> a sh:NodeShape ;
-    sh:disjoint <https://saref.etsi.org/core/Service>,
-        <https://saref.etsi.org/core/UnitOfMeasure>,
-        ns:CommunicationInterface,
-        ns:CommunicationProtocol,
-        ns:CompassDirection,
-        ns:Geometry,
-        ns:Light ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass <https://saref.etsi.org/core/Property> .
@@ -158,27 +123,22 @@
 
 <http://mapping.example.com/map_triplesMapService_000/shape> a sh:NodeShape ;
     rdfs:isDefinedBy <https://saref.etsi.org/core/> ;
-    sh:disjoint <https://saref.etsi.org/core/UnitOfMeasure>,
-        ns:Color,
-        ns:CommunicationProtocol,
-        ns:CompassDirection,
-        ns:Geometry,
-        ns:Light ;
     sh:nodeKind sh:IRI ;
+    sh:not <https://astrea.linkeddata.es/shapes#42dff92b4355016199856f7a85f969c0>,
+        <https://astrea.linkeddata.es/shapes#74510a690077c7eb9a37a86054369523>,
+        <https://astrea.linkeddata.es/shapes#79af7877b189248715b4523da7e84683>,
+        <https://astrea.linkeddata.es/shapes#7faec1931651a5f474db9331c68d48ee>,
+        <https://astrea.linkeddata.es/shapes#aa942717528b33727aa4ad14cf4313df>,
+        <https://astrea.linkeddata.es/shapes#dbff887514a7ac769bf4c90b1d5d60ef> ;
     sh:pattern "http://.*" ;
     sh:targetClass <https://saref.etsi.org/core/Service> .
 
 <http://mapping.example.com/map_triplesMapSpatialthing_000/shape> a sh:NodeShape ;
     rdfs:isDefinedBy <http://www.w3.org/2003/01/geo/wgs84_pos#> ;
-    sh:disjoint <https://saref.etsi.org/core/Measurement>,
-        <https://saref.etsi.org/core/Service>,
-        ns:Color,
-        ns:CommunicationInterface,
-        ns:CommunicationProtocol,
-        ns:CompassDirection,
-        ns:DigitalRepresentation,
-        ns:Geometry ;
     sh:nodeKind sh:IRI ;
+    sh:not <https://astrea.linkeddata.es/shapes#09e0e026047d6dae5373158edf4a0103>,
+        <https://astrea.linkeddata.es/shapes#ef221800e02003a8aaab7079a833400d>,
+        <https://astrea.linkeddata.es/shapes#ff6cf94d2010ad4e7991ab14b6e8cec8> ;
     sh:pattern "http://.*" ;
     sh:targetClass <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
 
@@ -200,14 +160,40 @@
 
 <http://mapping.example.com/map_triplesMapUnitofmeasure_000/shape> a sh:NodeShape ;
     rdfs:isDefinedBy <https://saref.etsi.org/core/> ;
-    sh:disjoint ns:Color,
-        ns:CommunicationInterface,
-        ns:CommunicationProtocol,
-        ns:CompassDirection,
-        ns:DigitalRepresentation,
-        ns:Geometry,
-        ns:Light ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass <https://saref.etsi.org/core/UnitOfMeasure> .
+
+<https://astrea.linkeddata.es/shapes#09e0e026047d6dae5373158edf4a0103> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/core/Measurement> .
+
+<https://astrea.linkeddata.es/shapes#42dff92b4355016199856f7a85f969c0> a sh:PropertyShape ;
+    sh:class ns:Color .
+
+<https://astrea.linkeddata.es/shapes#5c4d33be837d075d74476b40b9096f4e> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/core/Property> .
+
+<https://astrea.linkeddata.es/shapes#6b422bce3fb8d5d2c898c62b7e509535> a sh:PropertyShape ;
+    sh:class ns:DigitalRepresentation .
+
+<https://astrea.linkeddata.es/shapes#74510a690077c7eb9a37a86054369523> a sh:PropertyShape ;
+    sh:class ns:CompassDirection .
+
+<https://astrea.linkeddata.es/shapes#79af7877b189248715b4523da7e84683> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/core/UnitOfMeasure> .
+
+<https://astrea.linkeddata.es/shapes#7faec1931651a5f474db9331c68d48ee> a sh:PropertyShape ;
+    sh:class ns:Geometry .
+
+<https://astrea.linkeddata.es/shapes#aa942717528b33727aa4ad14cf4313df> a sh:PropertyShape ;
+    sh:class ns:CommunicationProtocol .
+
+<https://astrea.linkeddata.es/shapes#dbff887514a7ac769bf4c90b1d5d60ef> a sh:PropertyShape ;
+    sh:class ns:Light .
+
+<https://astrea.linkeddata.es/shapes#ef221800e02003a8aaab7079a833400d> a sh:PropertyShape ;
+    sh:class ns:CommunicationInterface .
+
+<https://astrea.linkeddata.es/shapes#ff6cf94d2010ad4e7991ab14b6e8cec8> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/core/Service> .
 

@@ -30,6 +30,8 @@ optional arguments:
                         Possible values: INFO,DEBUG,WARN
   -o ONTOLOGY_DIR       Directory/path with additional ontology files to be converted 
                         into SHACL shapes.
+  -o SCHEMA_DIR         Directory/path with schemas to be converted into SHACL shapes.
+                        Currently supports: XSD
   
 
 ```
@@ -43,9 +45,9 @@ To generate your shacl shapes:
 python3 main.py MAPPING_FILE
 ```
 
-An example with an additional folder containing ontology-files:
+An example with an additional folder containing ontology-files as well as a folder containing schemas:
 ```bash 
-python3 main.py -o ONTOLOGIES_PATH MAPPING_FILE
+python3 main.py -o ONTOLOGIES_PATH -s SCHEMA_PATH MAPPING_FILE
 ```
 
 For more clarity to locate the generated shape file, please 

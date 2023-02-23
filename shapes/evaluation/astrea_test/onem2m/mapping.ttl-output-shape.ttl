@@ -1,4 +1,5 @@
 @prefix ns: <https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rdfs1: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -16,7 +17,8 @@
 <http://mapping.example.com/map_triplesMapInterworkeddevice_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapAreanetwork_000/shape> ;
+    sh:property [ sh:class ns:AreaNetwork ;
+            sh:node <http://mapping.example.com/map_triplesMapAreanetwork_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:isPartOf ] ;
     sh:targetClass ns:InterworkedDevice .
@@ -47,46 +49,55 @@
     sh:targetClass ns:SET_OutputDataPoint .
 
 <http://mapping.example.com/map_triplesMapSimpletypevariable_000/shape> a sh:NodeShape ;
-    sh:disjoint ns:StructuredTypeVariable ;
     sh:nodeKind sh:IRI ;
+    sh:not <https://astrea.linkeddata.es/shapes#fd43ba25520c07b7c3a347681420390d> ;
     sh:pattern "http://.*" ;
     sh:property [ sh:nodeKind sh:Literal ;
-            sh:path ns:hasDataRestriction_pattern ],
+            sh:path ns:oneM2MAttribute ],
+        [ sh:datatype xsd:integer ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasDataRestriction_length ;
+            sh:pattern "[\\-+]?[0-9]+" ],
+        [ sh:datatype xsd:integer ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasDataRestriction_minLength ;
+            sh:pattern "[\\-+]?[0-9]+" ],
+        [ sh:datatype xsd:integer ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasDataRestriction_maxLength ;
+            sh:pattern "[\\-+]?[0-9]+" ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasValue ],
+        [ sh:class rdfs1:PlainLiteral ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasDataRestriction ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasDataRestriction_minInclusive ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasDataRestriction_maxExclusive ],
         [ sh:nodeKind sh:Literal ;
             sh:path ns:hasDataRestriction_maxInclusive ],
         [ sh:nodeKind sh:Literal ;
-            sh:path ns:hasDataRestriction_maxExclusive ],
+            sh:path ns:hasDataRestriction_minExclusive ],
         [ sh:datatype xsd:boolean ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:isDataList ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:oneM2MAttribute ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:hasDataRestriction_minInclusive ],
-        [ sh:datatype xsd:integer ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasDataRestriction_length ],
+            sh:path ns:isDataList ;
+            sh:pattern "true|false|0|1" ],
         [ sh:nodeKind sh:Literal ;
             sh:path ns:hasDataType ],
         [ sh:nodeKind sh:Literal ;
-            sh:path ns:hasDataRestriction_minExclusive ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:hasValue ],
-        [ sh:datatype xsd:integer ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasDataRestriction_minLength ],
-        [ sh:datatype xsd:integer ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasDataRestriction_maxLength ],
-        [ sh:class rdfs1:PlainLiteral ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasDataRestriction ] ;
+            sh:path ns:hasDataRestriction_pattern ;
+            sh:pattern ".*" ] ;
     sh:targetClass ns:SimpleTypeVariable .
 
 <http://mapping.example.com/map_triplesMapStructuredtypevariable_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapVariable_000/shape> ;
+    sh:property [ sh:class ns:Variable ;
+            sh:node <http://mapping.example.com/map_triplesMapVariable_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:hasSubStructure ;
             sh:qualifiedMinCount "1"^^xsd:nonNegativeInteger ;
@@ -96,12 +107,15 @@
 <http://mapping.example.com/map_triplesMapAreanetwork_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:nodeKind sh:Literal ;
+    sh:property [ sh:datatype rdfs1:PlainLiteral ;
+            sh:nodeKind sh:Literal ;
             sh:path ns:netTechnologyProfile ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:netTechnologyCommunicationProtocol ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:netTechnologyPhysicalStandard ] ;
+        [ sh:datatype rdfs1:PlainLiteral ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:netTechnologyPhysicalStandard ],
+        [ sh:datatype rdfs1:PlainLiteral ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:netTechnologyCommunicationProtocol ] ;
     sh:targetClass ns:AreaNetwork .
 
 <http://mapping.example.com/map_triplesMapCommand_000/shape> a sh:NodeShape ;
@@ -112,18 +126,20 @@
 <http://mapping.example.com/map_triplesMapDevice_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapFunction_000/shape> ;
+    sh:property [ sh:class ns:Function ;
+            sh:node <http://mapping.example.com/map_triplesMapFunction_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:hasFunction ;
             sh:qualifiedMinCount "1"^^xsd:nonNegativeInteger ;
             sh:qualifiedValueShape [ sh:class ns:Function ] ],
-        [ sh:node <http://mapping.example.com/map_triplesMapDevice_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:consistsOf ],
         [ sh:class ns:Service ;
             sh:node <http://mapping.example.com/map_triplesMapService_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:hasService ] ;
+            sh:path ns:hasService ],
+        [ sh:class ns:Device ;
+            sh:node <http://mapping.example.com/map_triplesMapDevice_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:consistsOf ] ;
     sh:targetClass ns:Device .
 
 <http://mapping.example.com/map_triplesMapInputdatapoint_000/shape> a sh:NodeShape ;
@@ -144,15 +160,17 @@
 <http://mapping.example.com/map_triplesMapThing_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:nodeKind sh:Literal ;
-            sh:path ns:hasThingAnnotation ],
-        [ sh:node <http://mapping.example.com/map_triplesMapThing_000/shape> ;
+    sh:property [ sh:class ns:Thing ;
+            sh:node <http://mapping.example.com/map_triplesMapThing_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:hasThingRelation ],
         [ sh:class ns:ThingProperty ;
             sh:node <http://mapping.example.com/map_triplesMapThingproperty_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:hasThingProperty ] ;
+            sh:path ns:hasThingProperty ],
+        [ sh:datatype rdfs:Literal ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasThingAnnotation ] ;
     sh:targetClass ns:Thing .
 
 <http://mapping.example.com/map_triplesMapThingproperty_000/shape> a sh:NodeShape ;
@@ -163,10 +181,14 @@
 <http://mapping.example.com/map_triplesMapVariableconversion_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapVariable_000/shape> ;
+    sh:property [ sh:class ns:Variable ;
+            sh:node <http://mapping.example.com/map_triplesMapVariable_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:convertsTo ] ;
     sh:targetClass ns:VariableConversion .
+
+<https://astrea.linkeddata.es/shapes#fd43ba25520c07b7c3a347681420390d> a sh:PropertyShape ;
+    sh:class ns:StructuredTypeVariable .
 
 <http://mapping.example.com/map_triplesMapAspect_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
@@ -176,10 +198,12 @@
 <http://mapping.example.com/map_triplesMapFunction_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapAspect_000/shape> ;
+    sh:property [ sh:class ns:Aspect ;
+            sh:node <http://mapping.example.com/map_triplesMapAspect_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:refersTo ],
-        [ sh:node <http://mapping.example.com/map_triplesMapCommand_000/shape> ;
+        [ sh:class ns:Command ;
+            sh:node <http://mapping.example.com/map_triplesMapCommand_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:hasCommand ] ;
     sh:targetClass ns:Function .
@@ -187,9 +211,18 @@
 <http://mapping.example.com/map_triplesMapService_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapFunction_000/shape> ;
+    sh:property [ sh:class ns:Function ;
+            sh:node <http://mapping.example.com/map_triplesMapFunction_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:exposesFunction ],
+        [ sh:class ns:Service ;
+            sh:node <http://mapping.example.com/map_triplesMapService_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:hasSubService ],
+        [ sh:class ns:InputDataPoint ;
+            sh:node <http://mapping.example.com/map_triplesMapInputdatapoint_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:hasInputDataPoint ],
         [ sh:class ns:OutputDataPoint ;
             sh:node <http://mapping.example.com/map_triplesMapOutputdatapoint_000/shape> ;
             sh:nodeKind sh:IRI ;
@@ -197,24 +230,19 @@
         [ sh:class ns:Operation ;
             sh:node <http://mapping.example.com/map_triplesMapOperation_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:hasOperation ],
-        [ sh:node <http://mapping.example.com/map_triplesMapService_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:hasSubService ],
-        [ sh:class ns:InputDataPoint ;
-            sh:node <http://mapping.example.com/map_triplesMapInputdatapoint_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:hasInputDataPoint ] ;
+            sh:path ns:hasOperation ] ;
     sh:targetClass ns:Service .
 
 <http://mapping.example.com/map_triplesMapVariable_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapAspect_000/shape> ;
+    sh:property [ sh:class ns:VariableConversion ;
+            sh:node <http://mapping.example.com/map_triplesMapVariableconversion_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:describes ],
-        [ sh:node <http://mapping.example.com/map_triplesMapVariableconversion_000/shape> ;
+            sh:path ns:hasConversion ],
+        [ sh:class ns:Aspect ;
+            sh:node <http://mapping.example.com/map_triplesMapAspect_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:hasConversion ] ;
+            sh:path ns:describes ] ;
     sh:targetClass ns:Variable .
 
