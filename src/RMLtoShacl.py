@@ -49,7 +49,7 @@ class RMLtoSHACL:
         self.XSDtree = None
         self.XSD_elements = dict()
         self.named_types = None
-        self.XSDtargetNamespace = ""
+        self.XSDtargetNamespace = "http://example.com"
 
     def helpAddTriples(self, shacl_graph: Graph, sub: Identifier,
                        pred: Identifier, obj_arr: Optional[List[Identifier]]) -> None:
@@ -449,7 +449,6 @@ class RMLtoSHACL:
                 self.onto_stats_add(p)
                 g.add((s, p, o))
 
-    # temp functions
     def onto_stats_add(self, p):
         if p in self.onto_stats:
             self.onto_stats[p] += 1
@@ -462,6 +461,7 @@ class RMLtoSHACL:
             return None
         if element.find('xs:complexType', self.XSDNS2) is not None:
             element_dict = {'ElementName': element_name, 'ElementType': 'Element'}
+            element_dict.update(element.attrib)
             if parent_name:
                 element_dict['parent'] = parent_name
             for child_element in element.findall('xs:complexType/xs:sequence/xs:element', self.XSDNS2):
@@ -492,6 +492,7 @@ class RMLtoSHACL:
                             element_dict[f"{child_element_info}"] += [element_name]
         elif element.find('xs:simpleType', self.XSDNS2) is not None:
             element_dict = {'ElementName': element_name, 'ElementType': 'Element'}
+            element_dict.update(element.attrib)
             if parent_name:
                 element_dict['parent'] = parent_name
             simple_type = element.find('xs:simpleType', self.XSDNS2)
@@ -591,7 +592,7 @@ class RMLtoSHACL:
             node for (_, node) in ET.iterparse(xsd_file, events=['start-ns'])
         ])
 
-        self.XSDtargetNamespace = ""
+        self.XSDtargetNamespace = "http://example.com"  #set a default value for if no targetnamespace is defined
         for key in root.attrib:
             if key == "targetNamespace":
                 self.XSDtargetNamespace = root.attrib[key]
@@ -608,7 +609,6 @@ class RMLtoSHACL:
 
     def import_xsd_constraints(self, xsd_file):
         self.get_xsd_info(xsd_file)
-
         for XSDelem in self.XSD_elements:
             for XSDconst in self.XSD_elements[XSDelem]:
                 for namespace in self.XSDNS2:
