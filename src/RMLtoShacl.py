@@ -668,11 +668,6 @@ class RMLtoSHACL:
                         if "maxLength" in self.XSD_elements[str(item)]:
                             if not (property_BNodes_dict[item], self.shaclNS.maxLength, None) in self.SHACL.graph:
                                 self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.maxLength, rdflib.Literal(int(self.XSD_elements[str(item)]["maxLength"]))))
-                        if "totalDigits" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.minCount, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.minCount, rdflib.Literal(int(self.XSD_elements[str(item)]["totalDigits"]))))
-                            if not (property_BNodes_dict[item], self.shaclNS.maxCount, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.maxCount, rdflib.Literal(int(self.XSD_elements[str(item)]["totalDigits"]))))
                         if "fractionDigits" in self.XSD_elements[str(item)]:
                             if not (property_BNodes_dict[item], self.shaclNS.datatype, None) in self.SHACL.graph:
                                 self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.datatype, self.XSDNS.decimal))
