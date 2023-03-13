@@ -684,6 +684,12 @@ class RMLtoSHACL:
                         if "maxInclusive" in self.XSD_elements[str(item)]:
                             if not (property_BNodes_dict[item], self.shaclNS.maxInclusive, None) in self.SHACL.graph:
                                 self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.maxInclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["maxInclusive"]))))
+                        if "minExclusive" in self.XSD_elements[str(item)]:
+                            if not (property_BNodes_dict[item], self.shaclNS.minInclusive, None) in self.SHACL.graph:
+                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.minExclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["minExclusive"]))))
+                        if "maxExclusive" in self.XSD_elements[str(item)]:
+                            if not (property_BNodes_dict[item], self.shaclNS.maxInclusive, None) in self.SHACL.graph:
+                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.maxExclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["maxExclusive"]))))
                         if "pattern" in self.XSD_elements[str(item)]:
                             xsd_pattern = self.XSD_elements[str(item)]["pattern"]
                             shacl_pattern = "^"
