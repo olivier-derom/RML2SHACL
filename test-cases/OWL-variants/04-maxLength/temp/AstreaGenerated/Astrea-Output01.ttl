@@ -8,11 +8,14 @@
 
 <https://astrea.linkeddata.es/shapes#3999b7f562f9057f9d73c09c080ea87b>
         rdf:type      sh:PropertyShape ;
-        sh:maxLength  "15"^^xsd:int ;
+        sh:datatype   xsd:string ;
+        sh:maxLength  15 ;
         sh:nodeKind   sh:Literal ;
-        sh:path       ex:firstname .
+        sh:path       ex:firstname ;
+        sh:pattern    ".*" .
 
 <https://astrea.linkeddata.es/shapes#1ceede38c00ff83c6a0b5938e32618f4>
         rdf:type        sh:NodeShape ;
         sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#3999b7f562f9057f9d73c09c080ea87b> ;
         sh:targetClass  ex:person .

@@ -11,5 +11,6 @@ ex:person rdf:type owl:Class .
 ex:firstname 	rdf:type owl:DatatypeProperty ;
                 rdfs:domain ex:person ;
                 owl:withRestrictions (
-					[ xsd:minLength "2"^^xsd:int ]
-				) .
+					[ xsd:minLength 2 ]
+				) ;
+				rdfs:range xsd:string .

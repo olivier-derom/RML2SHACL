@@ -164,6 +164,11 @@
         sh:qualifiedMinCount    "1"^^xsd:nonNegativeInteger ;
         sh:qualifiedValueShape  [ sh:class  r2rml:SubjectMap ] .
 
+<https://astrea.linkeddata.es/shapes#575f95013886e2f2eba87242aafe9d9e>
+        rdf:type     sh:PropertyShape ;
+        sh:nodeKind  sh:IRIOrLiteral ;
+        sh:path      r2rml:child .
+
 <https://astrea.linkeddata.es/shapes#fe54c11478914c20043a3cb18d2f0e2d>
         rdf:type        sh:PropertyShape ;
         rdfs:label      "The subject value generated for a logical table row will be asserted as an instance of this RDFS class."@en ;
@@ -171,11 +176,6 @@
         sh:description  "The subject value generated for a logical table row will be asserted as an instance of this RDFS class."@en ;
         sh:nodeKind     sh:BlankNodeOrIRI ;
         sh:path         r2rml:class .
-
-<https://astrea.linkeddata.es/shapes#575f95013886e2f2eba87242aafe9d9e>
-        rdf:type     sh:PropertyShape ;
-        sh:nodeKind  sh:IRIOrLiteral ;
-        sh:path      r2rml:child .
 
 <https://astrea.linkeddata.es/shapes#a86530a943566ddb388b2500c552f01f>
         rdf:type        sh:PropertyShape ;

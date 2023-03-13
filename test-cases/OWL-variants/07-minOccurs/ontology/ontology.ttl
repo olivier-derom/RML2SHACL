@@ -10,4 +10,5 @@ ex:person rdf:type owl:Class .
 
 ex:phone 	rdf:type owl:DatatypeProperty ;
 			rdfs:domain ex:person ;
-			owl:minCardinality "0"^^xsd:nonNegativeInteger .
+			owl:minCardinality 0;
+            rdfs:range xsd:string .

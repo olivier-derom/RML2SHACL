@@ -6,7 +6,8 @@
 
 ex:age a owl:DatatypeProperty ;
     rdfs:domain ex:person ;
-    owl:withRestrictions ( [ xsd:minInclusive "0"^^xsd:int ] ) .
+    rdfs:range xsd:int ;
+    owl:withRestrictions ( [ xsd:minInclusive 0 ] ) .
 
 ex:ontology a owl:Ontology .
 
