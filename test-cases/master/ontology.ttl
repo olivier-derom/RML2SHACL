@@ -1,0 +1,68 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://example.com/> .
+
+<http://example.com/ontology> rdf:type owl:Ontology .
+
+# Define the class Person
+ex:Person rdf:type owl:Class .
+
+# Define the properties of Person
+ex:hasFirstName rdf:type owl:ObjectProperty ;
+                rdfs:domain ex:Person ;
+                rdfs:range xsd:string .
+
+ex:hasDateOfBirth rdf:type owl:DatatypeProperty ;
+                   rdfs:domain ex:Person ;
+                   rdfs:range xsd:date .
+
+ex:hasAge rdf:type owl:DatatypeProperty ;
+           rdfs:domain ex:Person ;
+           rdfs:range xsd:integer ;
+           owl:equivalentProperty ex:hasExactAge .
+
+ex:hasExactAge rdf:type owl:DatatypeProperty ;
+                rdfs:domain ex:Person ;
+                rdfs:range xsd:integer ;
+                owl:inverseOf ex:hasAge .
+
+ex:hasPhone rdf:type owl:DatatypeProperty ;
+             rdfs:domain ex:Person ;
+             rdfs:range xsd:string .
+
+ex:belongsToTeam rdf:type owl:DatatypeProperty ;
+                  rdfs:domain ex:Person ;
+                  rdfs:range xsd:string .
+
+# Define the individuals and their properties
+ex:001 rdf:type ex:Person ;
+       ex:hasFirstName "John" ;
+       ex:hasDateOfBirth "1990-01-01"^^xsd:date ;
+       ex:hasAge "30"^^xsd:integer ;
+       ex:hasPhone "123-45-67-89" ;
+       ex:belongsToTeam "Red" .
+
+# Define restrictions based on the XSD
+ex:hasFirstName owl:minLength "2"^^xsd:nonNegativeInteger ;
+                owl:maxLength "15"^^xsd:nonNegativeInteger ;
+                owl:onDatatype xsd:string ;
+                owl:withRestrictions (
+                    [xsd:pattern "[a-zA-Z]+"] # Only letters allowed
+                ) .
+
+ex:hasAge owl:minInclusive "0"^^xsd:integer ;
+           owl:maxInclusive "120"^^xsd:integer ;
+           owl:onDatatype xsd:integer .
+
+ex:hasPhone owl:onDatatype xsd:string ;
+             owl:withRestrictions (
+                 [xsd:pattern "\\d{3}-\\d{2}-\\d{2}-\\d{2}"] # Phone number format
+             ) .
+
+ex:belongsToTeam owl:onDatatype xsd:string ;
+                 owl:withRestrictions (
+                     [xsd:enumeration "Blue"]
+                     [xsd:enumeration "Red"]
+                 ) .

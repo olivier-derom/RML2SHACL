@@ -5,3 +5,4 @@ __pycache__
 .localtesting/*
 ./WIP/*
 /testing_WIP/*
+./temp/*

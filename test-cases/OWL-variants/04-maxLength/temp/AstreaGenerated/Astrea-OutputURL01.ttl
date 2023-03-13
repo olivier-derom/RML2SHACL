@@ -1,0 +1,284 @@
+@prefix grddl: <http://www.w3.org/2003/g/data-view#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix afn:   <http://jena.apache.org/ARQ/function#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+
+<https://astrea.linkeddata.es/shapes#17b4b079e0bbed1b382b55d62fcf73ea>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "AllDifferent" ;
+        sh:description    "The class of collections of pairwise different individuals." ;
+        sh:name           "AllDifferent" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:AllDifferent .
+
+<https://astrea.linkeddata.es/shapes#48ed32b24428f0acf2d714cba289a35b>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "IrreflexiveProperty" ;
+        sh:description    "The class of irreflexive properties." ;
+        sh:name           "IrreflexiveProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:IrreflexiveProperty .
+
+<https://astrea.linkeddata.es/shapes#e784fc38a226153e4c40081d76e63345>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "DeprecatedClass" ;
+        sh:description    "The class of deprecated classes." ;
+        sh:name           "DeprecatedClass" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:DeprecatedClass .
+
+<https://astrea.linkeddata.es/shapes#4e85196ed3bddbd1fd5ea130daf448db>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "OntologyProperty" ;
+        sh:description    "The class of ontology properties." ;
+        sh:name           "OntologyProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:OntologyProperty .
+
+<https://astrea.linkeddata.es/shapes#b0b0a23780724e75631dd288816ba40d>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "Nothing" ;
+        sh:description    "This is the empty class." ;
+        sh:name           "Nothing" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:Nothing .
+
+<https://astrea.linkeddata.es/shapes#89df24df35df8882616112ab6a78df83>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "Ontology" ;
+        sh:description    "The class of ontologies." ;
+        sh:name           "Ontology" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:Ontology .
+
+<https://astrea.linkeddata.es/shapes#1ca745c9f8b3c9769bd64e64b306d5f2>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "Axiom" ;
+        sh:description    "The class of annotated axioms for which the RDF serialization consists of an annotated subject, predicate and object." ;
+        sh:name           "Axiom" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:Axiom .
+
+<https://astrea.linkeddata.es/shapes#9ed2fb7d3b7985c23e788a879a4db9d7>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "Restriction" ;
+        sh:description    "The class of property restrictions." ;
+        sh:name           "Restriction" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:Restriction .
+
+<https://astrea.linkeddata.es/shapes#c012b7ec75460f4fa419f022afb089eb>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "InverseFunctionalProperty" ;
+        sh:description    "The class of inverse-functional properties." ;
+        sh:name           "InverseFunctionalProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:InverseFunctionalProperty .
+
+<https://astrea.linkeddata.es/shapes#5f9a3c4a1822965124a1535d6433dbe3>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "DataRange" ;
+        sh:description    "The class of OWL data ranges, which are special kinds of datatypes. Note: The use of the IRI owl:DataRange has been deprecated as of OWL 2. The IRI rdfs:Datatype SHOULD be used instead." ;
+        sh:name           "DataRange" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:DataRange .
+
+<https://astrea.linkeddata.es/shapes#6be100d081a438502013ba4e5fef3db7>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "Class" ;
+        sh:description    "The class of OWL classes." ;
+        sh:name           "Class" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:Class .
+
+<https://astrea.linkeddata.es/shapes#74e425b281aba40c64591e447b4752d2>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "AllDisjointProperties" ;
+        sh:description    "The class of collections of pairwise disjoint properties." ;
+        sh:name           "AllDisjointProperties" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:AllDisjointProperties .
+
+<https://astrea.linkeddata.es/shapes#55439a5d90df8ccad534dc9af3fc4aee>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "AnnotationProperty" ;
+        sh:description    "The class of annotation properties." ;
+        sh:name           "AnnotationProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:AnnotationProperty .
+
+<https://astrea.linkeddata.es/shapes#2e3d9909eded822ed6efb70e75a1cddd>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "ReflexiveProperty" ;
+        sh:description    "The class of reflexive properties." ;
+        sh:name           "ReflexiveProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:ReflexiveProperty .
+
+<https://astrea.linkeddata.es/shapes#f02d9eba6439d3843194fd02bb1c21a6>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "SymmetricProperty" ;
+        sh:description    "The class of symmetric properties." ;
+        sh:name           "SymmetricProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:SymmetricProperty .
+
+<https://astrea.linkeddata.es/shapes#09925f9dd96d052646fc8124bb4c126c>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "bottomDataProperty" , "The data property that does not relate any individual to any data value." ;
+        sh:datatype       rdfs:Literal ;
+        sh:description    "The data property that does not relate any individual to any data value." ;
+        sh:name           "bottomDataProperty" ;
+        sh:nodeKind       sh:Literal ;
+        sh:path           owl:bottomDataProperty .
+
+<https://astrea.linkeddata.es/shapes#de22708738fa2273403a7eca2dc46c20>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "NegativePropertyAssertion" ;
+        sh:description    "The class of negative property assertions." ;
+        sh:name           "NegativePropertyAssertion" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:NegativePropertyAssertion .
+
+<https://astrea.linkeddata.es/shapes#71e902c1a9999b0a675d0a10a9c52181>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "bottomObjectProperty" , "The object property that does not relate any two individuals." ;
+        sh:class          owl:Thing ;
+        sh:description    "The object property that does not relate any two individuals." ;
+        sh:name           "bottomObjectProperty" ;
+        sh:nodeKind       sh:BlankNodeOrIRI ;
+        sh:path           owl:bottomObjectProperty .
+
+<https://astrea.linkeddata.es/shapes#5d8d7b2654e10107de09e7646407caa5>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "Thing" ;
+        sh:description    "The class of OWL individuals." ;
+        sh:name           "Thing" ;
+        sh:nodeKind       sh:IRI ;
+        sh:property       <https://astrea.linkeddata.es/shapes#71e902c1a9999b0a675d0a10a9c52181> , <https://astrea.linkeddata.es/shapes#b5709a9c2eaa7805ed5f7e56a090d496> , <https://astrea.linkeddata.es/shapes#a846a4145de1fc510b3a990fb8182f4f> , <https://astrea.linkeddata.es/shapes#09925f9dd96d052646fc8124bb4c126c> ;
+        sh:targetClass    owl:Thing .
+
+<https://astrea.linkeddata.es/shapes#9e6d9eddc19d6811c0a885c828aceb63>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "DatatypeProperty" ;
+        sh:description    "The class of data properties." ;
+        sh:name           "DatatypeProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:DatatypeProperty .
+
+<https://astrea.linkeddata.es/shapes#717e1ac2dd567ad1567ba802cdb67e2a>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "FunctionalProperty" ;
+        sh:description    "The class of functional properties." ;
+        sh:name           "FunctionalProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:FunctionalProperty .
+
+<https://astrea.linkeddata.es/shapes#4c7e1d98f9b557728d77169534cf9251>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "AllDisjointClasses" ;
+        sh:description    "The class of collections of pairwise disjoint classes." ;
+        sh:name           "AllDisjointClasses" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:AllDisjointClasses .
+
+<https://astrea.linkeddata.es/shapes#472ee8b9e92f00863f1b11929967a7fa>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "ObjectProperty" ;
+        sh:description    "The class of object properties." ;
+        sh:name           "ObjectProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:ObjectProperty .
+
+<https://astrea.linkeddata.es/shapes#4a79de8578f265800bc4c1e3b090e76c>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "AsymmetricProperty" ;
+        sh:description    "The class of asymmetric properties." ;
+        sh:name           "AsymmetricProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:AsymmetricProperty .
+
+<https://astrea.linkeddata.es/shapes#3b46ba4c0adbd1be8c4d87b306c67b25>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "TransitiveProperty" ;
+        sh:description    "The class of transitive properties." ;
+        sh:name           "TransitiveProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:TransitiveProperty .
+
+<https://astrea.linkeddata.es/shapes#2f714e173ad6b295c885d010aae2dadc>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "Annotation" ;
+        sh:description    "The class of annotated annotations for which the RDF serialization consists of an annotated subject, predicate and object." ;
+        sh:name           "Annotation" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:Annotation .
+
+<https://astrea.linkeddata.es/shapes#a846a4145de1fc510b3a990fb8182f4f>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "topObjectProperty" , "The object property that relates every two individuals." ;
+        sh:class          owl:Thing ;
+        sh:description    "The object property that relates every two individuals." ;
+        sh:name           "topObjectProperty" ;
+        sh:nodeKind       sh:BlankNodeOrIRI ;
+        sh:path           owl:topObjectProperty .
+
+<https://astrea.linkeddata.es/shapes#bb70ba4af84eba77e76cf90374b5e869>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "NamedIndividual" ;
+        sh:description    "The class of named individuals." ;
+        sh:name           "NamedIndividual" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:NamedIndividual .
+
+<https://astrea.linkeddata.es/shapes#b5709a9c2eaa7805ed5f7e56a090d496>
+        rdf:type          sh:PropertyShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "topDataProperty" , "The data property that relates every individual to every data value." ;
+        sh:datatype       rdfs:Literal ;
+        sh:description    "The data property that relates every individual to every data value." ;
+        sh:name           "topDataProperty" ;
+        sh:nodeKind       sh:Literal ;
+        sh:path           owl:topDataProperty .
+
+<https://astrea.linkeddata.es/shapes#277ca96529dce43c47445842a6e0bcb6>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  owl: ;
+        rdfs:label        "DeprecatedProperty" ;
+        sh:description    "The class of deprecated properties." ;
+        sh:name           "DeprecatedProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    owl:DeprecatedProperty .

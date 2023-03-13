@@ -1,0 +1,6 @@
+<http://example.com/person/001> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.com/person>.
+<http://example.com/person/001> <http://example.com/team> "Red".
+<http://example.com/person/001> <http://example.com/firstname> "John".
+<http://example.com/person/001> <http://example.com/Dob> "1990-01-01"^^<http://www.w3.org/2001/XMLSchema#date>.
+<http://example.com/person/001> <http://example.com/age> "30"^^<http://www.w3.org/2001/XMLSchema#integer>.
+<http://example.com/person/001> <http://example.com/phone> "123-45-67-89".

@@ -1,0 +1,11 @@
+@prefix ex: <http://example.com/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+<http://example.com/PersonMapping/shape> a sh:NodeShape ;
+    sh:class ex:person ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://example.com/person/.*" ;
+    sh:property [ sh:nodeKind sh:Literal ;
+            sh:path ex:age ] ;
+    sh:targetClass ex:person .
+

@@ -1,0 +1,103 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+ex:PersonMapping
+	a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "D:\data\school\2de master\masterproef\Python\RML2SHACL\test-cases\master\data.xml";
+        rml:referenceFormulation ql:XPath;
+        rml:iterator "/person"
+    ];
+    rr:subjectMap [
+        rr:template "http://example.com/person/{@id}";
+        rr:class ex:Person
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:hasFirstName;
+        rr:objectMap [
+            rml:reference "firstname";
+            rr:datatype xsd:string;
+            ql:maxLength "15";
+            ql:minLength "2";
+            ql:pattern "[a-zA-Z]+";
+        ]
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:hasDateOfBirth;
+        rr:objectMap [
+            rml:reference "Dob";
+            rr:datatype xsd:date;
+        ]
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:hasAge;
+        rr:objectMap [
+            rml:reference "age";
+            rr:datatype xsd:integer;
+            ql:maxInclusive "120";
+            ql:minInclusive "0";
+        ]
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:hasPhone;
+        rr:objectMap [
+            rml:reference "phone";
+            rr:datatype xsd:string;
+            ql:pattern "\\d{3}-\\d{2}-\\d{2}-\\d{2}";
+        ]
+    ];
+    rr:predicateObjectMap [        
+		rr:predicate ex:hasTeam;        
+		rr:objectMap [            
+			rml:reference "team";            
+			rr:datatype xsd:string;        	
+		]
+    ];
+    rr:predicateObjectMap [        
+		rr:predicate ex:hasAddress;        
+		rr:objectMap [            
+			rr:parentTriplesMap ex:AddressMapping;        
+		]
+    ].
+
+ex:AddressMapping
+    rr:logicalTable [        
+		rr:tableName "person"    
+	];
+    rr:subjectMap [        
+		rr:template "http://example.com/person/{@id}/address/{street}_{city}_{state}_{zip}";
+        rr:class ex:Address    
+	];
+    rr:predicateObjectMap [        
+		rr:predicate ex:hasStreet;        
+		rr:objectMap [            
+			rml:reference "street";            
+			rr:datatype xsd:string;        
+		]
+    ];
+    rr:predicateObjectMap [        
+		rr:predicate ex:hasCity;        
+		rr:objectMap [            
+			rml:reference "city";            
+			rr:datatype xsd:string;        
+		]
+    ];
+    rr:predicateObjectMap [        
+		rr:predicate ex:hasState;        
+		rr:objectMap [            
+			rml:reference "state";            
+			rr:datatype xsd:string;        
+		]
+    ];
+    rr:predicateObjectMap [        
+		rr:predicate ex:hasZipCode;        
+		rr:objectMap [            
+			rml:reference "zip";            
+			rr:datatype xsd:string;        
+		]
+    ].
