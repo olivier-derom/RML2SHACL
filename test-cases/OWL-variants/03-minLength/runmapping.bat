@@ -1,1 +1,0 @@
-java -jar "D:\data\school\2de master\masterproef\Python\RML2SHACL\test-cases\mapper.jar" -m "mapping.ttl" -o "RDF.ttl"

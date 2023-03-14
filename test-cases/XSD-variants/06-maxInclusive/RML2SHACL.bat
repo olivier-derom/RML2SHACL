@@ -1,1 +1,0 @@
-python "..\..\..\main.py" "mapping.ttl" -s "schema"

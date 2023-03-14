@@ -6,110 +6,56 @@
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix dc:    <http://purl.org/dc/elements/1.1/> .
 
-<https://astrea.linkeddata.es/shapes#a525dbe6650ac77e22017f40f2e3bad8>
-        rdf:type          sh:PropertyShape ;
-        rdfs:isDefinedBy  rdf: ;
-        rdfs:label        "XMLLiteral" , "The datatype of XML literal values." ;
-        sh:description    "The datatype of XML literal values." ;
-        sh:name           "XMLLiteral" ;
-        sh:nodeKind       sh:Literal .
-
-<https://astrea.linkeddata.es/shapes#954c4977bb7f807aff75c0541673b595>
+<https://astrea.linkeddata.es/shapes#e70106cf33c4a8d55f7031297af9b64e>
         rdf:type          sh:NodeShape ;
-        rdfs:isDefinedBy  rdf: ;
-        rdfs:label        "Bag" ;
-        sh:description    "The class of unordered containers." ;
-        sh:name           "Bag" ;
+        rdfs:isDefinedBy  rdfs: ;
+        rdfs:label        "Datatype" ;
+        sh:description    "The class of RDF datatypes." ;
+        sh:name           "Datatype" ;
         sh:nodeKind       sh:IRI ;
-        sh:targetClass    rdf:Bag .
+        sh:targetClass    rdfs:Datatype .
 
-<https://astrea.linkeddata.es/shapes#01c4ae2a568c4225e48b740397251010>
-        rdf:type          sh:PropertyShape ;
-        rdfs:isDefinedBy  rdf: ;
-        rdfs:label        "HTML" , "The datatype of RDF literals storing fragments of HTML content" ;
-        rdfs:seeAlso      <http://www.w3.org/TR/rdf11-concepts/#section-html> ;
-        sh:description    "The datatype of RDF literals storing fragments of HTML content" ;
-        sh:name           "HTML" ;
-        sh:nodeKind       sh:Literal .
-
-<https://astrea.linkeddata.es/shapes#f416497fc4b6c2747a33f2fd19f79c0d>
+<https://astrea.linkeddata.es/shapes#f5b57e73404f923ba9cf7d7388444c2d>
         rdf:type          sh:NodeShape ;
-        rdfs:isDefinedBy  rdf: ;
-        rdfs:label        "Alt" ;
-        sh:description    "The class of containers of alternatives." ;
-        sh:name           "Alt" ;
+        rdfs:isDefinedBy  rdfs: ;
+        rdfs:label        "Container" ;
+        sh:description    "The class of RDF containers." ;
+        sh:name           "Container" ;
         sh:nodeKind       sh:IRI ;
-        sh:targetClass    rdf:Alt .
+        sh:targetClass    rdfs:Container .
 
-<https://astrea.linkeddata.es/shapes#afab0dea22c979f0d9750a1dbe4e2e42>
+<https://astrea.linkeddata.es/shapes#ad808933a855b5113f5840f343578761>
         rdf:type          sh:NodeShape ;
-        rdfs:isDefinedBy  rdf: ;
-        rdfs:label        "Statement" ;
-        sh:description    "The class of RDF statements." ;
-        sh:name           "Statement" ;
+        rdfs:isDefinedBy  rdfs: ;
+        rdfs:label        "Class" ;
+        sh:description    "The class of classes." ;
+        sh:name           "Class" ;
         sh:nodeKind       sh:IRI ;
-        sh:targetClass    rdf:Statement .
+        sh:targetClass    rdfs:Class .
 
-<https://astrea.linkeddata.es/shapes#a6d3569ccab7c4e529029cfd05fde0c5>
-        rdf:type          sh:PropertyShape ;
-        rdfs:isDefinedBy  rdf: ;
-        rdfs:label        "JSON" , "The datatype of RDF literals storing JSON content." ;
-        rdfs:seeAlso      <https://www.w3.org/TR/json-ld11/#the-rdf-json-datatype> ;
-        sh:description    "The datatype of RDF literals storing JSON content." ;
-        sh:name           "JSON" ;
-        sh:nodeKind       sh:Literal .
-
-<https://astrea.linkeddata.es/shapes#137c9dc1cb27b23cc8bf8dc3ec2d5c89>
+<https://astrea.linkeddata.es/shapes#d67b17ee1af7afd39f143c8cc0114007>
         rdf:type          sh:NodeShape ;
-        rdfs:isDefinedBy  rdf: ;
-        rdfs:label        "List" ;
-        sh:description    "The class of RDF Lists." ;
-        sh:name           "List" ;
+        rdfs:isDefinedBy  rdfs: ;
+        rdfs:label        "ContainerMembershipProperty" ;
+        sh:description    "The class of container membership properties, rdf:_1, rdf:_2, ...,\n                    all of which are sub-properties of 'member'." ;
+        sh:name           "ContainerMembershipProperty" ;
         sh:nodeKind       sh:IRI ;
-        sh:targetClass    rdf:List .
+        sh:targetClass    rdfs:ContainerMembershipProperty .
 
-<https://astrea.linkeddata.es/shapes#a9e5931ef05b5e1796936a087c5b52ca>
-        rdf:type          sh:PropertyShape ;
-        rdfs:isDefinedBy  rdf: ;
-        rdfs:label        "PlainLiteral" , "The class of plain (i.e. untyped) literal values, as used in RIF and OWL 2" ;
-        rdfs:seeAlso      <http://www.w3.org/TR/rdf-plain-literal/> ;
-        sh:description    "The class of plain (i.e. untyped) literal values, as used in RIF and OWL 2" ;
-        sh:name           "PlainLiteral" ;
-        sh:nodeKind       sh:Literal .
-
-<https://astrea.linkeddata.es/shapes#b6cabf848cc41ac7d981b09799e42b28>
+<https://astrea.linkeddata.es/shapes#a0005af2635b82beb671b40f25536d31>
         rdf:type          sh:NodeShape ;
-        rdfs:isDefinedBy  rdf: ;
-        rdfs:label        "CompoundLiteral" ;
-        rdfs:seeAlso      <https://www.w3.org/TR/json-ld11/#the-rdf-compoundliteral-class-and-the-rdf-language-and-rdf-direction-properties> ;
-        sh:description    "A class representing a compound literal." ;
-        sh:name           "CompoundLiteral" ;
+        rdfs:isDefinedBy  rdfs: ;
+        rdfs:label        "Resource" ;
+        sh:description    "The class resource, everything." ;
+        sh:name           "Resource" ;
         sh:nodeKind       sh:IRI ;
-        sh:targetClass    rdf:CompoundLiteral .
+        sh:targetClass    rdfs:Resource .
 
-<https://astrea.linkeddata.es/shapes#3915afe1cc5261d7727d9802633d0ac2>
+<https://astrea.linkeddata.es/shapes#63a8f4c7428d6fc6fa96ed60cd159838>
         rdf:type          sh:NodeShape ;
-        rdfs:isDefinedBy  rdf: ;
-        rdfs:label        "Seq" ;
-        sh:description    "The class of ordered containers." ;
-        sh:name           "Seq" ;
+        rdfs:isDefinedBy  rdfs: ;
+        rdfs:label        "Literal" ;
+        sh:description    "The class of literal values, eg. textual strings and integers." ;
+        sh:name           "Literal" ;
         sh:nodeKind       sh:IRI ;
-        sh:targetClass    rdf:Seq .
-
-<https://astrea.linkeddata.es/shapes#80029ef2380309dbd92f6d593c9c1f20>
-        rdf:type          sh:NodeShape ;
-        rdfs:isDefinedBy  rdf: ;
-        rdfs:label        "Property" ;
-        sh:description    "The class of RDF properties." ;
-        sh:name           "Property" ;
-        sh:nodeKind       sh:IRI ;
-        sh:targetClass    rdf:Property .
-
-<https://astrea.linkeddata.es/shapes#a293c1c4f80b12331668319d522ad018>
-        rdf:type          sh:PropertyShape ;
-        rdfs:isDefinedBy  rdf: ;
-        rdfs:label        "langString" , "The datatype of language-tagged string values" ;
-        rdfs:seeAlso      <http://www.w3.org/TR/rdf11-concepts/#section-Graph-Literal> ;
-        sh:description    "The datatype of language-tagged string values" ;
-        sh:name           "langString" ;
-        sh:nodeKind       sh:Literal .
+        sh:targetClass    rdfs:Literal .

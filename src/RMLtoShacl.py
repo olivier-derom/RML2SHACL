@@ -266,8 +266,16 @@ class RMLtoSHACL:
 
         if not os.path.exists(self.astreageneratedpath):
             os.makedirs(self.astreageneratedpath)
+        else:
+            for file_name in os.listdir(self.astreageneratedpath):
+                file_path = os.path.join(self.astreageneratedpath, file_name)
+                os.remove(file_path)
         if not os.path.exists(self.temp_imported_onto_folder):
             os.makedirs(self.temp_imported_onto_folder)
+        else:
+            for file_name in os.listdir(self.temp_imported_onto_folder):
+                file_path = os.path.join(self.temp_imported_onto_folder, file_name)
+                os.remove(file_path)
 
         self.get_file_ontologies(ontology_dir)
 
