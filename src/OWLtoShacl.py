@@ -14,8 +14,8 @@ class OWLtoSHACL:
         self.rdfSyntax = rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
         self.XSDNS = rdflib.Namespace('http://www.w3.org/2001/XMLSchema#')
         self.AstreaArgs = []
-        self.AstreaKG = str(os.getcwd()) + "\\Astrea-KG.ttl"
-        self.astreajarpath = str(os.getcwd()) + "\\Astrea2SHACL.jar"
+        self.AstreaKG = str(os.getcwd()) + "/Astrea-KG.ttl"
+        self.astreajarpath = str(os.getcwd()) + "/Astrea2SHACL.jar"
 
         self.onto_stats = dict()
 
@@ -35,7 +35,7 @@ class OWLtoSHACL:
                 try:
                     g = rdflib.Graph()
                     g.parse(file)
-                    destination = str(temp_imported_onto_folder + "\\" + ontology)
+                    destination = str(temp_imported_onto_folder + "/" + ontology)
                     g.serialize(destination=destination, format='turtle')
                 except:
                     pass

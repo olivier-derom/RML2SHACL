@@ -19,8 +19,8 @@ class RMLtoSHACL:
         self.rdfSyntax = rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
         self.XSDNS = rdflib.Namespace('http://www.w3.org/2001/XMLSchema#')
         self.SHACL = SHACL()
-        self.astreageneratedpath = str(os.getcwd()) + "\\temp\\AstreaGenerated"
-        self.temp_imported_onto_folder = str(os.getcwd()) + "\\temp\\imported_ontologies_turtle"
+        self.astreageneratedpath = str(os.getcwd()) + "/temp/AstreaGenerated"
+        self.temp_imported_onto_folder = str(os.getcwd()) + "/temp/imported_ontologies_turtle"
         self.OWLtoSHACL = OWLtoSHACL()
         self.XSDtoSHACL = XSDtoSHACL()
 
