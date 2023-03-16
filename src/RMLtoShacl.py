@@ -1,55 +1,28 @@
-import argparse
-import csv
 import logging
 import os
 from pathlib import Path
-import string
-import time
-import timeit
 from typing import Any, List
-import requests
-import json
-import subprocess
-import re
-
 import rdflib
 from rdflib import URIRef
-from rdflib import RDF
-from requests.exceptions import HTTPError
 
-import xml.etree.ElementTree as ET
 
 from .RML import *
 from .SHACL import *
+from .OWLtoShacl import *
+from .XSDtoShacl import *
 
 
 class RMLtoSHACL:
     def __init__(self):
         self.RML = RML()
         self.shaclNS = rdflib.Namespace('http://www.w3.org/ns/shacl#')
-        self.rdfSyntax = rdflib.Namespace(
-            'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
-        self.XSDNS = rdflib.Namespace(
-            'http://www.w3.org/2001/XMLSchema#')
+        self.rdfSyntax = rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
+        self.XSDNS = rdflib.Namespace('http://www.w3.org/2001/XMLSchema#')
         self.SHACL = SHACL()
-        self.AstreaArgs = []
         self.astreageneratedpath = str(os.getcwd()) + "\\temp\\AstreaGenerated"
         self.temp_imported_onto_folder = str(os.getcwd()) + "\\temp\\imported_ontologies_turtle"
-        self.AstreaKG = str(os.getcwd()) + "\\Astrea-KG.ttl"
-        self.astreajarpath = str(os.getcwd()) + "\\Astrea2SHACL.jar"
-
-        # temp vars
-        # also see lines 268-270, 391,394,397,400,403,406,411,421,424,429, 432-437
-        self.onto_stats = dict()
-
-        # XSD related vars
-        # add all the namespaces used in the XSD's here
-        self.XSDNS2 = dict()
-        self.named_type_constraints = dict()
-        self.XSDtree = None
-        self.XSD_elements = dict()
-        self.named_types = None
-        self.XSDtargetNamespace = "http://example.com"
+        self.OWLtoSHACL = OWLtoSHACL()
+        self.XSDtoSHACL = XSDtoSHACL()
 
     def helpAddTriples(self, shacl_graph: Graph, sub: Identifier,
                        pred: Identifier, obj_arr: Optional[List[Identifier]]) -> None:
@@ -262,7 +235,10 @@ class RMLtoSHACL:
             for schema in os.listdir(schema_dir):
                 file = os.path.join(schema_dir, schema)
                 if file.endswith(".xsd"):
-                    self.import_xsd_constraints(file)
+                    self.XSDtoSHACL.import_xsd_constraints(file, self.SHACL.graph)
+
+        self.astreageneratedpath = (self.astreageneratedpath + "/" + os.path.dirname(rml_mapping_file))
+        self.temp_imported_onto_folder = (self.temp_imported_onto_folder + "/" + os.path.dirname(rml_mapping_file))
 
         if not os.path.exists(self.astreageneratedpath):
             os.makedirs(self.astreageneratedpath)
@@ -277,18 +253,18 @@ class RMLtoSHACL:
                 file_path = os.path.join(self.temp_imported_onto_folder, file_name)
                 os.remove(file_path)
 
-        self.get_file_ontologies(ontology_dir)
+        self.OWLtoSHACL.get_file_ontologies(ontology_dir, self.temp_imported_onto_folder)
 
-        self.get_prefix_ontologies()
+        self.OWLtoSHACL.get_prefix_ontologies()
 
-        self.convert_ontologies()
+        self.OWLtoSHACL.convert_ontologies(self.astreageneratedpath)
 
         for astreafile in os.listdir(self.astreageneratedpath):
             file = os.path.join(self.astreageneratedpath, astreafile)
             try:
                 g = rdflib.Graph()
                 g.parse(file)
-                self.enrich_ontology(g)
+                self.OWLtoSHACL.enrich_ontology(g, self.SHACL.graph)
             except:
                 pass
 
@@ -297,7 +273,7 @@ class RMLtoSHACL:
 
         outputfiledict = f"shapes/{rml_mapping_file}-dict.txt"
         with open(outputfiledict, 'w') as data:
-            data.write(str(self.onto_stats))
+            data.write(str(self.OWLtoSHACL.onto_stats))
 
         validation_shape_graph = rdflib.Graph()
         validation_shape_graph.parse("shacl-shacl.ttl", format="turtle")
@@ -322,391 +298,3 @@ class RMLtoSHACL:
                 self.transformPOM(subject_shape_node, pom, self.SHACL.graph)
 
         return None
-
-    def get_prefix_ontologies(self):
-        for namespace in self.RML.graph.namespaces():
-            try:
-                g = rdflib.Graph()
-                g.parse(namespace[1])
-                self.AstreaArgs += [str(namespace[1])]
-            except:
-                pass
-
-    def get_file_ontologies(self, ontology_dir):
-        if ontology_dir is not None:
-            for ontology in os.listdir(ontology_dir):
-                file = os.path.join(ontology_dir, ontology)
-                try:
-                    g = rdflib.Graph()
-                    g.parse(file)
-                    destination = str(self.temp_imported_onto_folder + "\\" + ontology)
-                    g.serialize(destination=destination, format='turtle')
-                except:
-                    pass
-            for ontology in os.listdir(self.temp_imported_onto_folder):
-                file = os.path.join(self.temp_imported_onto_folder, ontology)
-                self.AstreaArgs += [str(file)]
-
-    def convert_ontologies(self):
-        subprocesscommand = ['java', '-jar', self.astreajarpath, self.AstreaKG]
-        for item in self.AstreaArgs:
-            subprocesscommand.append(item)
-        subprocess.call(subprocesscommand, cwd=self.astreageneratedpath)
-
-    def enrich_ontology(self, ontology_graph):
-        nodeshape_blacklist = [self.shaclNS.targetClass,
-                               self.rdfSyntax.type,
-                               URIRef("http://www.w3.org/2000/01/rdf-schema#label"),
-                               self.shaclNS.description,
-                               self.shaclNS.name]
-
-        propertyshape_blacklist = [self.shaclNS.targetClass,
-                                   self.rdfSyntax.type,
-                                   URIRef("http://www.w3.org/2000/01/rdf-schema#label"),
-                                   self.shaclNS.description,
-                                   self.shaclNS.name]
-
-        # Get a list of all targetClasses
-        q1 = f'SELECT ?nodeshape ?targetclass {{?nodeshape a <{self.shaclNS.NodeShape}> .?nodeshape <{self.shaclNS.targetClass}> ?targetclass.}}'
-        x1 = self.SHACL.graph.query(q1)
-
-        # Get the constraints for each targetClass and add them to the rml2shacl shapes
-        for row in x1:
-            q2 = f'SELECT ?p ?o {{?s a <{self.shaclNS.NodeShape}> .?s <{self.shaclNS.targetClass}> <{row.targetclass}> .?s ?p ?o}}'
-            x2 = ontology_graph.query(q2)
-            q3 = f'SELECT ?p ?o {{?s a <{self.shaclNS.NodeShape}> .?s <{self.shaclNS.targetClass}> \"{row.targetclass}\" .?s ?p ?o}}'
-            x3 = self.SHACL.graph.query(q3)
-            property_BNodes_dict = dict()
-            q5 = f'SELECT ?bnode ?p ?o {{<{row.nodeshape}> a <{self.shaclNS.NodeShape}> .<{row.nodeshape}> <{self.shaclNS.property}> ?bnode. ?bnode ?p ?o}}'
-            x5 = self.SHACL.graph.query(q5)
-            for row5 in x5:
-                if row5.p == self.shaclNS.path:
-                    property_BNodes_dict[row5.o] = row5.bnode
-            for row2 in x2:
-                if row2.p not in nodeshape_blacklist:
-                    if row2.p != self.shaclNS.property:
-                        for row3 in x3:
-                            if row2.p == row3.p:
-                                break
-                        else:
-                            self.add_ontology_item(self.SHACL.graph, row.nodeshape, row2.p, row2.o, ontology_graph)
-                    else:
-                        property_dict = dict()
-                        q4 = f'SELECT ?p ?o {{<{row2.o}> a <{self.shaclNS.PropertyShape}> .<{row2.o}> ?p ?o}}'
-                        x4 = ontology_graph.query(q4)
-                        for row4 in x4:
-                            if row4.p not in propertyshape_blacklist:
-                                property_dict[row4.p] = row4.o
-                        if property_dict.get(self.shaclNS.path) in property_BNodes_dict:
-                            for item in property_dict:
-                                for row5 in x5:
-                                    if item == row5.p:
-                                        break
-                                else:
-                                    self.add_ontology_item(self.SHACL.graph, property_BNodes_dict[property_dict[self.shaclNS.path]], item, property_dict[item], ontology_graph)
-
-        property_BNodes_dict = dict()
-        q6 = f'SELECT ?bnode {{?s a <{self.shaclNS.NodeShape}> .?s <{self.shaclNS.property}> ?bnode.}}'
-        x6 = self.SHACL.graph.query(q6)
-        BNode_list = list()
-        for row6 in x6:
-            if type(row6.bnode) == rdflib.term.BNode:
-                BNode_list += [row6.bnode]
-
-        for bnode in BNode_list:
-            if ((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind,  self.shaclNS.IRI) in self.SHACL.graph):
-                self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral))
-                self.onto_stats[self.shaclNS.nodeKind] -= 1
-            elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind, self.shaclNS.Literal) in self.SHACL.graph):
-                self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral))
-                self.onto_stats[self.shaclNS.nodeKind] -= 1
-            elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrLiteral) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind, self.shaclNS.Literal) in self.SHACL.graph):
-                self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrLiteral))
-                self.onto_stats[self.shaclNS.nodeKind] -= 1
-            elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrLiteral) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNode) in self.SHACL.graph):
-                self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrLiteral))
-                self.onto_stats[self.shaclNS.nodeKind] -= 1
-            elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind, self.shaclNS.IRI) in self.SHACL.graph):
-                self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI))
-                self.onto_stats[self.shaclNS.nodeKind] -= 1
-            elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI) in self.SHACL.graph) and ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNode) in self.SHACL.graph):
-                self.SHACL.graph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI))
-                self.onto_stats[self.shaclNS.nodeKind] -= 1
-
-    def add_ontology_item(self, g, s, p, o, g2=None):
-        if type(o) == rdflib.term.BNode:
-            new_BNode = rdflib.BNode()
-            self.onto_stats_add(p)
-            g.add((s, p, new_BNode))
-            for p2, o2 in g2.predicate_objects(o):
-                self.add_ontology_item(g, new_BNode, p2, o2, g2)
-        else:
-            if type(o) == rdflib.term.URIRef and str(o).startswith('https://astrea.linkeddata.es/shapes'):
-                if (o, self.rdfSyntax.type, None) not in g:
-                    if (o, self.rdfSyntax.type, self.shaclNS.NodeShape) in g2:
-                        targetclass = g2.value(subject=o, predicate=self.shaclNS.targetClass)
-                        for s2 in g.subjects(self.shaclNS.targetClass, rdflib.Literal(targetclass)):
-                            self.onto_stats_add(p)
-                            g.add((s, p, s2))
-                    else:
-                        self.onto_stats_add(p)
-                        g.add((s, p, o))
-                        for p2, o2 in g2.predicate_objects(o):
-                            self.add_ontology_item(g, o, p2, o2, g2)
-            else:
-                self.onto_stats_add(p)
-                g.add((s, p, o))
-
-    def onto_stats_add(self, p):
-        if p in self.onto_stats:
-            self.onto_stats[p] += 1
-        else:
-            self.onto_stats[p] = 1
-
-    def get_xsd_element_info(self, element, parent_name=None, is_attribute=False):
-        element_name = self.XSDtargetNamespace+'/'+str(element.get('name'))
-        if element_name is None:
-            return None
-        if element.find('xs:complexType', self.XSDNS2) is not None:
-            element_dict = {'ElementName': element_name, 'ElementType': 'Element'}
-            element_dict.update(element.attrib)
-            if parent_name:
-                element_dict['parent'] = parent_name
-            for child_element in element.findall('xs:complexType/xs:sequence/xs:element', self.XSDNS2):
-                child_element_info = self.get_xsd_element_info(child_element, element_name)
-                if child_element_info is not None:
-                    if child_element_info != "enumeration":
-                        if "children" not in element_dict:
-                            element_dict["children"] = [f"{child_element_info}"]
-                        else:
-                            element_dict["children"] += [f"{child_element_info}"]
-                    else:
-                        if "enumeration" not in element_dict:
-                            element_dict[f"{child_element_info}"] = [element_name]
-                        else:
-                            element_dict[f"{child_element_info}"] += [element_name]
-            for attribute in element.findall('xs:complexType/xs:attribute', self.XSDNS2):
-                child_element_info = self.get_xsd_element_info(attribute, element_name, True)
-                if child_element_info is not None:
-                    if child_element_info != "enumeration":
-                        if "children" not in element_dict:
-                            element_dict["children"] = [f"{child_element_info}"]
-                        else:
-                            element_dict["children"] += [f"{child_element_info}"]
-                    else:
-                        if "enumeration" not in element_dict:
-                            element_dict[f"{child_element_info}"] = [element_name]
-                        else:
-                            element_dict[f"{child_element_info}"] += [element_name]
-        elif element.find('xs:simpleType', self.XSDNS2) is not None:
-            element_dict = {'ElementName': element_name, 'ElementType': 'Element'}
-            element_dict.update(element.attrib)
-            if parent_name:
-                element_dict['parent'] = parent_name
-            simple_type = element.find('xs:simpleType', self.XSDNS2)
-            data_type = simple_type.find('xs:restriction', self.XSDNS2).get('base')
-            element_dict["type"] = data_type
-            for child_element in simple_type.findall('xs:restriction/*', self.XSDNS2):
-                child_element_info = child_element.tag.split('}')[1]
-                if child_element_info != "enumeration":
-                    element_dict[f"{child_element_info}"] = child_element.get('value')
-                else:
-                    if "enumeration" not in element_dict:
-                        element_dict[f"{child_element_info}"] = [child_element.get('value')]
-                    else:
-                        element_dict[f"{child_element_info}"] += [child_element.get('value')]
-            for attribute in element.findall('xs:complexType/xs:attribute', self.XSDNS2):
-                child_element_info = self.get_xsd_element_info(attribute, element_name, True)
-                if child_element_info is not None:
-                    if child_element_info != "enumeration":
-                        if "children" not in element_dict:
-                            element_dict["children"] = [f"{child_element_info}"]
-                        else:
-                            element_dict["children"] += [f"{child_element_info}"]
-                    else:
-                        if "enumeration" not in element_dict:
-                            element_dict[f"{child_element_info}"] = [element_name]
-                        else:
-                            element_dict[f"{child_element_info}"] += [element_name]
-        elif is_attribute:
-            element_dict = {'ElementName': element_name, 'ElementType': 'Attribute'}
-            if parent_name:
-                element_dict['parent'] = parent_name
-            element_dict.update(element.attrib)
-            if "type" in element_dict:
-                type_name = element.attrib["type"].split(":")[-1]
-                if type_name in self.named_type_constraints:
-                    element_dict.pop("type")
-                    constraints = self.named_type_constraints[type_name]
-                    for constraint_name, constraint_value in constraints.items():
-                        element_dict[constraint_name.split('}')[1]] = constraint_value
-        else:
-            element_dict = {'ElementName': element_name, 'ElementType': 'Element'}
-            if parent_name:
-                element_dict['parent'] = parent_name
-            element_dict.update(element.attrib)
-            if "type" in element_dict:
-                type_name = element.attrib["type"].split(":")[-1]
-                if type_name in self.named_type_constraints:
-                    element_dict.pop("type")
-                    constraints = self.named_type_constraints[type_name]
-                    for constraint_name, constraint_value in constraints.items():
-                        element_dict[constraint_name.split('}')[1]] = constraint_value
-        if "name" in element_dict:
-            element_dict.pop("name")
-
-        self.XSD_elements[str(element_name)] = element_dict
-        return element_name
-
-    def extract_xsd_constraints(self, named_type):
-        named_type_name = named_type.attrib.get("name")
-        if named_type_name is not None:
-            if named_type_name in self.named_type_constraints:
-                return self.named_type_constraints[named_type_name]
-            constraints = {}
-            restriction = named_type.find("./xs:restriction", self.XSDNS2)
-            base = restriction.attrib.get("base")
-            constraints["{http://www.w3.org/2001/XMLSchema}type"] = base
-            for child in restriction:
-                if child.tag == "{http://www.w3.org/2001/XMLSchema}restriction":
-                    named_type_name = child.attrib.get("base").split(":")[-1]
-                    nested_constraints = self.extract_xsd_constraints(
-                        self.XSDtree.find(f".//xs:simpleType[@name='{named_type_name}']", self.XSDNS2))
-                    constraints.update(nested_constraints)
-                else:
-                    if child.tag == "{http://www.w3.org/2001/XMLSchema}enumeration":
-                        if "{http://www.w3.org/2001/XMLSchema}enumeration" not in constraints:
-                            constraints[child.tag] = [child.attrib.get("value")]
-                        else:
-                            constraints[child.tag] += [child.attrib.get("value")]
-                    else:
-                        constraints[child.tag] = child.attrib.get("value")
-            for named_type2 in self.named_types:
-                named_type_name2 = named_type2.attrib.get("name")
-                if base == named_type_name2:
-                    constraints.pop("{http://www.w3.org/2001/XMLSchema}type")
-                    constraints.update(self.extract_xsd_constraints(named_type2))
-            self.named_type_constraints[named_type_name] = constraints
-            return constraints
-        else:
-            return None
-
-    def get_xsd_info(self, xsd_file):
-        self.XSDtree = ET.parse(xsd_file)
-        root = self.XSDtree.getroot()
-
-        self.XSDNS2 = dict()
-        self.XSDNS2 = dict([
-            node for (_, node) in ET.iterparse(xsd_file, events=['start-ns'])
-        ])
-
-        self.XSDtargetNamespace = "http://example.com"  #set a default value for if no targetnamespace is defined
-        for key in root.attrib:
-            if key == "targetNamespace":
-                self.XSDtargetNamespace = root.attrib[key]
-
-        self.named_types = self.XSDtree.findall(".//xs:simpleType", self.XSDNS2)
-        self.named_type_constraints = {}
-        self.XSD_elements = dict()
-
-        for named_type in self.named_types:
-            self.extract_xsd_constraints(named_type)
-
-        for element_node in root.findall('xs:element', self.XSDNS2):
-            self.get_xsd_element_info(element_node)
-
-    def import_xsd_constraints(self, xsd_file):
-        self.get_xsd_info(xsd_file)
-        for XSDelem in self.XSD_elements:
-            for XSDconst in self.XSD_elements[XSDelem]:
-                for namespace in self.XSDNS2:
-                    if type(self.XSD_elements[XSDelem][XSDconst]) == type("string"):
-                        if self.XSD_elements[XSDelem][XSDconst].startswith(namespace+':'):
-                            self.XSD_elements[XSDelem][XSDconst] = self.XSDNS2[namespace]+"#"+self.XSD_elements[XSDelem][XSDconst].split(":")[-1]
-
-        q1 = f'SELECT ?nodeshape ?targetclass {{?nodeshape a <{self.shaclNS.NodeShape}> .?nodeshape <{self.shaclNS.targetClass}> ?targetclass.}}'
-        x1 = self.SHACL.graph.query(q1)
-        for row in x1:
-            if str(row.targetclass) in self.XSD_elements:
-                # enrich nodeshape
-                if "type" in self.XSD_elements[str(row.targetclass)]:
-                    if not (row.nodeshape, self.shaclNS.datatype, None) in self.SHACL.graph:
-                        self.SHACL.graph.add((row.nodeshape, self.shaclNS.datatype, URIRef(self.XSD_elements[str(row.targetclass)]["type"])))
-                if "minInclusive" in self.XSD_elements[str(row.targetclass)]:
-                    if not (row.nodeshape, self.shaclNS.minInclusive, None) in self.SHACL.graph:
-                        self.SHACL.graph.add((row.nodeshape, self.shaclNS.minInclusive, rdflib.Literal(int(self.XSD_elements[str(row.targetclass)]["minInclusive"]))))
-                if "maxInclusive" in self.XSD_elements[str(row.targetclass)]:
-                    if not (row.nodeshape, self.shaclNS.maxInclusive, None) in self.SHACL.graph:
-                        self.SHACL.graph.add((row.nodeshape, self.shaclNS.maxInclusive, rdflib.Literal(int(self.XSD_elements[str(row.targetclass)]["maxInclusive"]))))
-                if "pattern" in self.XSD_elements[str(row.targetclass)]:
-                    if not (row.nodeshape, self.shaclNS.pattern, None) in self.SHACL.graph:
-                        xsd_pattern = self.XSD_elements[str(row.targetclass)]["pattern"]
-                        shacl_pattern = "^"
-                        shacl_pattern += xsd_pattern.replace("\\d", "[0-9]") \
-                            .replace("\\w", "[A-Za-z0-9_]") \
-                            .replace("\\s", "[ \\t\\r\\n]") \
-                            .replace("\\D", "[^0-9]") \
-                            .replace("\\W", "[^A-Za-z0-9_]") \
-                            .replace("\\S", "[^ \\t\\r\\n]")
-                        shacl_pattern += "$"
-                        self.SHACL.graph.add((row.nodeshape, self.shaclNS.pattern, rdflib.Literal(shacl_pattern)))
-
-                # go over each propertyshape and enrich it
-                property_BNodes_dict = dict()
-                q2 = f'SELECT ?bnode ?p ?o {{<{row.nodeshape}> a <{self.shaclNS.NodeShape}> .<{row.nodeshape}> <{self.shaclNS.property}> ?bnode. ?bnode ?p ?o}}'
-                x2 = self.SHACL.graph.query(q2)
-                for row2 in x2:
-                    if row2.p == self.shaclNS.path:
-                        property_BNodes_dict[row2.o] = row2.bnode
-                for item in property_BNodes_dict:
-                    if str(item) in self.XSD_elements:
-                        # propertyshape constraints
-                        if "type" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.datatype, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.datatype, URIRef(self.XSD_elements[str(item)]["type"])))
-                        if "minOccurs" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.minCount, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.minCount, rdflib.Literal(int(self.XSD_elements[str(item)]["minOccurs"]))))
-                        if "maxOccurs" in self.XSD_elements[str(item)] and self.XSD_elements[str(item)]["maxOccurs"] != "unbounded":
-                            if not (property_BNodes_dict[item], self.shaclNS.maxCount, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.maxCount, rdflib.Literal(int(self.XSD_elements[str(item)]["maxOccurs"]))))
-                        if "minLength" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.minLength, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.minLength, rdflib.Literal(int(self.XSD_elements[str(item)]["minLength"]))))
-                        if "maxLength" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.maxLength, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.maxLength, rdflib.Literal(int(self.XSD_elements[str(item)]["maxLength"]))))
-                        if "fractionDigits" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.datatype, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.datatype, self.XSDNS.decimal))
-                            if int(self.XSD_elements[str(item)]["fractionDigits"]) > 0:
-                                decimal_pattern = "\\.[0-9]{1," + str(int(self.XSD_elements[str(item)]["fractionDigits"])) + "}"
-                            else:
-                                decimal_pattern = ""
-                            fractionDigitspattern = "^-?[0-9]+" + decimal_pattern + "$"
-                            if not (property_BNodes_dict[item], self.shaclNS.pattern, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.pattern, rdflib.Literal(fractionDigitspattern)))
-                        if "minInclusive" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.minInclusive, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.minInclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["minInclusive"]))))
-                        if "maxInclusive" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.maxInclusive, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.maxInclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["maxInclusive"]))))
-                        if "minExclusive" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.minInclusive, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.minExclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["minExclusive"]))))
-                        if "maxExclusive" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.maxInclusive, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.maxExclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["maxExclusive"]))))
-                        if "pattern" in self.XSD_elements[str(item)]:
-                            xsd_pattern = self.XSD_elements[str(item)]["pattern"]
-                            shacl_pattern = "^"
-                            shacl_pattern += xsd_pattern.replace("\\d", "[0-9]") \
-                                .replace("\\w", "[A-Za-z0-9_]") \
-                                .replace("\\s", "[ \\t\\r\\n]") \
-                                .replace("\\D", "[^0-9]") \
-                                .replace("\\W", "[^A-Za-z0-9_]") \
-                                .replace("\\S", "[^ \\t\\r\\n]")
-                            shacl_pattern += "$"
-                            if not (property_BNodes_dict[item], self.shaclNS.pattern, None) in self.SHACL.graph:
-                                self.SHACL.graph.add((property_BNodes_dict[item], self.shaclNS.pattern, rdflib.Literal(shacl_pattern)))

@@ -1,0 +1,29 @@
+@prefix ex:    <http://example.com/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix afn:   <http://jena.apache.org/ARQ/function#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://astrea.linkeddata.es/shapes#57300880c6b1702e4b84259bbe9d58a0>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:equals    ex:familyname ;
+        sh:nodeKind  sh:Literal ;
+        sh:path      ex:lastname ;
+        sh:pattern   ".*" .
+
+<https://astrea.linkeddata.es/shapes#fbeb04c269812b7b08000e4e1a32249d>
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:equals    ex:lastname ;
+        sh:nodeKind  sh:Literal ;
+        sh:path      ex:familyname ;
+        sh:pattern   ".*" .
+
+<https://astrea.linkeddata.es/shapes#1ceede38c00ff83c6a0b5938e32618f4>
+        rdf:type        sh:NodeShape ;
+        sh:nodeKind     sh:IRI ;
+        sh:property     <https://astrea.linkeddata.es/shapes#57300880c6b1702e4b84259bbe9d58a0> , <https://astrea.linkeddata.es/shapes#fbeb04c269812b7b08000e4e1a32249d> ;
+        sh:targetClass  ex:person .
