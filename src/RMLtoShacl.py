@@ -236,9 +236,8 @@ class RMLtoSHACL:
                 file = os.path.join(schema_dir, schema)
                 if file.endswith(".xsd"):
                     self.XSDtoSHACL.import_xsd_constraints(file, self.SHACL.graph)
-
-        self.astreageneratedpath = (self.astreageneratedpath + "/" + os.path.dirname(rml_mapping_file))
-        self.temp_imported_onto_folder = (self.temp_imported_onto_folder + "/" + os.path.dirname(rml_mapping_file))
+        self.astreageneratedpath = (self.astreageneratedpath + "/" + os.path.dirname(rml_mapping_file) + "/" + Path(rml_mapping_file).stem)
+        self.temp_imported_onto_folder = (self.temp_imported_onto_folder + "/" + os.path.dirname(rml_mapping_file) + "/" + Path(rml_mapping_file).stem)
 
         if not os.path.exists(self.astreageneratedpath):
             os.makedirs(self.astreageneratedpath)
