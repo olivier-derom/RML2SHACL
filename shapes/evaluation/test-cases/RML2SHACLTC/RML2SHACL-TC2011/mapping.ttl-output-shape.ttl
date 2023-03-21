@@ -9,7 +9,6 @@
     sh:property [ sh:datatype xsd:string ;
             sh:minCount 0 ;
             sh:nodeKind sh:Literal ;
-            sh:path ex:phone ;
-            sh:pattern ".*" ] ;
+            sh:path ex:phone ] ;
     sh:targetClass ex:person .
 

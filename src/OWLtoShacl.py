@@ -132,8 +132,7 @@ class OWLtoSHACL:
     def add_ontology_item(self, g, s, p, o, g2=None):
         if type(o) == rdflib.term.BNode:
             new_BNode = rdflib.BNode()
-            self.onto_stats_add(p)
-            g.add((s, p, new_BNode))
+            self.add_ontology_item2(g, s, p, new_BNode)
             for p2, o2 in g2.predicate_objects(o):
                 self.add_ontology_item(g, new_BNode, p2, o2, g2)
         else:
@@ -142,19 +141,100 @@ class OWLtoSHACL:
                     if (o, self.rdfSyntax.type, self.shaclNS.NodeShape) in g2:
                         targetclass = g2.value(subject=o, predicate=self.shaclNS.targetClass)
                         for s2 in g.subjects(self.shaclNS.targetClass, rdflib.Literal(targetclass)):
-                            self.onto_stats_add(p)
-                            g.add((s, p, s2))
+                            self.add_ontology_item2(g, s2, p, o)
                     else:
-                        self.onto_stats_add(p)
-                        g.add((s, p, o))
+                        self.add_ontology_item2(g, s, p, o)
                         for p2, o2 in g2.predicate_objects(o):
                             self.add_ontology_item(g, o, p2, o2, g2)
             else:
-                self.onto_stats_add(p)
-                g.add((s, p, o))
+                self.add_ontology_item2(g, s, p, o)
 
     def onto_stats_add(self, p):
         if p in self.onto_stats:
             self.onto_stats[p] += 1
         else:
             self.onto_stats[p] = 1
+
+    def add_ontology_item2(self, g, s, p, o):
+        if p == self.shaclNS.pattern:
+            if o == rdflib.Literal(".*"):
+                return
+        elif p == self.shaclNS.minInclusive:
+            if (s, self.shaclNS.maxInclusive, None) in g:
+                counterRestriction = g.value(subject=s, predicate=self.shaclNS.maxInclusive)
+                print(counterRestriction, '12')
+                if o > counterRestriction:
+                    return
+            if (s, self.shaclNS.maxExclusive, None) in g:
+                counterRestriction = g.value(subject=s, predicate=self.shaclNS.maxExclusive)
+                print(counterRestriction, '11')
+                if o >= counterRestriction:
+                    return
+            if (s, self.shaclNS.minExclusive, None) in g:
+                return
+        elif p == self.shaclNS.maxInclusive:
+            if (s, self.shaclNS.minInclusive, None) in g:
+                counterRestriction = g.value(subject=s, predicate=self.shaclNS.minInclusive)
+                print(counterRestriction, '10')
+                if o < counterRestriction:
+                    return
+            if (s, self.shaclNS.minExclusive, None) in g:
+                counterRestriction = g.value(subject=s, predicate=self.shaclNS.minExclusive)
+                print(counterRestriction, '9')
+                if o <= counterRestriction:
+                    return
+            if (s, self.shaclNS.maxExclusive, None) in g:
+                return
+        elif p == self.shaclNS.minExclusive:
+            if (s, self.shaclNS.maxExclusive, None) in g:
+                counterRestriction = g.value(subject=s, predicate=self.shaclNS.maxExclusive)
+                print(counterRestriction, '8')
+                if o >= counterRestriction:
+                    return
+            if (s, self.shaclNS.maxInclusive, None) in g:
+                counterRestriction = g.value(subject=s, predicate=self.shaclNS.maxInclusive)
+                print(counterRestriction, '7')
+                if o >= counterRestriction:
+                    return
+            if (s, self.shaclNS.minExclusive, None) in g:
+                return
+        elif p == self.shaclNS.maxExclusive:
+            if (s, self.shaclNS.minExclusive, None) in g:
+                counterRestriction = g.value(subject=s, predicate=self.shaclNS.minExclusive)
+                print(counterRestriction, '6')
+                if o <= counterRestriction:
+                    return
+            if (s, self.shaclNS.minInclusive, None) in g:
+                counterRestriction = g.value(subject=s, predicate=self.shaclNS.minInclusive)
+                print(counterRestriction, '5')
+                if o <= counterRestriction:
+                    return
+            if (s, self.shaclNS.maxExclusive, None) in g:
+                return
+        elif p == self.shaclNS.minLength:
+            if (s, self.shaclNS.maxLength, None) in g:
+                counterRestriction = g.value(subject=s, predicate=self.shaclNS.maxLength)
+                print(counterRestriction, '4')
+                if o > counterRestriction:
+                    return
+        elif p == self.shaclNS.maxLength:
+            if (s, self.shaclNS.minLength, None) in g:
+                counterRestriction = g.value(subject=s, predicate=self.shaclNS.minLength)
+                print(counterRestriction,'3')
+                if o < counterRestriction:
+                    return
+        elif p == self.shaclNS.minOccurs:
+            if (s, self.shaclNS.maxOccurs, None) in g:
+                counterRestriction = g.value(subject=s, predicate=self.shaclNS.maxOccurs)
+                print(counterRestriction, '2')
+                if o > counterRestriction:
+                    return
+        elif p == self.shaclNS.maxOccurs:
+            if (s, self.shaclNS.minOccurs, None) in g:
+                counterRestriction = g.value(subject=s, predicate=self.shaclNS.minOccurs)
+                print(counterRestriction, '1')
+                if o < counterRestriction:
+                    return
+        self.onto_stats_add(p)
+        g.add((s, p, o))
+        return

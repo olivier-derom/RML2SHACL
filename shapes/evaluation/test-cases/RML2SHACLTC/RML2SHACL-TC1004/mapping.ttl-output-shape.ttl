@@ -9,7 +9,6 @@
     sh:property [ sh:datatype xsd:string ;
             sh:maxLength 15 ;
             sh:nodeKind sh:Literal ;
-            sh:path ex:firstname ;
-            sh:pattern ".*" ] ;
+            sh:path ex:firstname ] ;
     sh:targetClass ex:person .
 

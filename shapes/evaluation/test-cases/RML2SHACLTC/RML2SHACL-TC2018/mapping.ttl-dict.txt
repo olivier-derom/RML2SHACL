@@ -1,1 +1,1 @@
-{rdflib.term.URIRef('http://www.w3.org/ns/shacl#nodeKind'): 1, rdflib.term.URIRef('http://www.w3.org/ns/shacl#maxInclusive'): 1, rdflib.term.URIRef('http://www.w3.org/ns/shacl#minExclusive'): 1, rdflib.term.URIRef('http://www.w3.org/ns/shacl#minInclusive'): 1, rdflib.term.URIRef('http://www.w3.org/ns/shacl#pattern'): 1}
+{rdflib.term.URIRef('http://www.w3.org/ns/shacl#nodeKind'): 1, rdflib.term.URIRef('http://www.w3.org/ns/shacl#minInclusive'): 1, rdflib.term.URIRef('http://www.w3.org/ns/shacl#pattern'): 1}

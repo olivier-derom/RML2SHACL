@@ -9,7 +9,6 @@
     sh:property [ sh:datatype xsd:string ;
             sh:equals ex:lastname ;
             sh:nodeKind sh:Literal ;
-            sh:path ex:familyname ;
-            sh:pattern ".*" ] ;
+            sh:path ex:familyname ] ;
     sh:targetClass ex:person .
 
