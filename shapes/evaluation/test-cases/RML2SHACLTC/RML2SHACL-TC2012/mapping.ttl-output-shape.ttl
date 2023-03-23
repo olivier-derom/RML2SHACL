@@ -7,8 +7,7 @@
     sh:nodeKind sh:IRI ;
     sh:pattern "http://example.com/person/.*" ;
     sh:property [ sh:datatype xsd:string ;
-            sh:maxCount 10 ;
             sh:nodeKind sh:Literal ;
-            sh:path ex:phone ] ;
+            sh:path ex:firstname ] ;
     sh:targetClass ex:person .
 

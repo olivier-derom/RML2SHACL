@@ -6,9 +6,14 @@
 
 <http://example.com/ontology> rdf:type owl:Ontology .
 
-ex:person rdf:type owl:Class .
+ex:book rdf:type owl:Class .
 
-ex:phone 	rdf:type owl:DatatypeProperty ;
-			rdfs:domain ex:person ;
-			owl:minCardinality 50;
-            rdfs:range xsd:string .
+ex:hasISBN rdf:type owl:DatatypeProperty ;
+			rdfs:domain ex:book ;
+            rdfs:range xsd:string ;
+			owl:propertyDisjointWith ex:hasISSN .
+			
+ex:hasISSN rdf:type owl:DatatypeProperty ;
+			rdfs:domain ex:book ;
+            rdfs:range xsd:string ;
+			owl:propertyDisjointWith ex:hasISBN .

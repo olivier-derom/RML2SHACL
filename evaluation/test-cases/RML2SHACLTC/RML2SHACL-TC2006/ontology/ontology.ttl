@@ -8,9 +8,10 @@
 
 ex:person rdf:type owl:Class .
 
-ex:firstname 	rdf:type owl:DatatypeProperty ;
-                rdfs:domain ex:person ;
-                owl:withRestrictions (
-					[ xsd:maxLength 2 ]
-				) ;
-				rdfs:range xsd:string .
+ex:age 	rdf:type owl:DatatypeProperty ;
+        rdfs:domain ex:person ;
+        owl:withRestrictions (
+			[ xsd:maxInclusive 120 ]
+		) ;
+		rdfs:range xsd:int .
+        

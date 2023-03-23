@@ -7,7 +7,7 @@
 ex:firstname a owl:DatatypeProperty ;
     rdfs:domain ex:person ;
     rdfs:range xsd:string ;
-    owl:withRestrictions ( [ xsd:pattern "[a-FA-F]+" ] ) .
+    owl:withRestrictions ( [ xsd:pattern "[a-zA-Z]+" ] ) .
 
 ex:ontology a owl:Ontology .
 

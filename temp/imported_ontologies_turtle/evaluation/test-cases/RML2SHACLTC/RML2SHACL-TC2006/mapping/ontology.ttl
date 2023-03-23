@@ -4,10 +4,10 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:firstname a owl:DatatypeProperty ;
+ex:age a owl:DatatypeProperty ;
     rdfs:domain ex:person ;
-    rdfs:range xsd:string ;
-    owl:withRestrictions ( [ xsd:maxLength 2 ] ) .
+    rdfs:range xsd:int ;
+    owl:withRestrictions ( [ xsd:maxInclusive 120 ] ) .
 
 ex:ontology a owl:Ontology .
 

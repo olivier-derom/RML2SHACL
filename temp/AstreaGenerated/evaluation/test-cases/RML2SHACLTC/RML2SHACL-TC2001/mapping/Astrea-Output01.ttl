@@ -7,13 +7,11 @@
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 
 <https://astrea.linkeddata.es/shapes#3999b7f562f9057f9d73c09c080ea87b>
-        rdf:type         sh:PropertyShape ;
-        sh:datatype      xsd:int ;
-        sh:maxInclusive  2147483647 ;
-        sh:minInclusive  -2147483648 ;
-        sh:nodeKind      sh:Literal ;
-        sh:path          ex:firstname ;
-        sh:pattern       "[\\-+]?[0-9]+" .
+        rdf:type     sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:nodeKind  sh:Literal ;
+        sh:path      ex:firstname ;
+        sh:pattern   ".*" .
 
 <https://astrea.linkeddata.es/shapes#1ceede38c00ff83c6a0b5938e32618f4>
         rdf:type        sh:NodeShape ;

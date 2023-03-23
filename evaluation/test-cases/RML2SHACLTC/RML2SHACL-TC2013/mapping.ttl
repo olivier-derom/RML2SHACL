@@ -9,15 +9,21 @@ ex:PersonMapping
   rml:logicalSource [
     rml:source "data.xml";
     rml:referenceFormulation ql:XPath;
-    rml:iterator "/person"
+    rml:iterator "/book"
   ];
   rr:subjectMap [
-    rr:template "http://example.com/person/{@id}";
-    rr:class ex:person
+    rr:template "http://example.com/book/{@id}";
+    rr:class ex:book
   ];
   rr:predicateObjectMap [
-    rr:predicate ex:phone;
+    rr:predicate ex:hasISBN;
     rr:objectMap [
-      rml:reference "phone";
+      rml:reference "hasISBN";
+	];
+  ];
+  rr:predicateObjectMap [
+    rr:predicate ex:hasISSN;
+    rr:objectMap [
+      rml:reference "hasISSN";
 	];
   ].

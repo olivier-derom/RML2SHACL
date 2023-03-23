@@ -3,6 +3,7 @@
 @prefix ql: <http://semweb.mmlab.be/ns/ql#>.
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix ex: <http://example.com/>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
 
 ex:PersonMapping
   a rr:TriplesMap;
@@ -12,12 +13,6 @@ ex:PersonMapping
     rml:iterator "/person"
   ];
   rr:subjectMap [
-    rr:template "http://example.com/person/{@id}";
-    rr:class ex:person
-  ];
-  rr:predicateObjectMap [
-    rr:predicate ex:phone;
-    rr:objectMap [
-      rml:reference "phone";
-	];
+	rr:template "http://example.com/person/{id}";
+    rr:class foaf:Person
   ].

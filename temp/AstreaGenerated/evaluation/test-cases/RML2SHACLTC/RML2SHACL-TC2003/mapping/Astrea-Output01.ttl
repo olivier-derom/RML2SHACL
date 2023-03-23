@@ -9,7 +9,7 @@
 <https://astrea.linkeddata.es/shapes#3999b7f562f9057f9d73c09c080ea87b>
         rdf:type      sh:PropertyShape ;
         sh:datatype   xsd:string ;
-        sh:minLength  1 ;
+        sh:minLength  2 ;
         sh:nodeKind   sh:Literal ;
         sh:path       ex:firstname ;
         sh:pattern    ".*" .

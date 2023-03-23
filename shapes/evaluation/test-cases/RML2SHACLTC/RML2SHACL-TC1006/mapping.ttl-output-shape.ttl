@@ -6,11 +6,9 @@
     sh:class ex:person ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://example.com/person/.*" ;
-    sh:property [ sh:datatype xsd:int ;
+    sh:property [ sh:datatype xsd:integer ;
             sh:maxInclusive 120 ;
-            sh:minInclusive -2147483648 ;
             sh:nodeKind sh:Literal ;
-            sh:path ex:age ;
-            sh:pattern "[\\-+]?[0-9]+" ] ;
+            sh:path ex:age ] ;
     sh:targetClass ex:person .
 

@@ -6,12 +6,13 @@
 
 <http://example.com/ontology> rdf:type owl:Ontology .
 
-ex:person rdf:type owl:Class .
+ex:person rdf:type owl:Class ;
+		rdfs:subClassOf [
+			rdf:type owl:Restriction ;
+			owl:maxCardinality 10;
+			owl:onProperty ex:phone ;
+			] .
 
-ex:age 	rdf:type owl:DatatypeProperty ;
-        rdfs:domain ex:person ;
-        owl:withRestrictions (
-			[ xsd:maxInclusive 18 ]
-		) ;
-		rdfs:range xsd:int .
-        
+ex:phone 	rdf:type owl:DatatypeProperty ;
+			rdfs:domain ex:person ;
+            rdfs:range xsd:string .

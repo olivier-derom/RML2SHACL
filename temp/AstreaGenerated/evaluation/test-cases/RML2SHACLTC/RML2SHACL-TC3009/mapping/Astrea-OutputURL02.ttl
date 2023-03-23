@@ -1,0 +1,61 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix afn:   <http://jena.apache.org/ARQ/function#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+
+<https://astrea.linkeddata.es/shapes#e70106cf33c4a8d55f7031297af9b64e>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  rdfs: ;
+        rdfs:label        "Datatype" ;
+        sh:description    "The class of RDF datatypes." ;
+        sh:name           "Datatype" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    rdfs:Datatype .
+
+<https://astrea.linkeddata.es/shapes#f5b57e73404f923ba9cf7d7388444c2d>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  rdfs: ;
+        rdfs:label        "Container" ;
+        sh:description    "The class of RDF containers." ;
+        sh:name           "Container" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    rdfs:Container .
+
+<https://astrea.linkeddata.es/shapes#ad808933a855b5113f5840f343578761>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  rdfs: ;
+        rdfs:label        "Class" ;
+        sh:description    "The class of classes." ;
+        sh:name           "Class" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    rdfs:Class .
+
+<https://astrea.linkeddata.es/shapes#d67b17ee1af7afd39f143c8cc0114007>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  rdfs: ;
+        rdfs:label        "ContainerMembershipProperty" ;
+        sh:description    "The class of container membership properties, rdf:_1, rdf:_2, ...,\n                    all of which are sub-properties of 'member'." ;
+        sh:name           "ContainerMembershipProperty" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    rdfs:ContainerMembershipProperty .
+
+<https://astrea.linkeddata.es/shapes#a0005af2635b82beb671b40f25536d31>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  rdfs: ;
+        rdfs:label        "Resource" ;
+        sh:description    "The class resource, everything." ;
+        sh:name           "Resource" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    rdfs:Resource .
+
+<https://astrea.linkeddata.es/shapes#63a8f4c7428d6fc6fa96ed60cd159838>
+        rdf:type          sh:NodeShape ;
+        rdfs:isDefinedBy  rdfs: ;
+        rdfs:label        "Literal" ;
+        sh:description    "The class of literal values, eg. textual strings and integers." ;
+        sh:name           "Literal" ;
+        sh:nodeKind       sh:IRI ;
+        sh:targetClass    rdfs:Literal .

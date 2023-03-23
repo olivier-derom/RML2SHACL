@@ -11,6 +11,6 @@ ex:person rdf:type owl:Class .
 ex:age 	rdf:type owl:DatatypeProperty ;
         rdfs:domain ex:person ;
         owl:withRestrictions (
-			[ xsd:minInclusive 1 ]
+			[ xsd:minExclusive 18 ]
 		) ;
         rdfs:range xsd:int .

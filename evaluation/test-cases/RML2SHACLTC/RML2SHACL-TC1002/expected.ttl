@@ -9,6 +9,6 @@
     sh:property [ sh:datatype xsd:string ;
             sh:nodeKind sh:Literal ;
             sh:path ex:firstname ;
-            sh:pattern "[a-zA-Z]+" ] ;
+            sh:pattern "^[a-zA-Z]+$" ] ;
     sh:targetClass ex:person .
 

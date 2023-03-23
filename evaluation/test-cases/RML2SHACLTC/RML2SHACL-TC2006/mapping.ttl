@@ -16,8 +16,8 @@ ex:PersonMapping
     rr:class ex:person
   ];
   rr:predicateObjectMap [
-    rr:predicate ex:firstname;
+    rr:predicate ex:age;
     rr:objectMap [
-      rml:reference "firstname";
+      rml:reference "age";
 	];
   ].

@@ -9,7 +9,8 @@
 <https://astrea.linkeddata.es/shapes#99301825ccac4f69423457e15dcd9bbc>
         rdf:type         sh:PropertyShape ;
         sh:datatype      xsd:int ;
-        sh:maxInclusive  2147483647 , 150 ;
+        sh:maxExclusive  120 ;
+        sh:maxInclusive  2147483647 ;
         sh:minInclusive  -2147483648 ;
         sh:nodeKind      sh:Literal ;
         sh:path          ex:age ;

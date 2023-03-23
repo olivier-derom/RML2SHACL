@@ -11,7 +11,7 @@
         sh:datatype  xsd:string ;
         sh:nodeKind  sh:Literal ;
         sh:path      ex:firstname ;
-        sh:pattern   "[a-FA-F]+" , ".*" .
+        sh:pattern   "[a-zA-Z]+" , ".*" .
 
 <https://astrea.linkeddata.es/shapes#1ceede38c00ff83c6a0b5938e32618f4>
         rdf:type        sh:NodeShape ;

@@ -1,20 +1,18 @@
 @prefix ex:    <http://example.com/> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
-@prefix sh:    <http://www.w3.org/ns/shacl#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 @prefix afn:   <http://jena.apache.org/ARQ/function#> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 
-<https://astrea.linkeddata.es/shapes#3fb7f1e646df05267617130be1ee5db5>
-        rdf:type     sh:PropertyShape ;
-        sh:datatype  xsd:string ;
-        sh:nodeKind  sh:Literal ;
-        sh:path      ex:phone ;
-        sh:pattern   ".*" .
-
-<https://astrea.linkeddata.es/shapes#1ceede38c00ff83c6a0b5938e32618f4>
+<https://astrea.linkeddata.es/shapes#9e9a355219f8a7a48e11c83927596410>
         rdf:type        sh:NodeShape ;
         sh:nodeKind     sh:IRI ;
-        sh:property     <https://astrea.linkeddata.es/shapes#3fb7f1e646df05267617130be1ee5db5> ;
-        sh:targetClass  ex:person .
+        sh:targetClass  ex:product .
+
+<https://astrea.linkeddata.es/shapes#8a8a9748bc6955067b5321f648a33c7f>
+        rdf:type        sh:NodeShape ;
+        sh:in           ( <https://astrea.linkeddata.es/shapes#89f7fc957a00318390ad6da6cfd8e5cd> <https://astrea.linkeddata.es/shapes#12b5f88606e4c98f7f42ca6b5d7c62b9> <https://astrea.linkeddata.es/shapes#d3ec0e92d0fb6c8af1bce04773d6ca32> ) ;
+        sh:nodeKind     sh:IRI ;
+        sh:targetClass  ex:color .

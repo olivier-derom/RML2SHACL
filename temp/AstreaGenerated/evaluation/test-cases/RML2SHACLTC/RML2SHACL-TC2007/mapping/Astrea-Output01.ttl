@@ -10,7 +10,8 @@
         rdf:type         sh:PropertyShape ;
         sh:datatype      xsd:int ;
         sh:maxInclusive  2147483647 ;
-        sh:minInclusive  -2147483648 , 1 ;
+        sh:minExclusive  18 ;
+        sh:minInclusive  -2147483648 ;
         sh:nodeKind      sh:Literal ;
         sh:path          ex:age ;
         sh:pattern       "[\\-+]?[0-9]+" .

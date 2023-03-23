@@ -6,9 +6,9 @@
     sh:class ex:person ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://example.com/person/.*" ;
-    sh:property [ sh:datatype xsd:string ;
-            sh:maxLength 2 ;
+    sh:property [ sh:datatype xsd:int ;
+            sh:minInclusive 0 ;
             sh:nodeKind sh:Literal ;
-            sh:path ex:firstname ] ;
+            sh:path ex:age ] ;
     sh:targetClass ex:person .
 

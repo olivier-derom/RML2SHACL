@@ -6,16 +6,17 @@
 @prefix afn:   <http://jena.apache.org/ARQ/function#> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 
-<https://astrea.linkeddata.es/shapes#3999b7f562f9057f9d73c09c080ea87b>
-        rdf:type      sh:PropertyShape ;
-        sh:datatype   xsd:string ;
-        sh:minLength  10 ;
-        sh:nodeKind   sh:Literal ;
-        sh:path       ex:firstname ;
-        sh:pattern    ".*" .
+<https://astrea.linkeddata.es/shapes#99301825ccac4f69423457e15dcd9bbc>
+        rdf:type         sh:PropertyShape ;
+        sh:datatype      xsd:int ;
+        sh:maxInclusive  2147483647 ;
+        sh:minInclusive  -2147483648 , 0 ;
+        sh:nodeKind      sh:Literal ;
+        sh:path          ex:age ;
+        sh:pattern       "[\\-+]?[0-9]+" .
 
 <https://astrea.linkeddata.es/shapes#1ceede38c00ff83c6a0b5938e32618f4>
         rdf:type        sh:NodeShape ;
         sh:nodeKind     sh:IRI ;
-        sh:property     <https://astrea.linkeddata.es/shapes#3999b7f562f9057f9d73c09c080ea87b> ;
+        sh:property     <https://astrea.linkeddata.es/shapes#99301825ccac4f69423457e15dcd9bbc> ;
         sh:targetClass  ex:person .

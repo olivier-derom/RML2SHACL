@@ -11,6 +11,6 @@ ex:person rdf:type owl:Class .
 ex:firstname 	rdf:type owl:DatatypeProperty ;
                 rdfs:domain ex:person ;
                 owl:withRestrictions (
-                    [xsd:pattern "[a-FA-F]+"]
+                    [xsd:pattern "[a-zA-Z]+"]
                 ) ;
 				rdfs:range xsd:string .

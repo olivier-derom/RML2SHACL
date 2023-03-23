@@ -1,13 +1,9 @@
-@prefix ex: <http://example.com/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://example.com/PersonMapping/shape> a sh:NodeShape ;
-    sh:class ex:person ;
+    sh:class foaf:Person ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://example.com/person/.*" ;
-    sh:property [ sh:datatype xsd:string ;
-            sh:nodeKind sh:Literal ;
-            sh:path ex:phone ] ;
-    sh:targetClass ex:person .
+    sh:targetClass foaf:Person .
 

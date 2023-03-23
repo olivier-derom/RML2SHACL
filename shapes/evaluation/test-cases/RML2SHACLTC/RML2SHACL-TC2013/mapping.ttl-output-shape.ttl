@@ -3,12 +3,16 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://example.com/PersonMapping/shape> a sh:NodeShape ;
-    sh:class ex:person ;
+    sh:class ex:book ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "http://example.com/person/.*" ;
+    sh:pattern "http://example.com/book/.*" ;
     sh:property [ sh:datatype xsd:string ;
-            sh:maxCount 10 ;
+            sh:disjoint ex:hasISSN ;
             sh:nodeKind sh:Literal ;
-            sh:path ex:phone ] ;
-    sh:targetClass ex:person .
+            sh:path ex:hasISBN ],
+        [ sh:datatype xsd:string ;
+            sh:disjoint ex:hasISBN ;
+            sh:nodeKind sh:Literal ;
+            sh:path ex:hasISSN ] ;
+    sh:targetClass ex:book .
 

@@ -12,12 +12,6 @@ ex:PersonMapping
     rml:iterator "/person"
   ];
   rr:subjectMap [
-    rr:template "http://example.com/person/{@id}";
-    rr:class ex:person
-  ];
-  rr:predicateObjectMap [
-    rr:predicate ex:age;
-    rr:objectMap [
-      rml:reference "age";
-	];
+    rml:reference "id" ;
+    rr:termType rr:IRI
   ].
