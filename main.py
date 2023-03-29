@@ -45,14 +45,14 @@ if __name__ == "__main__":
     else:
         if args.ONTOLOGY_DIR is None:
             if args.SCHEMA_DIR is None:
-                RtoS.evaluate_files(args.MAPPING_FILE, None, None)
+                RtoS.evaluateFiles(args.MAPPING_FILE, None, None)
             else:
-                RtoS.evaluate_files(args.MAPPING_FILE, None, args.SCHEMA_DIR)
+                RtoS.evaluateFiles(args.MAPPING_FILE, None, args.SCHEMA_DIR)
         else:
             if args.SCHEMA_DIR is None:
-                RtoS.evaluate_files(args.MAPPING_FILE, args.ONTOLOGY_DIR, None)
+                RtoS.evaluateFiles(args.MAPPING_FILE, args.ONTOLOGY_DIR, None)
             else:
-                RtoS.evaluate_files(args.MAPPING_FILE, args.ONTOLOGY_DIR, args.SCHEMA_DIR)
+                RtoS.evaluateFiles(args.MAPPING_FILE, args.ONTOLOGY_DIR, args.SCHEMA_DIR)
 
     end = time.time()
 

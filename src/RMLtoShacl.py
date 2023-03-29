@@ -227,15 +227,15 @@ class RMLtoSHACL:
 
         return filenNameShape
 
-    def evaluate_files(self, rml_mapping_file, ontology_dir=None, schema_dir=None):
+    def evaluateFiles(self, rml_mapping_file, ontology_dir=None, schema_dir=None):
 
-        self.evaluate_mapping(rml_mapping_file)
+        self.evaluateMapping(rml_mapping_file)
 
         if schema_dir is not None:
             for schema in os.listdir(schema_dir):
                 file = os.path.join(schema_dir, schema)
                 if file.endswith(".xsd"):
-                    self.XSDtoSHACL.import_xsd_constraints(file, self.SHACL.graph)
+                    self.XSDtoSHACL.addXSDConstraints(file, self.SHACL.graph)
         self.astreageneratedpath = (self.astreageneratedpath + "/" + os.path.dirname(rml_mapping_file) + "/" + Path(rml_mapping_file).stem)
         self.temp_imported_onto_folder = (self.temp_imported_onto_folder + "/" + os.path.dirname(rml_mapping_file) + "/" + Path(rml_mapping_file).stem)
 
@@ -252,18 +252,18 @@ class RMLtoSHACL:
                 file_path = os.path.join(self.temp_imported_onto_folder, file_name)
                 os.remove(file_path)
 
-        self.OWLtoSHACL.get_file_ontologies(ontology_dir, self.temp_imported_onto_folder)
+        self.OWLtoSHACL.getFileOntologies(ontology_dir, self.temp_imported_onto_folder)
 
-        self.OWLtoSHACL.get_prefix_ontologies()
+        self.OWLtoSHACL.getPrefixOntologies()
 
-        self.OWLtoSHACL.convert_ontologies(self.astreageneratedpath)
+        self.OWLtoSHACL.convertOntologies(self.astreageneratedpath)
 
         for astreafile in os.listdir(self.astreageneratedpath):
             file = os.path.join(self.astreageneratedpath, astreafile)
             try:
                 g = rdflib.Graph()
                 g.parse(file)
-                self.OWLtoSHACL.enrich_ontology(g, self.SHACL.graph)
+                self.OWLtoSHACL.enrichWithOntology(g, self.SHACL.graph)
             except:
                 pass
 
@@ -283,11 +283,12 @@ class RMLtoSHACL:
         logging.debug("RESULTS")
         logging.debug("=" * 100)
         logging.debug(self.SHACL.results_text)
+        print(rml_mapping_file)
         print(self.SHACL.results_text)
 
         return None
 
-    def evaluate_mapping(self, rml_mapping_file):
+    def evaluateMapping(self, rml_mapping_file):
         self.RML.parseFile(rml_mapping_file)
 
         for _, triples_map in self.RML.tm_model_dict.items():

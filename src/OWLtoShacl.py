@@ -19,7 +19,7 @@ class OWLtoSHACL:
 
         self.onto_stats = dict()
 
-    def get_prefix_ontologies(self):
+    def getPrefixOntologies(self):
         for namespace in self.RML.graph.namespaces():
             try:
                 g = rdflib.Graph()
@@ -28,7 +28,7 @@ class OWLtoSHACL:
             except:
                 pass
 
-    def get_file_ontologies(self, ontology_dir, temp_imported_onto_folder):
+    def getFileOntologies(self, ontology_dir, temp_imported_onto_folder):
         if ontology_dir is not None:
             for ontology in os.listdir(ontology_dir):
                 file = os.path.join(ontology_dir, ontology)
@@ -43,13 +43,13 @@ class OWLtoSHACL:
                 file = os.path.join(temp_imported_onto_folder, ontology)
                 self.AstreaArgs += [str(file)]
 
-    def convert_ontologies(self, astreageneratedpath):
+    def convertOntologies(self, astreageneratedpath):
         subprocesscommand = ['java', '-jar', self.astreajarpath, self.AstreaKG]
         for item in self.AstreaArgs:
             subprocesscommand.append(item)
         subprocess.call(subprocesscommand, cwd=astreageneratedpath)
 
-    def enrich_ontology(self, ontology_graph, RML2SHACLgraph):
+    def enrichWithOntology(self, ontology_graph, RML2SHACLgraph):
         nodeshape_blacklist = [self.shaclNS.targetClass,
                                self.rdfSyntax.type,
                                URIRef("http://www.w3.org/2000/01/rdf-schema#label"),
@@ -85,7 +85,7 @@ class OWLtoSHACL:
                             if row2.p == row3.p:
                                 break
                         else:
-                            self.add_ontology_item(RML2SHACLgraph, row.nodeshape, row2.p, row2.o, ontology_graph)
+                            self.evalOntologyConstraint(RML2SHACLgraph, row.nodeshape, row2.p, row2.o, ontology_graph)
                     else:
                         property_dict = dict()
                         q4 = f'SELECT ?p ?o {{<{row2.o}> a <{self.shaclNS.PropertyShape}> .<{row2.o}> ?p ?o}}'
@@ -99,7 +99,7 @@ class OWLtoSHACL:
                                     if item == row5.p:
                                         break
                                 else:
-                                    self.add_ontology_item(RML2SHACLgraph, property_BNodes_dict[property_dict[self.shaclNS.path]], item, property_dict[item], ontology_graph)
+                                    self.evalOntologyConstraint(RML2SHACLgraph, property_BNodes_dict[property_dict[self.shaclNS.path]], item, property_dict[item], ontology_graph)
 
         property_BNodes_dict = dict()
         q6 = f'SELECT ?bnode {{?s a <{self.shaclNS.NodeShape}> .?s <{self.shaclNS.property}> ?bnode.}}'
@@ -129,33 +129,33 @@ class OWLtoSHACL:
                 RML2SHACLgraph.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI))
                 self.onto_stats[self.shaclNS.nodeKind] -= 1
 
-    def add_ontology_item(self, g, s, p, o, g2=None):
+    def evalOntologyConstraint(self, g, s, p, o, g2=None):
         if type(o) == rdflib.term.BNode:
             new_BNode = rdflib.BNode()
-            self.add_ontology_item2(g, s, p, new_BNode)
+            self.addOntologyConstraint(g, s, p, new_BNode)
             for p2, o2 in g2.predicate_objects(o):
-                self.add_ontology_item(g, new_BNode, p2, o2, g2)
+                self.evalOntologyConstraint(g, new_BNode, p2, o2, g2)
         else:
             if type(o) == rdflib.term.URIRef and str(o).startswith('https://astrea.linkeddata.es/shapes'):
                 if (o, self.rdfSyntax.type, None) not in g:
                     if (o, self.rdfSyntax.type, self.shaclNS.NodeShape) in g2:
                         targetclass = g2.value(subject=o, predicate=self.shaclNS.targetClass)
                         for s2 in g.subjects(self.shaclNS.targetClass, rdflib.Literal(targetclass)):
-                            self.add_ontology_item2(g, s2, p, o)
+                            self.addOntologyConstraint(g, s2, p, o)
                     else:
-                        self.add_ontology_item2(g, s, p, o)
+                        self.addOntologyConstraint(g, s, p, o)
                         for p2, o2 in g2.predicate_objects(o):
-                            self.add_ontology_item(g, o, p2, o2, g2)
+                            self.evalOntologyConstraint(g, o, p2, o2, g2)
             else:
-                self.add_ontology_item2(g, s, p, o)
+                self.addOntologyConstraint(g, s, p, o)
 
-    def onto_stats_add(self, p):
+    def updateOntologyStats(self, p):
         if p in self.onto_stats:
             self.onto_stats[p] += 1
         else:
             self.onto_stats[p] = 1
 
-    def add_ontology_item2(self, g, s, p, o):
+    def addOntologyConstraint(self, g, s, p, o):
         if p == self.shaclNS.pattern:
             if o == rdflib.Literal(".*"):
                 return
@@ -223,6 +223,6 @@ class OWLtoSHACL:
                 counterRestriction = g.value(subject=s, predicate=self.shaclNS.minOccurs)
                 if o < counterRestriction:
                     return
-        self.onto_stats_add(p)
+        self.updateOntologyStats(p)
         g.add((s, p, o))
         return

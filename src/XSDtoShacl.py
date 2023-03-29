@@ -18,7 +18,7 @@ class XSDtoSHACL:
         self.named_types = None
         self.XSDtargetNamespace = "http://example.com"
 
-    def get_xsd_info(self, xsd_file):
+    def getXSDFileInfo(self, xsd_file):
         self.XSDtree = ET.parse(xsd_file)
         root = self.XSDtree.getroot()
 
@@ -37,12 +37,12 @@ class XSDtoSHACL:
         self.XSD_elements = dict()
 
         for named_type in self.named_types:
-            self.extract_xsd_constraints(named_type)
+            self.extractXSDConstraints(named_type)
 
         for element_node in root.findall('xs:element', self.XSDNS2):
-            self.get_xsd_element_info(element_node)
+            self.getXSDElementInfo(element_node)
 
-    def get_xsd_element_info(self, element, parent_name=None, is_attribute=False):
+    def getXSDElementInfo(self, element, parent_name=None, is_attribute=False):
         element_name = self.XSDtargetNamespace+'/'+str(element.get('name'))
         if element_name is None:
             return None
@@ -52,7 +52,7 @@ class XSDtoSHACL:
             if parent_name:
                 element_dict['parent'] = parent_name
             for child_element in element.findall('xs:complexType/xs:sequence/xs:element', self.XSDNS2):
-                child_element_info = self.get_xsd_element_info(child_element, element_name)
+                child_element_info = self.getXSDElementInfo(child_element, element_name)
                 if child_element_info is not None:
                     if child_element_info != "enumeration":
                         if "children" not in element_dict:
@@ -65,7 +65,7 @@ class XSDtoSHACL:
                         else:
                             element_dict[f"{child_element_info}"] += [element_name]
             for attribute in element.findall('xs:complexType/xs:attribute', self.XSDNS2):
-                child_element_info = self.get_xsd_element_info(attribute, element_name, True)
+                child_element_info = self.getXSDElementInfo(attribute, element_name, True)
                 if child_element_info is not None:
                     if child_element_info != "enumeration":
                         if "children" not in element_dict:
@@ -95,7 +95,7 @@ class XSDtoSHACL:
                     else:
                         element_dict[f"{child_element_info}"] += [child_element.get('value')]
             for attribute in element.findall('xs:complexType/xs:attribute', self.XSDNS2):
-                child_element_info = self.get_xsd_element_info(attribute, element_name, True)
+                child_element_info = self.getXSDElementInfo(attribute, element_name, True)
                 if child_element_info is not None:
                     if child_element_info != "enumeration":
                         if "children" not in element_dict:
@@ -137,7 +137,7 @@ class XSDtoSHACL:
         self.XSD_elements[str(element_name)] = element_dict
         return element_name
 
-    def extract_xsd_constraints(self, named_type):
+    def extractXSDConstraints(self, named_type):
         named_type_name = named_type.attrib.get("name")
         if named_type_name is not None:
             if named_type_name in self.named_type_constraints:
@@ -149,7 +149,7 @@ class XSDtoSHACL:
             for child in restriction:
                 if child.tag == "{http://www.w3.org/2001/XMLSchema}restriction":
                     named_type_name = child.attrib.get("base").split(":")[-1]
-                    nested_constraints = self.extract_xsd_constraints(
+                    nested_constraints = self.extractXSDConstraints(
                         self.XSDtree.find(f".//xs:simpleType[@name='{named_type_name}']", self.XSDNS2))
                     constraints.update(nested_constraints)
                 else:
@@ -164,14 +164,14 @@ class XSDtoSHACL:
                 named_type_name2 = named_type2.attrib.get("name")
                 if base == named_type_name2:
                     constraints.pop("{http://www.w3.org/2001/XMLSchema}type")
-                    constraints.update(self.extract_xsd_constraints(named_type2))
+                    constraints.update(self.extractXSDConstraints(named_type2))
             self.named_type_constraints[named_type_name] = constraints
             return constraints
         else:
             return None
 
-    def import_xsd_constraints(self, xsd_file, g):
-        self.get_xsd_info(xsd_file)
+    def addXSDConstraints(self, xsd_file, g):
+        self.getXSDFileInfo(xsd_file)
         for XSDelem in self.XSD_elements:
             for XSDconst in self.XSD_elements[XSDelem]:
                 for namespace in self.XSDNS2:
