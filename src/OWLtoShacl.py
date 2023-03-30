@@ -91,8 +91,10 @@ class OWLtoSHACL:
                         q4 = f'SELECT ?p ?o {{<{row2.o}> a <{self.shaclNS.PropertyShape}> .<{row2.o}> ?p ?o}}'
                         x4 = ontology_graph.query(q4)
                         for row4 in x4:
-                            if row4.p not in propertyshape_blacklist:
-                                property_dict[row4.p] = row4.o
+                            if (row4.p not in propertyshape_blacklist):
+                                if not (row4.p == rdflib.term.URIRef(
+                                    'http://www.w3.org/ns/shacl#pattern') and row4.o == rdflib.term.Literal('.*')):
+                                    property_dict[row4.p] = row4.o
                         if property_dict.get(self.shaclNS.path) in property_BNodes_dict:
                             for item in property_dict:
                                 for row5 in x5:
@@ -156,10 +158,7 @@ class OWLtoSHACL:
             self.onto_stats[p] = 1
 
     def addOntologyConstraint(self, g, s, p, o):
-        if p == self.shaclNS.pattern:
-            if o == rdflib.Literal(".*"):
-                return
-        elif p == self.shaclNS.minInclusive:
+        if p == self.shaclNS.minInclusive:
             if (s, self.shaclNS.maxInclusive, None) in g:
                 counterRestriction = g.value(subject=s, predicate=self.shaclNS.maxInclusive)
                 if o > counterRestriction:

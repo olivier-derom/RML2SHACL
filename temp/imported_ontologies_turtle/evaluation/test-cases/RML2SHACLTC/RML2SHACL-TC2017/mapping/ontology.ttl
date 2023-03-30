@@ -1,0 +1,32 @@
+@prefix ex: <http://example.com/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:BookShape a owl:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:cardinality 1 ;
+            owl:onClass ex:Author ;
+            owl:onProperty ex:hasAuthor ] .
+
+ex:name a owl:DatatypeProperty ;
+    rdfs:domain ex:Author ;
+    rdfs:range xsd:string .
+
+ex:ontology a owl:Ontology .
+
+ex:Book a owl:Class .
+
+ex:isAuthorOf a owl:ObjectProperty ;
+    owl:inverseOf ex:hasAuthor .
+
+ex:hasAuthor a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain ex:Book ;
+    rdfs:range ex:Author ;
+    owl:inverseOf ex:isAuthorOf .
+
+ex:Author a owl:Class ;
+    rdfs:range xsd:string ;
+    rdfs:subClassOf owl:Thing .
+

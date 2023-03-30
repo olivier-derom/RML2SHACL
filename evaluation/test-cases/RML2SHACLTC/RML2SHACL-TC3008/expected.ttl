@@ -8,7 +8,9 @@
     sh:pattern "http://example.com/person/.*" ;
     sh:property [ sh:datatype xsd:integer ;
             sh:maxInclusive 120 ;
+            sh:minInclusive -2147483648 ;
             sh:nodeKind sh:Literal ;
-            sh:path ex:age ] ;
+            sh:path ex:age ;
+            sh:pattern "[\\-+]?[0-9]+" ] ;
     sh:targetClass ex:person .
 
