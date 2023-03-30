@@ -19,8 +19,6 @@ class RMLtoSHACL:
         self.rdfSyntax = rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
         self.XSDNS = rdflib.Namespace('http://www.w3.org/2001/XMLSchema#')
         self.SHACL = SHACL()
-        self.astreageneratedpath = str(os.getcwd()) + "/temp/AstreaGenerated"
-        self.temp_imported_onto_folder = str(os.getcwd()) + "/temp/imported_ontologies_turtle"
         self.OWLtoSHACL = OWLtoSHACL()
         self.XSDtoSHACL = XSDtoSHACL()
 
@@ -228,7 +226,7 @@ class RMLtoSHACL:
 
         return filenNameShape
 
-    def evaluateFiles(self, rml_mapping_file, ontology_dir=None, schema_dir=None):
+    def evaluateFiles(self, rml_mapping_file, ontology_dir=None, schema_dir=None, tempfolder=(str(os.getcwd())+"/temp")):
 
         self.evaluateMapping(rml_mapping_file)
 
@@ -237,8 +235,11 @@ class RMLtoSHACL:
                 file = os.path.join(schema_dir, schema)
                 if file.endswith(".xsd"):
                     self.XSDtoSHACL.addXSDConstraints(file, self.SHACL.graph)
-        self.astreageneratedpath = (self.astreageneratedpath + "/" + os.path.dirname(rml_mapping_file) + "/" + Path(rml_mapping_file).stem)
-        self.temp_imported_onto_folder = (self.temp_imported_onto_folder + "/" + os.path.dirname(rml_mapping_file) + "/" + Path(rml_mapping_file).stem)
+        home_dir = os.path.dirname(os.path.dirname(__file__))
+        rml_rel_path = os.path.relpath(os.path.dirname(rml_mapping_file), home_dir)
+        self.astreageneratedpath = (tempfolder + "/AstreaGenerated/" + rml_rel_path + "/" + Path(rml_mapping_file).stem)
+        print(self.astreageneratedpath)
+        self.temp_imported_onto_folder = (tempfolder + "/imported_ontologies_turtle/" + rml_rel_path + "/" + Path(rml_mapping_file).stem)
 
         if not os.path.exists(self.astreageneratedpath):
             os.makedirs(self.astreageneratedpath)
@@ -268,26 +269,7 @@ class RMLtoSHACL:
             except:
                 pass
 
-        outputfileName = f"{rml_mapping_file}-output-shape.ttl"
-        self.writeShapeToFile(outputfileName)
-
-        outputfiledict = f"shapes/{rml_mapping_file}-dict.txt"
-        with open(outputfiledict, 'w') as data:
-            data.write(str(self.OWLtoSHACL.onto_stats))
-
-        validation_shape_graph = rdflib.Graph()
-        validation_shape_graph.parse("shacl-shacl.ttl", format="turtle")
-
-        self.SHACL.Validation(validation_shape_graph, self.SHACL.graph)
-
-        logging.debug("*" * 100)
-        logging.debug("RESULTS")
-        logging.debug("=" * 100)
-        logging.debug(self.SHACL.results_text)
-        print(rml_mapping_file)
-        print(self.SHACL.results_text)
-
-        return None
+        return self.SHACL.graph
 
     def evaluateMapping(self, rml_mapping_file):
         self.RML.parseFile(rml_mapping_file)

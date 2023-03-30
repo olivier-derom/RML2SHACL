@@ -9,6 +9,7 @@ import logging
 import time
 from src.RML import *
 from src.RMLtoShacl import RMLtoSHACL
+from src.OWLtoShacl import OWLtoSHACL
 from src.SHACL import *
 
 if __name__ == "__main__":
@@ -20,6 +21,7 @@ if __name__ == "__main__":
             raise NotADirectoryError(string)
 
     RtoS = RMLtoSHACL()
+    SHACL = SHACL()
     parser = argparse.ArgumentParser()
     parser.add_argument("MAPPING_FILE", type=str,
                         help="RML mapping file to be converted into SHACL shapes.")
@@ -39,20 +41,32 @@ if __name__ == "__main__":
     logging.basicConfig(level=numeric_level)
 
     start = time.time()
-    if args.MAPPING_FILE is None:
-        print("please provide an RML mapping")
+    if not args.MAPPING_FILE:
+        print("Please provide an RML mapping.")
         exit()
     else:
-        if args.ONTOLOGY_DIR is None:
-            if args.SCHEMA_DIR is None:
-                RtoS.evaluateFiles(args.MAPPING_FILE, None, None)
-            else:
-                RtoS.evaluateFiles(args.MAPPING_FILE, None, args.SCHEMA_DIR)
-        else:
-            if args.SCHEMA_DIR is None:
-                RtoS.evaluateFiles(args.MAPPING_FILE, args.ONTOLOGY_DIR, None)
-            else:
-                RtoS.evaluateFiles(args.MAPPING_FILE, args.ONTOLOGY_DIR, args.SCHEMA_DIR)
+        result_graph = RtoS.evaluateFiles(args.MAPPING_FILE, args.ONTOLOGY_DIR, args.SCHEMA_DIR, str(os.getcwd()) + "/temp")
+
+
+    outputfileName = f"{args.MAPPING_FILE}-output-shape.ttl"
+    outputDirectory = "shapes/"
+    RtoS.writeShapeToFile(outputfileName, outputDirectory)
+
+    outputdictfile = f"shapes/{args.MAPPING_FILE}-dict.txt"
+    with open(outputdictfile, 'w') as data:
+        data.write(str(RtoS.OWLtoSHACL.onto_stats))
+
+    validation_shape_graph = rdflib.Graph()
+    validation_shape_graph.parse("shacl-shacl.ttl", format="turtle")
+
+    SHACL.Validation(validation_shape_graph, result_graph)
+
+    logging.debug("*" * 100)
+    logging.debug("RESULTS")
+    logging.debug("=" * 100)
+    logging.debug(SHACL.results_text)
+    print(args.MAPPING_FILE)
+    print(SHACL.results_text)
 
     end = time.time()
 

@@ -14,8 +14,8 @@ class OWLtoSHACL:
         self.rdfSyntax = rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
         self.XSDNS = rdflib.Namespace('http://www.w3.org/2001/XMLSchema#')
         self.AstreaArgs = []
-        self.AstreaKG = str(os.getcwd()) + "/Astrea-KG.ttl"
-        self.astreajarpath = str(os.getcwd()) + "/Astrea2SHACL.jar"
+        self.AstreaKG = os.path.dirname(os.path.dirname(__file__))+ "/Astrea-KG.ttl"
+        self.astreajarpath = os.path.dirname(os.path.dirname(__file__)) + "/Astrea2SHACL.jar"
 
         self.onto_stats = dict()
 
@@ -92,8 +92,7 @@ class OWLtoSHACL:
                         x4 = ontology_graph.query(q4)
                         for row4 in x4:
                             if (row4.p not in propertyshape_blacklist):
-                                if not (row4.p == rdflib.term.URIRef(
-                                    'http://www.w3.org/ns/shacl#pattern') and row4.o == rdflib.term.Literal('.*')):
+                                if not (row4.p == rdflib.term.URIRef('http://www.w3.org/ns/shacl#pattern') and row4.o == rdflib.term.Literal('.*')):
                                     property_dict[row4.p] = row4.o
                         if property_dict.get(self.shaclNS.path) in property_BNodes_dict:
                             for item in property_dict:
