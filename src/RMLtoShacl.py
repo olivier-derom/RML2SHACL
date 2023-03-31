@@ -238,7 +238,6 @@ class RMLtoSHACL:
         home_dir = os.path.dirname(os.path.dirname(__file__))
         rml_rel_path = os.path.relpath(os.path.dirname(rml_mapping_file), home_dir)
         self.astreageneratedpath = (tempfolder + "/AstreaGenerated/" + rml_rel_path + "/" + Path(rml_mapping_file).stem)
-        print(self.astreageneratedpath)
         self.temp_imported_onto_folder = (tempfolder + "/imported_ontologies_turtle/" + rml_rel_path + "/" + Path(rml_mapping_file).stem)
 
         if not os.path.exists(self.astreageneratedpath):
