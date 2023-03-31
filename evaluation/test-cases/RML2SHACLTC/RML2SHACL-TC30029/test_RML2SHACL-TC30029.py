@@ -3,7 +3,7 @@ from src.RMLtoShacl import RMLtoSHACL
 from rdflib.graph import Graph
 from rdflib import compare
 
-def test_RML2SHACL_TC3025():
+def test_RML2SHACL_TC30029():
 
     RtoS = RMLtoSHACL()
     expected_graph = Graph()
