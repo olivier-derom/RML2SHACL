@@ -226,7 +226,7 @@ class RMLtoSHACL:
 
         return filenNameShape
 
-    def evaluateFiles(self, rml_mapping_file, ontology_dir=None, schema_dir=None, tempfolder=(str(os.getcwd())+"/temp")):
+    def evaluateFiles(self, rml_mapping_file, ontology_dir=None, schema_dir=None, tempfolder=(str(os.getcwd())+"/temp"), parallelproc = False):
 
         self.evaluateMapping(rml_mapping_file)
 
@@ -237,8 +237,15 @@ class RMLtoSHACL:
                     self.XSDtoSHACL.addXSDConstraints(file, self.SHACL.graph)
         home_dir = os.path.dirname(os.path.dirname(__file__))
         rml_rel_path = os.path.relpath(os.path.dirname(rml_mapping_file), home_dir)
-        self.astreageneratedpath = (tempfolder + "/AstreaGenerated/" + rml_rel_path + "/" + Path(rml_mapping_file).stem)
-        self.temp_imported_onto_folder = (tempfolder + "/imported_ontologies_turtle/" + rml_rel_path + "/" + Path(rml_mapping_file).stem)
+        if parallelproc:
+            self.astreageneratedpath = (tempfolder + "/AstreaGenerated/" + rml_rel_path + "/" + Path(rml_mapping_file).stem)
+            self.temp_imported_onto_folder = (tempfolder + "/imported_ontologies_turtle/" + rml_rel_path + "/" + Path(rml_mapping_file).stem)
+        else:
+            self.astreageneratedpath = (
+                        tempfolder + "/AstreaGenerated/serial")
+            self.temp_imported_onto_folder = (
+                        tempfolder + "/imported_ontologies_turtle/serial")
+
 
         if not os.path.exists(self.astreageneratedpath):
             os.makedirs(self.astreageneratedpath)

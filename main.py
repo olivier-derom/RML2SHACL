@@ -31,6 +31,8 @@ if __name__ == "__main__":
                         help="Directory with schema files to be converted into SHACL shapes. (supported schemas: XSD)")
     parser.add_argument("-logLevel", "-l", type=str, default="INFO",
                         help="Logging level of this script")
+    parser.add_argument("--PARALLEL", "-p", action='store_true',
+                        help="Use this if you want to run multiple iteration in parallel")
 
     args = parser.parse_args()
 
@@ -45,7 +47,7 @@ if __name__ == "__main__":
         print("Please provide an RML mapping.")
         exit()
     else:
-        result_graph = RtoS.evaluateFiles(args.MAPPING_FILE, args.ONTOLOGY_DIR, args.SCHEMA_DIR, str(os.getcwd()) + "/temp")
+        result_graph = RtoS.evaluateFiles(args.MAPPING_FILE, args.ONTOLOGY_DIR, args.SCHEMA_DIR, str(os.getcwd()) + "/temp", args.PARALLEL)
 
 
     outputfileName = f"{args.MAPPING_FILE}-output-shape.ttl"
