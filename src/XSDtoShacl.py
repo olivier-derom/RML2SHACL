@@ -4,10 +4,12 @@ import xml.etree.ElementTree as ET
 
 from .RML import *
 from .SHACL import *
+from .EnrichShacl import *
 
 class XSDtoSHACL:
     def __init__(self):
         self.RML = RML()
+        self.EnrichSHACL = EnrichSHACL()
         self.shaclNS = rdflib.Namespace('http://www.w3.org/ns/shacl#')
         self.rdfSyntax = rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
         self.XSDNS = rdflib.Namespace('http://www.w3.org/2001/XMLSchema#')
@@ -185,26 +187,22 @@ class XSDtoSHACL:
             if str(row.targetclass) in self.XSD_elements:
                 # enrich nodeshape
                 if "type" in self.XSD_elements[str(row.targetclass)]:
-                    if not (row.nodeshape, self.shaclNS.datatype, None) in g:
-                        g.add((row.nodeshape, self.shaclNS.datatype, URIRef(self.XSD_elements[str(row.targetclass)]["type"])))
+                    self.EnrichSHACL.enrich(g, row.nodeshape, self.shaclNS.datatype, URIRef(self.XSD_elements[str(row.targetclass)]["type"]))
                 if "minInclusive" in self.XSD_elements[str(row.targetclass)]:
-                    if not (row.nodeshape, self.shaclNS.minInclusive, None) in g:
-                        g.add((row.nodeshape, self.shaclNS.minInclusive, rdflib.Literal(int(self.XSD_elements[str(row.targetclass)]["minInclusive"]))))
+                    self.EnrichSHACL.enrich(g, row.nodeshape, self.shaclNS.minInclusive, rdflib.Literal(int(self.XSD_elements[str(row.targetclass)]["minInclusive"])))
                 if "maxInclusive" in self.XSD_elements[str(row.targetclass)]:
-                    if not (row.nodeshape, self.shaclNS.maxInclusive, None) in g:
-                        g.add((row.nodeshape, self.shaclNS.maxInclusive, rdflib.Literal(int(self.XSD_elements[str(row.targetclass)]["maxInclusive"]))))
+                    self.EnrichSHACL.enrich(g, row.nodeshape, self.shaclNS.maxInclusive, rdflib.Literal(int(self.XSD_elements[str(row.targetclass)]["maxInclusive"])))
                 if "pattern" in self.XSD_elements[str(row.targetclass)]:
-                    if not (row.nodeshape, self.shaclNS.pattern, None) in g:
-                        xsd_pattern = self.XSD_elements[str(row.targetclass)]["pattern"]
-                        shacl_pattern = "^"
-                        shacl_pattern += xsd_pattern.replace("\\d", "[0-9]") \
-                            .replace("\\w", "[A-Za-z0-9_]") \
-                            .replace("\\s", "[ \\t\\r\\n]") \
-                            .replace("\\D", "[^0-9]") \
-                            .replace("\\W", "[^A-Za-z0-9_]") \
-                            .replace("\\S", "[^ \\t\\r\\n]")
-                        shacl_pattern += "$"
-                        g.add((row.nodeshape, self.shaclNS.pattern, rdflib.Literal(shacl_pattern)))
+                    xsd_pattern = self.XSD_elements[str(row.targetclass)]["pattern"]
+                    shacl_pattern = "^"
+                    shacl_pattern += xsd_pattern.replace("\\d", "[0-9]") \
+                        .replace("\\w", "[A-Za-z0-9_]") \
+                        .replace("\\s", "[ \\t\\r\\n]") \
+                        .replace("\\D", "[^0-9]") \
+                        .replace("\\W", "[^A-Za-z0-9_]") \
+                        .replace("\\S", "[^ \\t\\r\\n]")
+                    shacl_pattern += "$"
+                    self.EnrichSHACL.enrich(g, row.nodeshape, self.shaclNS.pattern, rdflib.Literal(shacl_pattern))
 
                 # go over each propertyshape and enrich it
                 property_BNodes_dict = dict()
@@ -217,42 +215,31 @@ class XSDtoSHACL:
                     if str(item) in self.XSD_elements:
                         # propertyshape constraints
                         if "type" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.datatype, None) in g:
-                                g.add((property_BNodes_dict[item], self.shaclNS.datatype, URIRef(self.XSD_elements[str(item)]["type"])))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.datatype, URIRef(self.XSD_elements[str(item)]["type"]))
                         if "minOccurs" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.minCount, None) in g:
-                                g.add((property_BNodes_dict[item], self.shaclNS.minCount, rdflib.Literal(int(self.XSD_elements[str(item)]["minOccurs"]))))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.minCount, rdflib.Literal(int(self.XSD_elements[str(item)]["minOccurs"])))
                         if "maxOccurs" in self.XSD_elements[str(item)] and self.XSD_elements[str(item)]["maxOccurs"] != "unbounded":
-                            if not (property_BNodes_dict[item], self.shaclNS.maxCount, None) in g:
-                                g.add((property_BNodes_dict[item], self.shaclNS.maxCount, rdflib.Literal(int(self.XSD_elements[str(item)]["maxOccurs"]))))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.maxCount, rdflib.Literal(int(self.XSD_elements[str(item)]["maxOccurs"])))
                         if "minLength" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.minLength, None) in g:
-                                g.add((property_BNodes_dict[item], self.shaclNS.minLength, rdflib.Literal(int(self.XSD_elements[str(item)]["minLength"]))))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.minLength, rdflib.Literal(int(self.XSD_elements[str(item)]["minLength"])))
                         if "maxLength" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.maxLength, None) in g:
-                                g.add((property_BNodes_dict[item], self.shaclNS.maxLength, rdflib.Literal(int(self.XSD_elements[str(item)]["maxLength"]))))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.maxLength, rdflib.Literal(int(self.XSD_elements[str(item)]["maxLength"])))
                         if "fractionDigits" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.datatype, None) in g:
-                                g.add((property_BNodes_dict[item], self.shaclNS.datatype, self.XSDNS.decimal))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.datatype, self.XSDNS.decimal)
                             if int(self.XSD_elements[str(item)]["fractionDigits"]) > 0:
                                 decimal_pattern = "\\.[0-9]{1," + str(int(self.XSD_elements[str(item)]["fractionDigits"])) + "}"
                             else:
                                 decimal_pattern = ""
                             fractionDigitspattern = "^-?[0-9]+" + decimal_pattern + "$"
-                            if not (property_BNodes_dict[item], self.shaclNS.pattern, None) in g:
-                                g.add((property_BNodes_dict[item], self.shaclNS.pattern, rdflib.Literal(fractionDigitspattern)))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.pattern, rdflib.Literal(fractionDigitspattern))
                         if "minInclusive" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.minInclusive, None) in g:
-                                g.add((property_BNodes_dict[item], self.shaclNS.minInclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["minInclusive"]))))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.minInclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["minInclusive"])))
                         if "maxInclusive" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.maxInclusive, None) in g:
-                                g.add((property_BNodes_dict[item], self.shaclNS.maxInclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["maxInclusive"]))))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.maxInclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["maxInclusive"])))
                         if "minExclusive" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.minInclusive, None) in g:
-                                g.add((property_BNodes_dict[item], self.shaclNS.minExclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["minExclusive"]))))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.minExclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["minExclusive"])))
                         if "maxExclusive" in self.XSD_elements[str(item)]:
-                            if not (property_BNodes_dict[item], self.shaclNS.maxInclusive, None) in g:
-                                g.add((property_BNodes_dict[item], self.shaclNS.maxExclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["maxExclusive"]))))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.maxExclusive, rdflib.Literal(int(self.XSD_elements[str(item)]["maxExclusive"])))
                         if "pattern" in self.XSD_elements[str(item)]:
                             xsd_pattern = self.XSD_elements[str(item)]["pattern"]
                             shacl_pattern = "^"
@@ -263,5 +250,4 @@ class XSDtoSHACL:
                                 .replace("\\W", "[^A-Za-z0-9_]") \
                                 .replace("\\S", "[^ \\t\\r\\n]")
                             shacl_pattern += "$"
-                            if not (property_BNodes_dict[item], self.shaclNS.pattern, None) in g:
-                                g.add((property_BNodes_dict[item], self.shaclNS.pattern, rdflib.Literal(shacl_pattern)))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.pattern, rdflib.Literal(shacl_pattern))

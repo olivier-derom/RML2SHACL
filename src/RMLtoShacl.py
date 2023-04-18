@@ -14,6 +14,7 @@ from .XSDtoShacl import *
 
 class RMLtoSHACL:
     def __init__(self):
+        self.EnrichSHACL = EnrichSHACL()
         self.RML = RML()
         self.shaclNS = rdflib.Namespace('http://www.w3.org/ns/shacl#')
         self.rdfSyntax = rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
@@ -21,6 +22,7 @@ class RMLtoSHACL:
         self.SHACL = SHACL()
         self.OWLtoSHACL = OWLtoSHACL()
         self.XSDtoSHACL = XSDtoSHACL()
+
 
     def helpAddTriples(self, shacl_graph: Graph, sub: Identifier,
                        pred: Identifier, obj_arr: Optional[List[Identifier]]) -> None:
@@ -226,7 +228,7 @@ class RMLtoSHACL:
 
         return filenNameShape
 
-    def evaluateFiles(self, rml_mapping_file, ontology_dir=None, schema_dir=None, tempfolder=(str(os.getcwd())+"/temp"), parallelproc = False):
+    def evaluateFiles(self, rml_mapping_file, ontology_dir=None, schema_dir=None):
 
         self.evaluateMapping(rml_mapping_file)
 
@@ -235,45 +237,14 @@ class RMLtoSHACL:
                 file = os.path.join(schema_dir, schema)
                 if file.endswith(".xsd"):
                     self.XSDtoSHACL.addXSDConstraints(file, self.SHACL.graph)
-        home_dir = os.path.dirname(os.path.dirname(__file__))
-        rml_rel_path = os.path.relpath(os.path.dirname(rml_mapping_file), home_dir)
-        if parallelproc:
-            self.astreageneratedpath = (tempfolder + "/AstreaGenerated/" + rml_rel_path + "/" + Path(rml_mapping_file).stem)
-            self.temp_imported_onto_folder = (tempfolder + "/imported_ontologies_turtle/" + rml_rel_path + "/" + Path(rml_mapping_file).stem)
-        else:
-            self.astreageneratedpath = (
-                        tempfolder + "/AstreaGenerated/serial")
-            self.temp_imported_onto_folder = (
-                        tempfolder + "/imported_ontologies_turtle/serial")
 
-
-        if not os.path.exists(self.astreageneratedpath):
-            os.makedirs(self.astreageneratedpath)
-        else:
-            for file_name in os.listdir(self.astreageneratedpath):
-                file_path = os.path.join(self.astreageneratedpath, file_name)
-                os.remove(file_path)
-        if not os.path.exists(self.temp_imported_onto_folder):
-            os.makedirs(self.temp_imported_onto_folder)
-        else:
-            for file_name in os.listdir(self.temp_imported_onto_folder):
-                file_path = os.path.join(self.temp_imported_onto_folder, file_name)
-                os.remove(file_path)
-
-        self.OWLtoSHACL.getFileOntologies(ontology_dir, self.temp_imported_onto_folder)
+        self.OWLtoSHACL.getFileOntologies(ontology_dir)
 
         self.OWLtoSHACL.getPrefixOntologies()
 
-        self.OWLtoSHACL.convertOntologies(self.astreageneratedpath)
+        self.OWLtoSHACL.convertOntologies(self.SHACL.graph)
 
-        for astreafile in os.listdir(self.astreageneratedpath):
-            file = os.path.join(self.astreageneratedpath, astreafile)
-            try:
-                g = rdflib.Graph()
-                g.parse(file)
-                self.OWLtoSHACL.enrichWithOntology(g, self.SHACL.graph)
-            except:
-                pass
+        self.EnrichSHACL.verifyConflicts(self.SHACL.graph)
 
         return self.SHACL.graph
 

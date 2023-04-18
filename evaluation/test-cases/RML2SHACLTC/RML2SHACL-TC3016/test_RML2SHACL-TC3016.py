@@ -19,7 +19,6 @@ def test_RML2SHACL_TC3016():
     if not os.path.exists(schema_path):
         schema_path = None
     cwd = os.getcwd()
-    tempfolder = os.path.abspath(os.path.join(cwd, '../../../../temp'))
-    result_graph = RtoS.evaluateFiles(mapping_file, ontology_path, schema_path, tempfolder)
+    result_graph = RtoS.evaluateFiles(mapping_file, ontology_path, schema_path)
 
     assert compare.isomorphic(expected_graph, result_graph)
