@@ -43,8 +43,13 @@ class RMLtoSHACL:
                 shacl_graph.add(
                     (sub, pred, el))
 
-    def transformIRI(self, node: Identifier, shacl_graph: Graph) -> None:
+    def transformIRI(self, node: Identifier, termMap: TermMap, shacl_graph: Graph) -> None:
         shacl_graph.add((node, self.shaclNS.nodeKind, self.shaclNS.IRI))
+        template_iri = self.RML.TEMPLATE
+        if template_iri in termMap.po_dict:
+            template_string = [self.serializeTemplate(x) for x in termMap.po_dict[template_iri]]
+            self.helpAddTriples(shacl_graph, node,
+                                self.shaclNS.pattern, template_string)
 
     def transformBlankNode(self, node: Identifier, shacl_graph: Graph) -> None:
         shacl_graph.add((node, self.shaclNS.nodeKind, self.shaclNS.BlankNode))
@@ -87,11 +92,17 @@ class RMLtoSHACL:
                     (node, self.shaclNS.languageIn, languageBlank))
                 self.transformList(languageBlank, language.split('-'), shacl_graph)
 
-                # Transform rr:datatype
+        # Transform rr:datatype
         datatype_iri = self.RML.DATATYPE
         if datatype_iri in termMap.po_dict:
             self.helpAddTriples(shacl_graph, node,
                                 self.shaclNS.datatype, termMap.po_dict[datatype_iri])
+
+        template_iri = self.RML.TEMPLATE
+        if template_iri in termMap.po_dict:
+            template_string = [self.serializeTemplate(x) for x in termMap.po_dict[template_iri]]
+            self.helpAddTriples(shacl_graph, node,
+                                self.shaclNS.pattern, template_string)
 
     def serializeTemplate(self, templateString: Identifier) -> Identifier:
         # we want to replace this {word} into a wildcard ='.'
@@ -165,18 +176,18 @@ class RMLtoSHACL:
             if term_type == self.RML.r2rmlNS.Literal:
                 self.transformLiteral(node, termMap, shacl_graph)
             elif term_type == self.RML.r2rmlNS.IRI:
-                self.transformIRI(node, shacl_graph)
+                self.transformIRI(node, termMap, shacl_graph)
             elif term_type == self.RML.r2rmlNS.BlankNode:
                 self.transformBlankNode(node, shacl_graph)
             else:
                 print(f"WARNING: {term_type} is not a valid term type for {self}, defaulting to IRI")
-                self.transformIRI(node, shacl_graph)
+                self.transformIRI(node, termMap, shacl_graph)
 
         # default behaviour if no termType is defined
         elif po_dict.get(self.RML.REFERENCE):
             self.transformLiteral(node, termMap, shacl_graph)
         else:
-            self.transformIRI(node, shacl_graph)
+            self.transformIRI(node, termMap, shacl_graph)
 
     def transformPOM(self, node: Identifier, pom: PredicateObjectMap, shacl_graph: Graph) -> None:
 

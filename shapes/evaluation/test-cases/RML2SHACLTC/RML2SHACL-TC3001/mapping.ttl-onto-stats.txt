@@ -1,1 +1,1 @@
-{rdflib.term.URIRef('http://www.w3.org/ns/shacl#pattern'): 1}
+{}

@@ -8,6 +8,7 @@
     sh:pattern "http://example.com/person/.*" ;
     sh:property [ sh:nodeKind sh:Literal ;
 			sh:datatype xsd:int ;
-            sh:path ex:age ] ;
+            sh:path ex:age;
+			sh:pattern "http://example.com/.*" ] ;
     sh:targetClass ex:person .
 

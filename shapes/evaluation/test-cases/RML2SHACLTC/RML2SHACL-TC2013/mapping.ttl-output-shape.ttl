@@ -7,12 +7,12 @@
     sh:nodeKind sh:IRI ;
     sh:pattern "http://example.com/book/.*" ;
     sh:property [ sh:datatype xsd:string ;
-            sh:disjoint ex:hasISBN ;
-            sh:nodeKind sh:Literal ;
-            sh:path ex:hasISSN ],
-        [ sh:datatype xsd:string ;
             sh:disjoint ex:hasISSN ;
             sh:nodeKind sh:Literal ;
-            sh:path ex:hasISBN ] ;
+            sh:path ex:hasISBN ],
+        [ sh:datatype xsd:string ;
+            sh:disjoint ex:hasISBN ;
+            sh:nodeKind sh:Literal ;
+            sh:path ex:hasISSN ] ;
     sh:targetClass ex:book .
 

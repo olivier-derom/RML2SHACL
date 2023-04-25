@@ -10,4 +10,4 @@ ex:person rdf:type owl:Class .
 
 ex:firstname 	rdf:type owl:DatatypeProperty ;
                 rdfs:domain ex:person ;
-                rdfs:range xsd:int .
+                rdfs:range xsd:string .

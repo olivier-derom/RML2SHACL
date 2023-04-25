@@ -6,12 +6,14 @@
 
 <http://example.com/ontology> rdf:type owl:Ontology .
 
-ex:color rdf:type owl:Class ;
-		owl:oneOf ( ex:Red ex:Green ex:Blue ) .
+ex:person rdf:type owl:Class .
 
-ex:Red rdf:type ex:color .
-ex:Green rdf:type ex:color .
-ex:Blue rdf:type ex:color .
+ex:lastname 	rdf:type owl:DatatypeProperty ;
+                rdfs:domain ex:person ;
+				rdfs:range xsd:string ;
+				owl:equivalentProperty ex:familyname .
 
-ex:product rdf:type owl:Class ;
-    owl:hasValue [        a ex:color ;        owl:hasValue ex:Red    ] .
+ex:familyname 	rdf:type owl:DatatypeProperty ;
+                rdfs:domain ex:person ;
+				rdfs:range xsd:string ;
+				owl:equivalentProperty ex:lastname .
