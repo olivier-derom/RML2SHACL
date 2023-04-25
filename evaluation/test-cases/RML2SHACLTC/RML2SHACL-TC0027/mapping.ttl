@@ -21,6 +21,6 @@ ex:PersonMapping
 	rr:objectMap [
        rr:constant "25";
        rr:termType rr:Literal;
-	   rr:dataType xsd:int
+	   rr:datatype xsd:int
 	]
   ].

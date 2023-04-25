@@ -21,6 +21,6 @@ ex:PersonMapping
 	rr:objectMap [
       rr:template "http://example.com/{Age}";
 	  rr:termType rr:Literal;
-	  rr:dataType xsd:int
+	  rr:datatype xsd:int
 	]
   ].
