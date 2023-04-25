@@ -35,7 +35,7 @@ class RML:
         self.LANGUAGE = self.r2rmlNS.language
         self.CONSTANT = self.r2rmlNS.constant
         self.OBJECT = self.r2rmlNS.object
-        self.DATATYPE = self.r2rmlNS.datatype
+        self.DATATYPE = self.r2rmlNS.dataType
         self.LOGICAL_SOURCE = self.rmlNS.logicalSource
         self.LOGICAL_TABLE = self.r2rmlNS.logicalTable
 
