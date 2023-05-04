@@ -222,6 +222,9 @@ class XSDtoSHACL:
                             self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.maxCount, rdflib.Literal(int(self.XSD_elements[str(item)]["maxOccurs"])))
                         if "minLength" in self.XSD_elements[str(item)]:
                             self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.minLength, rdflib.Literal(int(self.XSD_elements[str(item)]["minLength"])))
+                        if "length" in self.XSD_elements[str(item)]:
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.minLength, rdflib.Literal(int(self.XSD_elements[str(item)]["length"])))
+                            self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.maxLength, rdflib.Literal(int(self.XSD_elements[str(item)]["length"])))
                         if "maxLength" in self.XSD_elements[str(item)]:
                             self.EnrichSHACL.enrich(g, property_BNodes_dict[item], self.shaclNS.maxLength, rdflib.Literal(int(self.XSD_elements[str(item)]["maxLength"])))
                         if "fractionDigits" in self.XSD_elements[str(item)]:
