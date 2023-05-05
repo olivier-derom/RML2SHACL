@@ -14,21 +14,29 @@ class EnrichSHACL:
         self.rdfSyntax = rdflib.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
         self.XSDNS = rdflib.Namespace('http://www.w3.org/2001/XMLSchema#')
 
-        self.enrich_stats = dict()
+        self.enrich_stats = {}
 
     def enrich(self, g, s, p, o):
-        if (s, p, None) in g:
+        if (
+            p
+            not in [
+                URIRef("http://www.w3.org/2000/01/rdf-schema#label"),
+                self.shaclNS.description,
+                self.shaclNS.name,
+            ]
+            and (s, p, None) in g
+        ):
             return
 
         if (s, self.shaclNS.datatype, None) in g:
             datatype = g.value(subject=s, predicate=self.shaclNS.datatype)
             if p in {self.shaclNS.minInclusive, self.shaclNS.maxInclusive,
                      self.shaclNS.minExclusive, self.shaclNS.maxExclusive} \
-                    and datatype in {self.XSDNS.string, self.XSDNS.NMTOKEN, self.XSDNS.Name, self.XSDNS.language,
+                        and datatype in {self.XSDNS.string, self.XSDNS.NMTOKEN, self.XSDNS.Name, self.XSDNS.language,
                                      self.XSDNS.anyURI, self.XSDNS.hexBinary, self.XSDNS.base64Binary}:
                 return
             if p in {self.shaclNS.minLength, self.shaclNS.maxLength} \
-                    and datatype in {self.XSDNS.integer, self.XSDNS.decimal, self.XSDNS.double, self.XSDNS.long,
+                        and datatype in {self.XSDNS.integer, self.XSDNS.decimal, self.XSDNS.double, self.XSDNS.long,
                                      self.XSDNS.nonNegativeInteger, self.XSDNS.positiveInteger,
                                      self.XSDNS.nonPositiveInteger, self.XSDNS.negativeInteger, self.XSDNS.int,
                                      self.XSDNS.short, self.XSDNS.byte, self.XSDNS.unsignedLong, self.XSDNS.unsignedInt,
@@ -108,11 +116,9 @@ class EnrichSHACL:
     def verifyConflicts(self, g):
         q = f'SELECT ?bnode {{?s a <{self.shaclNS.NodeShape}> .?s <{self.shaclNS.property}> ?bnode.}}'
         x = g.query(q)
-        BNode_list = list()
-        for row6 in x:
-            if type(row6.bnode) == rdflib.term.BNode:
-                BNode_list += [row6.bnode]
-
+        BNode_list = [
+            row6.bnode for row6 in x if type(row6.bnode) == rdflib.term.BNode
+        ]
         for bnode in BNode_list:
             if ((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral) in g) and (
                     (bnode, self.shaclNS.nodeKind, self.shaclNS.IRI) in g):
