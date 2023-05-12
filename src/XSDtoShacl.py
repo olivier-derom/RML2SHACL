@@ -192,10 +192,6 @@ class XSDtoSHACL:
                     self.EnrichSHACL.enrich(g, row.nodeshape, self.shaclNS.minInclusive, rdflib.Literal(int(self.XSD_elements[str(row.targetclass)]["minInclusive"])))
                 if "maxInclusive" in self.XSD_elements[str(row.targetclass)]:
                     self.EnrichSHACL.enrich(g, row.nodeshape, self.shaclNS.maxInclusive, rdflib.Literal(int(self.XSD_elements[str(row.targetclass)]["maxInclusive"])))
-                if "minOccurs" in self.XSD_elements[str(row.targetclass)]:
-                    self.EnrichSHACL.enrich(g, row.nodeshape, self.shaclNS.minCount, rdflib.Literal(int(self.XSD_elements[str(row.targetclass)]["minOccurs"])))
-                if "maxOccurs" in self.XSD_elements[str(row.targetclass)] and self.XSD_elements[str(row.targetclass)]["maxOccurs"] != "unbounded":
-                    self.EnrichSHACL.enrich(g, row.nodeshape, self.shaclNS.maxCount, rdflib.Literal(int(self.XSD_elements[str(row.targetclass)]["maxOccurs"])))
                 if "pattern" in self.XSD_elements[str(row.targetclass)]:
                     xsd_pattern = self.XSD_elements[str(row.targetclass)]["pattern"]
                     shacl_pattern = "^"
