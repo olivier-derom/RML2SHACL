@@ -1,6 +1,4 @@
 @prefix ns: <http://www.w3.org/2006/time#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rdfs1: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -12,25 +10,20 @@
 <http://mapping.example.com/map_triplesMapDatetimeinterval_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:datatype xsd:dateTime ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:xsdDateTime ;
-            sh:pattern "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?|(24:00:00(\\.0+)?))(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ],
-        [ sh:class ns:GeneralDateTimeDescription ;
-            sh:node <http://mapping.example.com/map_triplesMapGeneraldatetimedescription_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapGeneraldatetimedescription_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:hasDateTimeDescription ] ;
+            sh:path ns:hasDateTimeDescription ],
+        [ sh:datatype xsd:dateTime ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:xsdDateTime ] ;
     sh:targetClass ns:DateTimeInterval .
 
 <http://mapping.example.com/map_triplesMapDuration_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:property [ sh:datatype xsd:float ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:numericDuration ;
-            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ] ;
+            sh:path ns:numericDuration ] ;
     sh:targetClass ns:Duration .
 
 <http://mapping.example.com/map_triplesMapDurationdescription_000/shape> a sh:NodeShape ;
@@ -42,48 +35,32 @@
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:property [ sh:datatype xsd:float ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:minutes ;
-            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
+            sh:path ns:weeks ],
         [ sh:datatype xsd:float ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:years ;
-            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
+            sh:path ns:hours ],
         [ sh:datatype xsd:float ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:days ;
-            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
-        [ rdfs:seeAlso <http://www.bipm.org/en/publications/si-brochure/second.html> ;
-            sh:datatype xsd:float ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:seconds ;
-            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
+            sh:path ns:minutes ],
         [ sh:datatype xsd:float ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:weeks ;
-            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
+            sh:path ns:seconds ],
         [ sh:datatype xsd:float ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:hours ;
-            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
+            sh:path ns:months ],
         [ sh:datatype xsd:float ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:months ;
-            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ] ;
+            sh:path ns:years ],
+        [ sh:datatype xsd:float ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:days ] ;
     sh:targetClass ns:GeneralDurationDescription .
 
 <http://mapping.example.com/map_triplesMapInterval_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:class ns:Instant ;
-            sh:node <http://mapping.example.com/map_triplesMapInstant_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapInstant_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:inside ] ;
     sh:targetClass ns:Interval .
@@ -132,12 +109,10 @@
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:property [ sh:nodeKind sh:Literal ;
-            sh:path ns:nominalPosition ;
-            sh:pattern ".*" ],
+            sh:path ns:nominalPosition ],
         [ sh:datatype xsd:float ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:numericPosition ;
-            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ] ;
+            sh:path ns:numericPosition ] ;
     sh:targetClass ns:TimePosition .
 
 <http://mapping.example.com/map_triplesMapTimezone_000/shape> a sh:NodeShape ;
@@ -145,237 +120,130 @@
     sh:pattern "http://.*" ;
     sh:targetClass ns:TimeZone .
 
-<https://astrea.linkeddata.es/shapes#41a4abdcd704a84a9e7fbe5496831ccd> a sh:PropertyShape ;
-    sh:class ns:Instant .
-
 <http://mapping.example.com/map_triplesMapGeneraldatetimedescription_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:datatype xsd:integer ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
-            sh:minInclusive 0 ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:week ;
-            sh:pattern "[\\-+]?[0-9]+" ],
-        [ sh:datatype xsd:integer ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
-            sh:minInclusive 0 ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:minute ;
-            sh:pattern "[\\-+]?[0-9]+" ],
-        [ sh:class ns:TimeZone ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
-            sh:node <http://mapping.example.com/map_triplesMapTimezone_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapTimezone_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:timeZone ],
-        [ sh:datatype xsd:float ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:second ;
-            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
         [ sh:datatype xsd:integer ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
-            sh:minInclusive 0 ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:hour ;
-            sh:pattern "[\\-+]?[0-9]+" ],
-        [ sh:class ns:MonthOfYear ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
-            sh:node <http://mapping.example.com/map_triplesMapMonthofyear_000/shape> ;
+            sh:path ns:hour ],
+        [ sh:node <http://mapping.example.com/map_triplesMapMonthofyear_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:monthOfYear ],
-        [ sh:datatype xsd:integer ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
-            sh:minInclusive 0 ;
+        [ sh:datatype xsd:float ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:dayOfYear ;
-            sh:pattern "[\\-+]?[0-9]+" ],
-        [ sh:class ns:DayOfWeek ;
-            sh:maxCount "1"^^xsd:nonNegativeInteger ;
-            sh:node <http://mapping.example.com/map_triplesMapDayofweek_000/shape> ;
+            sh:path ns:second ],
+        [ sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:week ],
+        [ sh:node <http://mapping.example.com/map_triplesMapDayofweek_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:dayOfWeek ] ;
+            sh:path ns:dayOfWeek ],
+        [ sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:minute ],
+        [ sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:dayOfYear ] ;
     sh:targetClass ns:GeneralDateTimeDescription .
 
 <http://mapping.example.com/map_triplesMapTemporalentity_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:or [ rdfs1:first [ sh:class ns:Instant ;
-                    sh:path ns:before ],
-                [ sh:class ns:Instant ;
-                    sh:path ns:after ],
-                [ sh:class ns:Instant ;
-                    sh:path ns:hasTime ] ;
-            rdfs1:rest [ rdfs1:first [ sh:class ns:Interval ;
-                            sh:path ns:after ],
-                        [ sh:class ns:Interval ;
-                            sh:path ns:hasTime ],
-                        [ sh:class ns:Interval ;
-                            sh:path ns:before ] ;
-                    rdfs1:rest () ] ],
-        [ rdfs1:first [ sh:class ns:Instant ;
-                    sh:path ns:hasTime ],
-                [ sh:class ns:Instant ;
-                    sh:path ns:before ],
-                [ sh:class ns:Instant ;
-                    sh:path ns:after ] ;
-            rdfs1:rest [ rdfs1:first [ sh:class ns:Interval ;
-                            sh:path ns:hasTime ],
-                        [ sh:class ns:Interval ;
-                            sh:path ns:after ],
-                        [ sh:class ns:Interval ;
-                            sh:path ns:before ] ;
-                    rdfs1:rest () ] ] ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:class ns:TemporalDuration ;
-            sh:node <http://mapping.example.com/map_triplesMapTemporalduration_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapTemporalentity_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:hasTemporalDuration ],
-        [ sh:class ns:TemporalEntity ;
-            sh:node <http://mapping.example.com/map_triplesMapTemporalentity_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:or [ rdfs1:first [ sh:class ns:Instant ;
-                            sh:path ns:after ],
-                        [ sh:class ns:Instant ;
-                            sh:path ns:hasTime ],
-                        [ sh:class ns:Instant ;
-                            sh:path ns:before ] ;
-                    rdfs1:rest [ rdfs1:first [ sh:class ns:Interval ;
-                                    sh:path ns:before ],
-                                [ sh:class ns:Interval ;
-                                    sh:path ns:hasTime ],
-                                [ sh:class ns:Interval ;
-                                    sh:path ns:after ] ;
-                            rdfs1:rest () ] ] ;
-            sh:path ns:before ],
-        [ sh:datatype xsd:duration ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasXSDDuration ;
-            sh:pattern "-?P((([0-9]+Y([0-9]+M)?([0-9]+D)?|([0-9]+M)([0-9]+D)?|([0-9]+D))(T(([0-9]+H)([0-9]+M)?([0-9]+(\\.[0-9]+)?S)?|([0-9]+M)([0-9]+(\\.[0-9]+)?S)?|([0-9]+(\\.[0-9]+)?S)))?)|(T(([0-9]+H)([0-9]+M)?([0-9]+(\\.[0-9]+)?S)?|([0-9]+M)([0-9]+(\\.[0-9]+)?S)?|([0-9]+(\\.[0-9]+)?S))))" ],
-        [ sh:class ns:Instant ;
-            sh:node <http://mapping.example.com/map_triplesMapInstant_000/shape> ;
+            sh:path ns:after ],
+        [ sh:node <http://mapping.example.com/map_triplesMapInstant_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:hasBeginning ],
-        [ sh:class ns:TemporalEntity ;
-            sh:node <http://mapping.example.com/map_triplesMapTemporalentity_000/shape> ;
+        [ sh:node <http://mapping.example.com/map_triplesMapInstant_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:or [ rdfs1:first [ sh:class ns:Instant ;
-                            sh:path ns:after ],
-                        [ sh:class ns:Instant ;
-                            sh:path ns:before ],
-                        [ sh:class ns:Instant ;
-                            sh:path ns:hasTime ] ;
-                    rdfs1:rest [ rdfs1:first [ sh:class ns:Interval ;
-                                    sh:path ns:hasTime ],
-                                [ sh:class ns:Interval ;
-                                    sh:path ns:after ],
-                                [ sh:class ns:Interval ;
-                                    sh:path ns:before ] ;
-                            rdfs1:rest () ] ] ;
-            sh:path ns:after ],
-        [ sh:class ns:Instant ;
-            sh:node <http://mapping.example.com/map_triplesMapInstant_000/shape> ;
+            sh:path ns:hasEnd ],
+        [ sh:node <http://mapping.example.com/map_triplesMapTemporalentity_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:hasEnd ] ;
+            sh:path ns:before ],
+        [ sh:node <http://mapping.example.com/map_triplesMapTemporalduration_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:hasTemporalDuration ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasXSDDuration ] ;
     sh:targetClass ns:TemporalEntity .
 
 <http://mapping.example.com/map_triplesMapInstant_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:datatype xsd:date ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:inXSDDate ;
-            sh:pattern "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:inXSDDateTimeStamp ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:inXSDgYear ;
-            sh:pattern "-?([1-9][0-9]{3,}|0[0-9]{3})(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ],
-        [ sh:datatype xsd:dateTime ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:inXSDDateTime ;
-            sh:pattern "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?|(24:00:00(\\.0+)?))(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:inXSDgYearMonth ;
-            sh:pattern "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ],
-        [ sh:class ns:GeneralDateTimeDescription ;
-            sh:node <http://mapping.example.com/map_triplesMapGeneraldatetimedescription_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:inDateTime ],
-        [ sh:class ns:TemporalPosition ;
-            sh:node <http://mapping.example.com/map_triplesMapTemporalposition_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapTemporalposition_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:inTemporalPosition ],
-        [ sh:class ns:TimePosition ;
-            sh:node <http://mapping.example.com/map_triplesMapTimeposition_000/shape> ;
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:inXSDgYear ],
+        [ sh:datatype xsd:date ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:inXSDDate ],
+        [ sh:datatype xsd:dateTime ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:inXSDDateTime ],
+        [ sh:node <http://mapping.example.com/map_triplesMapGeneraldatetimedescription_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:inDateTime ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:inXSDgYearMonth ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:inXSDDateTimeStamp ],
+        [ sh:node <http://mapping.example.com/map_triplesMapTimeposition_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:inTimePosition ] ;
     sh:targetClass ns:Instant .
 
 <http://mapping.example.com/map_triplesMapProperinterval_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:not <https://astrea.linkeddata.es/shapes#41a4abdcd704a84a9e7fbe5496831ccd> ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalContains ],
-        [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalOverlaps ],
-        [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalMeets ],
-        [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalFinishes ],
-        [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalAfter ],
-        [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalBefore ],
-        [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalDisjoint ],
-        [ sh:class ns:ProperInterval ;
-            sh:disjoint ns:intervalEquals ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalIn ],
-        [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalFinishedBy ],
-        [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalDuring ],
-        [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalStarts ],
-        [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalStartedBy ],
-        [ sh:class ns:ProperInterval ;
-            sh:disjoint ns:intervalIn ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+    sh:property [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:intervalEquals ],
-        [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalStarts ],
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalContains ],
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalStartedBy ],
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalDuring ],
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:intervalOverlappedBy ],
-        [ sh:class ns:ProperInterval ;
-            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:intervalMetBy ] ;
+            sh:path ns:intervalBefore ],
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalDisjoint ],
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalFinishedBy ],
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalIn ],
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalOverlaps ],
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalFinishes ],
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalMetBy ],
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalAfter ],
+        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalMeets ] ;
     sh:targetClass ns:ProperInterval .
 

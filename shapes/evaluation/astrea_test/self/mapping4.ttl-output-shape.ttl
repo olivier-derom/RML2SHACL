@@ -6,38 +6,38 @@
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
     sh:property [ sh:nodeKind sh:IRI ;
+            sh:path ns:eventDescriptor ],
+        [ sh:nodeKind sh:IRI ;
             sh:path ns:hasAreaTarget ],
         [ sh:nodeKind sh:IRI ;
             sh:path ns:hasGroupTarget ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:hasEventName ],
         [ sh:nodeKind sh:IRI ;
             sh:path ns:hasEventStatus ],
-        [ sh:nodeKind sh:IRI ;
-            sh:path ns:eventDescriptor ] ;
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasEventName ] ;
     sh:targetClass ns:Event .
 
 <http://mapping.example.com/map_triplesMapEventdescriptor_000/shape> a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ sh:nodeKind sh:Literal ;
-            sh:path ns:hasModificationReason ],
-        [ sh:datatype xsd:integer ;
+    sh:property [ sh:datatype xsd:boolean ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:hasPriority ],
+            sh:path ns:isTestEvent ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasModificationReason ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ns:hasModificationDateTime ],
+        [ sh:datatype xsd:boolean ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:isResponseRequired ],
         [ sh:datatype xsd:integer ;
             sh:nodeKind sh:Literal ;
             sh:path ns:hasModificationNumber ],
         [ sh:nodeKind sh:Literal ;
-            sh:path ns:hasModificationDateTime ],
-        [ sh:nodeKind sh:Literal ;
             sh:path ns:hasRandomization ],
-        [ sh:datatype xsd:boolean ;
+        [ sh:datatype xsd:integer ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:isTestEvent ],
-        [ sh:datatype xsd:boolean ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:isResponseRequired ] ;
+            sh:path ns:hasPriority ] ;
     sh:targetClass ns:EventDescriptor .
 
 <http://mapping.example.com/map_triplesMapEventstatus_000/shape> a sh:NodeShape ;

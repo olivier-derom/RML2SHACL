@@ -1,0 +1,297 @@
+@prefix ex: <http://www.example.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:dct_created a sh:PropertyShape ;
+    sh:path <http://purl.org/dc/terms/created> .
+
+ex:dct_creator a sh:PropertyShape ;
+    sh:path <http://purl.org/dc/terms/creator> .
+
+ex:dct_description a sh:PropertyShape ;
+    sh:path <http://purl.org/dc/terms/description> .
+
+ex:dct_license a sh:PropertyShape ;
+    sh:path <http://purl.org/dc/terms/license> .
+
+ex:dct_rights a sh:PropertyShape ;
+    sh:path <http://purl.org/dc/terms/rights> .
+
+ex:dct_title a sh:PropertyShape ;
+    sh:path <http://purl.org/dc/terms/title> .
+
+ex:foaf_Agent a sh:NodeShape ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:targetClass <http://xmlns.com/foaf/0.1/Agent> .
+
+ex:foaf_name a sh:PropertyShape ;
+    sh:path <http://xmlns.com/foaf/0.1/name> .
+
+ex:skos_definition a sh:PropertyShape ;
+    sh:path <http://www.w3.org/2004/02/skos/core#definition> .
+
+ex:skos_example a sh:PropertyShape ;
+    sh:path <http://www.w3.org/2004/02/skos/core#example> .
+
+ex:sosa_ActuatableProperty sh:property [ sh:class <http://www.w3.org/ns/sosa/Actuation> ;
+            sh:path <http://www.w3.org/ns/sosa/isActedOnBy> ] .
+
+ex:sosa_Actuation a sh:NodeShape ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:path <http://www.w3.org/ns/sosa/actsOnProperty> ],
+        [ sh:class <http://www.w3.org/ns/sosa/FeatureOfInterest> ;
+            sh:path <http://www.w3.org/ns/sosa/hasFeatureOfInterest> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/ns/sosa/madeByActuator> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/ns/sosa/resultTime> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/ns/sosa/hasFeatureOfInterest> ],
+        [ sh:class <http://www.w3.org/ns/sosa/Procedure> ;
+            sh:path <http://www.w3.org/ns/sosa/usedProcedure> ],
+        [ sh:class <http://www.w3.org/ns/sosa/ActuatableProperty> ;
+            sh:path <http://www.w3.org/ns/sosa/actsOnProperty> ],
+        [ sh:class <http://www.w3.org/ns/sosa/Result> ;
+            sh:path <http://www.w3.org/ns/sosa/hasResult> ],
+        [ sh:path <http://www.w3.org/ns/sosa/hasResult> ],
+        [ sh:class <http://www.w3.org/ns/sosa/Actuator> ;
+            sh:path <http://www.w3.org/ns/sosa/madeByActuator> ] ;
+    sh:targetClass <http://www.w3.org/ns/sosa/Actuation> .
+
+ex:sosa_Actuator sh:property [ sh:class <http://www.w3.org/ns/sosa/Actuation> ;
+            sh:path <http://www.w3.org/ns/sosa/madeActuation> ],
+        [ sh:class <http://www.w3.org/ns/sosa/ActuatableProperty> ;
+            sh:path <http://www.w3.org/ns/ssn/forProperty> ],
+        [ sh:path <http://www.w3.org/ns/ssn/implements> ] .
+
+ex:sosa_FeatureOfInterest sh:property [ sh:class <http://www.w3.org/ns/sosa/Sample> ;
+            sh:path <http://www.w3.org/ns/sosa/hasSample> ],
+        [ sh:path <http://www.w3.org/ns/ssn/hasProperty> ],
+        [ sh:class <http://www.w3.org/ns/ssn/Property> ;
+            sh:path <http://www.w3.org/ns/ssn/hasProperty> ] .
+
+ex:sosa_ObservableProperty sh:property [ sh:class <http://www.w3.org/ns/sosa/Sensor> ;
+            sh:path <http://www.w3.org/ns/sosa/isObservedBy> ] .
+
+ex:sosa_Observation a sh:NodeShape ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:path <http://www.w3.org/ns/sosa/hasResult> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/ns/ssn/wasOriginatedBy> ],
+        [ sh:class <http://www.w3.org/ns/sosa/Result> ;
+            sh:path <http://www.w3.org/ns/sosa/hasResult> ],
+        [ sh:class <http://www.w3.org/ns/sosa/FeatureOfInterest> ;
+            sh:path <http://www.w3.org/ns/sosa/hasFeatureOfInterest> ],
+        [ sh:class <http://www.w3.org/ns/sosa/Procedure> ;
+            sh:path <http://www.w3.org/ns/sosa/usedProcedure> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/ns/sosa/observedProperty> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/ns/sosa/resultTime> ],
+        [ sh:class <http://www.w3.org/ns/sosa/ObservableProperty> ;
+            sh:path <http://www.w3.org/ns/sosa/observedProperty> ],
+        [ sh:class <http://www.w3.org/ns/sosa/Sensor> ;
+            sh:path <http://www.w3.org/ns/sosa/madeBySensor> ],
+        [ sh:class <http://www.w3.org/ns/ssn/Stimulus> ;
+            sh:path <http://www.w3.org/ns/ssn/wasOriginatedBy> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/ns/sosa/madeBySensor> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/ns/sosa/phenomenonTime> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/ns/sosa/hasFeatureOfInterest> ] ;
+    sh:targetClass <http://www.w3.org/ns/sosa/Observation> .
+
+ex:sosa_Platform sh:property [ sh:class <http://www.w3.org/ns/ssn/Deployment> ;
+            sh:path <http://www.w3.org/ns/ssn/inDeployment> ],
+        [ sh:class <http://www.w3.org/ns/ssn/System> ;
+            sh:path <http://www.w3.org/ns/sosa/hosts> ] .
+
+ex:sosa_Procedure sh:property [ sh:class <http://www.w3.org/ns/ssn/System> ;
+            sh:path <http://www.w3.org/ns/ssn/implementedBy> ],
+        [ sh:class <http://www.w3.org/ns/ssn/Input> ;
+            sh:path <http://www.w3.org/ns/ssn/hasInput> ],
+        [ sh:class <http://www.w3.org/ns/ssn/Output> ;
+            sh:path <http://www.w3.org/ns/ssn/hasOutput> ] .
+
+ex:sosa_Result sh:property [ sh:path <http://www.w3.org/ns/sosa/isResultOf> ] .
+
+ex:sosa_Sample sh:property [ sh:class <http://www.w3.org/ns/sosa/FeatureOfInterest> ;
+            sh:path <http://www.w3.org/ns/sosa/isSampleOf> ],
+        [ sh:class <http://www.w3.org/ns/sosa/Sampling> ;
+            sh:path <http://www.w3.org/ns/sosa/isResultOf> ],
+        [ sh:path <http://www.w3.org/ns/sosa/isResultOf> ],
+        [ sh:path <http://www.w3.org/ns/sosa/isSampleOf> ] .
+
+ex:sosa_Sampler sh:property [ sh:class <http://www.w3.org/ns/sosa/Sampling> ;
+            sh:path <http://www.w3.org/ns/sosa/madeSampling> ],
+        [ sh:path <http://www.w3.org/ns/ssn/implements> ] .
+
+ex:sosa_Sampling a sh:NodeShape ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:path <http://www.w3.org/ns/sosa/hasResult> ],
+        [ sh:class <http://www.w3.org/ns/sosa/FeatureOfInterest> ;
+            sh:path <http://www.w3.org/ns/sosa/hasFeatureOfInterest> ],
+        [ sh:class <http://www.w3.org/ns/sosa/Sample> ;
+            sh:path <http://www.w3.org/ns/sosa/hasResult> ],
+        [ sh:class <http://www.w3.org/ns/sosa/Sampler> ;
+            sh:path <http://www.w3.org/ns/sosa/madeBySampler> ],
+        [ sh:class <http://www.w3.org/ns/sosa/Procedure> ;
+            sh:path <http://www.w3.org/ns/sosa/usedProcedure> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/ns/sosa/madeBySampler> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/ns/sosa/hasFeatureOfInterest> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/ns/sosa/resultTime> ] ;
+    sh:targetClass <http://www.w3.org/ns/sosa/Sampling> .
+
+ex:sosa_Sensor sh:property [ sh:class <http://www.w3.org/ns/sosa/ObservableProperty> ;
+            sh:path <http://www.w3.org/ns/sosa/observes> ],
+        [ sh:path <http://www.w3.org/ns/ssn/implements> ],
+        [ sh:class <http://www.w3.org/ns/ssn/Stimulus> ;
+            sh:path <http://www.w3.org/ns/ssn/detects> ],
+        [ sh:class <http://www.w3.org/ns/sosa/Observation> ;
+            sh:path <http://www.w3.org/ns/sosa/madeObservation> ] .
+
+ex:sosa_hasSample a sh:PropertyShape ;
+    sh:path [ sh:inversePath <http://www.w3.org/ns/sosa/hasSample> ;
+            sh:maxCount 1 ],
+        <http://www.w3.org/ns/sosa/hasSample> .
+
+ex:sosa_isSampleOf a sh:PropertyShape ;
+    sh:maxCount 1 ;
+    sh:path <http://www.w3.org/ns/sosa/isSampleOf> .
+
+ex:ssn_Deployment a sh:NodeShape ;
+    sh:description "Describes the Deployment of one or more Systems for a particular purpose. Deployment may be done on a Platform."@en ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:class <http://www.w3.org/ns/sosa/Platform> ;
+            sh:path <http://www.w3.org/ns/ssn/deployedOnPlatform> ],
+        [ sh:class <http://www.w3.org/ns/ssn/Property> ;
+            sh:path <http://www.w3.org/ns/ssn/forProperty> ],
+        [ sh:class <http://www.w3.org/ns/ssn/System> ;
+            sh:path <http://www.w3.org/ns/ssn/deployedSystem> ] ;
+    sh:targetClass <http://www.w3.org/ns/ssn/Deployment> .
+
+ex:ssn_Input a sh:NodeShape ;
+    sh:description "Any information that is provided to a Procedure for its use."@en ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:targetClass <http://www.w3.org/ns/ssn/Input> .
+
+ex:ssn_Output a sh:NodeShape ;
+    sh:description "Any information that is reported from a Procedure."@en ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:targetClass <http://www.w3.org/ns/ssn/Output> .
+
+ex:ssn_Property a sh:NodeShape ;
+    sh:description "A quality of an entity. An aspect of an entity that is intrinsic to and cannot exist without the entity."@en ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:class <http://www.w3.org/ns/sosa/FeatureOfInterest> ;
+            sh:path <http://www.w3.org/ns/ssn/isPropertyOf> ] ;
+    sh:targetClass <http://www.w3.org/ns/ssn/Property> .
+
+ex:ssn_Stimulus a sh:NodeShape ;
+    sh:description "An event in the real world that 'triggers' the Sensor. The properties associated to the Stimulus may be different to the eventual observed ObservableProperty. It is the event, not the object, that triggers the Sensor."@en ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:class <http://www.w3.org/ns/sosa/ObservableProperty> ;
+            sh:path <http://www.w3.org/ns/ssn/isProxyFor> ] ;
+    sh:targetClass <http://www.w3.org/ns/ssn/Stimulus> .
+
+ex:ssn_System a sh:NodeShape ;
+    sh:description "System is a unit of abstraction for pieces of infrastructure that implement Procedures. A System may have components, its subsystems, which are other systems."@en ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:class <http://www.w3.org/ns/sosa/Platform> ;
+            sh:path <http://www.w3.org/ns/sosa/isHostedBy> ],
+        [ sh:class <http://www.w3.org/ns/ssn/System> ;
+            sh:path <http://www.w3.org/ns/ssn/hasSubSystem> ],
+        [ sh:class <http://www.w3.org/ns/sosa/Procedure> ;
+            sh:path <http://www.w3.org/ns/ssn/implements> ],
+        [ sh:class <http://www.w3.org/ns/ssn/Deployment> ;
+            sh:path <http://www.w3.org/ns/ssn/hasDeployment> ] ;
+    sh:targetClass <http://www.w3.org/ns/ssn/System> .
+
+ex:ssn_deployedOnPlatform a sh:PropertyShape ;
+    sh:description "Relation between a Deployment and the Platform on which the Systems are deployed."@en ;
+    sh:path <http://www.w3.org/ns/ssn/deployedOnPlatform> .
+
+ex:ssn_deployedSystem a sh:PropertyShape ;
+    sh:description "Relation between a Deployment and a deployed System."@en ;
+    sh:path <http://www.w3.org/ns/ssn/deployedSystem> .
+
+ex:ssn_detects a sh:PropertyShape ;
+    sh:description "A relation from a Sensor to the Stimulus that the Sensor detects. The Stimulus itself will be serving as a proxy for some ObservableProperty."@en ;
+    sh:path <http://www.w3.org/ns/ssn/detects> .
+
+ex:ssn_forProperty a sh:PropertyShape ;
+    sh:description "A relation between some aspect of an entity and a Property."@en ;
+    sh:path <http://www.w3.org/ns/ssn/forProperty> .
+
+ex:ssn_hasDeployment a sh:PropertyShape ;
+    sh:description "Relation between a System and a Deployment, recording that the System is deployed in that Deployment."@en ;
+    sh:path <http://www.w3.org/ns/ssn/hasDeployment> .
+
+ex:ssn_hasInput a sh:PropertyShape ;
+    sh:description "Relation between a Procedure and an Input to it."@en ;
+    sh:path <http://www.w3.org/ns/ssn/hasInput> .
+
+ex:ssn_hasOutput a sh:PropertyShape ;
+    sh:description "Relation between a Procedure and an Output of it."@en ;
+    sh:path <http://www.w3.org/ns/ssn/hasOutput> .
+
+ex:ssn_hasProperty a sh:PropertyShape ;
+    sh:description "Relation between an entity and a Property of that entity."@en ;
+    sh:path <http://www.w3.org/ns/ssn/hasProperty> .
+
+ex:ssn_hasSubSystem a sh:PropertyShape ;
+    sh:description "Relation between a System and its component parts."@en ;
+    sh:path <http://www.w3.org/ns/ssn/hasSubSystem> .
+
+ex:ssn_implementedBy a sh:PropertyShape ;
+    sh:description "Relation between a Procedure (an algorithm, procedure or method) and an entity that implements that Procedure in some executable way."@en ;
+    sh:path <http://www.w3.org/ns/ssn/implementedBy> .
+
+ex:ssn_implements a sh:PropertyShape ;
+    sh:description "Relation between an entity that implements a Procedure in some executable way and the Procedure (an algorithm, procedure or method)."@en ;
+    sh:path <http://www.w3.org/ns/ssn/implements> .
+
+ex:ssn_inDeployment a sh:PropertyShape ;
+    sh:description "Relation between a Platform and a Deployment, meaning that the deployedSystems of the Deployment are hosted on the Platform."@en ;
+    sh:path <http://www.w3.org/ns/ssn/inDeployment> .
+
+ex:ssn_isPropertyOf a sh:PropertyShape ;
+    sh:description "Relation between a Property and the entity it belongs to."@en ;
+    sh:path <http://www.w3.org/ns/ssn/isPropertyOf> .
+
+ex:ssn_isProxyFor a sh:PropertyShape ;
+    sh:description "A relation from a Stimulus to the Property that the Stimulus is serving as a proxy for."@en ;
+    sh:path <http://www.w3.org/ns/ssn/isProxyFor> .
+
+ex:ssn_wasOriginatedBy a sh:PropertyShape ;
+    sh:description "Relation between an Observation and the Stimulus that originated it."@en ;
+    sh:maxCount 1 ;
+    sh:path <http://www.w3.org/ns/ssn/wasOriginatedBy> .
+
+ex:vann_preferredNamespacePrefix a sh:PropertyShape ;
+    sh:path <http://purl.org/vocab/vann/preferredNamespacePrefix> .
+
+ex:vann_preferredNamespaceUri a sh:PropertyShape ;
+    sh:path <http://purl.org/vocab/vann/preferredNamespaceUri> .
+
+ex:voaf_Vocabulary a sh:NodeShape ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:targetClass <http://purl.org/vocommons/voaf#Vocabulary> .
+
+

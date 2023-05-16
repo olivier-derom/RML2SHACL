@@ -1,0 +1,569 @@
+@prefix ex: <http://www.example.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:time_DateTimeDescription a sh:NodeShape ;
+    sh:description "Descripción de fecha y tiempo estructurada con valores separados para los diferentes elementos de un sistema calendario-reloj. El sistema de referencia temporal está fijado al calendario gregoriano, y el rango de las propiedades año, mes, día restringidas a los correspondientes tipos del XML Schema xsd:gYear, xsd:gMonth y xsd:gDay respectivamente."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:path <http://www.w3.org/2006/time#hasTRS> ],
+        [ sh:class xsd:gMonth ;
+            sh:path <http://www.w3.org/2006/time#month> ],
+        [ sh:class xsd:gYear ;
+            sh:path <http://www.w3.org/2006/time#year> ],
+        [ sh:class xsd:gDay ;
+            sh:path <http://www.w3.org/2006/time#day> ] ;
+    sh:targetClass <http://www.w3.org/2006/time#DateTimeDescription> .
+
+ex:time_DateTimeInterval a sh:NodeShape ;
+    sh:description "'intervalo de fecha-hora' es una subclase de 'intervalo propio', definida utilizando el multi-elemento 'descripción de fecha-hora'."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property ex:time_hasDateTimeDescription,
+        ex:time_xsdDateTime ;
+    sh:targetClass <http://www.w3.org/2006/time#DateTimeInterval> .
+
+ex:time_DayOfWeek a sh:NodeShape ;
+    sh:description "El día de la semana"@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:targetClass <http://www.w3.org/2006/time#DayOfWeek> .
+
+ex:time_Duration a sh:NodeShape ;
+    sh:description "Duración de una extensión temporal expresada como un número escalado por una unidad temporal."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/2006/time#unitType> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/2006/time#numericDuration> ],
+        ex:time_numericDuration,
+        ex:time_unitType ;
+    sh:targetClass <http://www.w3.org/2006/time#Duration> .
+
+ex:time_DurationDescription a sh:NodeShape ;
+    sh:description "Descripción de extensión temporal estructurada con valores separados para los distintos elementos de un sistema de horario-calendario. El sistema de referencia temporal se fija al calendario gregoriano, y el intervalo de cada una de las propiedades numéricas se restringe a xsd:decimal."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:class xsd:decimal ;
+            sh:path <http://www.w3.org/2006/time#months> ],
+        [ sh:class xsd:decimal ;
+            sh:path <http://www.w3.org/2006/time#years> ],
+        [ sh:class xsd:decimal ;
+            sh:path <http://www.w3.org/2006/time#days> ],
+        [ sh:class xsd:decimal ;
+            sh:path <http://www.w3.org/2006/time#weeks> ],
+        [ sh:path <http://www.w3.org/2006/time#hasTRS> ],
+        [ sh:class xsd:decimal ;
+            sh:path <http://www.w3.org/2006/time#seconds> ],
+        [ sh:class xsd:decimal ;
+            sh:path <http://www.w3.org/2006/time#minutes> ],
+        [ sh:class xsd:decimal ;
+            sh:path <http://www.w3.org/2006/time#hours> ] ;
+    sh:targetClass <http://www.w3.org/2006/time#DurationDescription> .
+
+ex:time_GeneralDateTimeDescription a sh:NodeShape ;
+    sh:description "Descripción de fecha y hora estructurada con valores separados para los distintos elementos de un sistema calendario-reloj."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/2006/time#unitType> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#hour> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#dayOfWeek> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#minute> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#month> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#timeZone> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#dayOfYear> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#monthOfYear> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#week> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#year> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#day> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#second> ],
+        ex:time_day,
+        ex:time_dayOfWeek,
+        ex:time_dayOfYear,
+        ex:time_hour,
+        ex:time_minute,
+        ex:time_month,
+        ex:time_monthOfYear,
+        ex:time_second,
+        ex:time_timeZone,
+        ex:time_unitType,
+        ex:time_week,
+        ex:time_year ;
+    sh:targetClass <http://www.w3.org/2006/time#GeneralDateTimeDescription> .
+
+ex:time_GeneralDurationDescription a sh:NodeShape ;
+    sh:description "Descripción de extensión temporal estructurada con valores separados para los distintos elementos de un sistema de horario-calendario."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#months> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#minutes> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#seconds> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#years> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#days> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/2006/time#hasTRS> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#hours> ],
+        [ sh:maxCount 1 ;
+            sh:path <http://www.w3.org/2006/time#weeks> ],
+        ex:time_days,
+        ex:time_hasTRS,
+        ex:time_hours,
+        ex:time_minutes,
+        ex:time_months,
+        ex:time_seconds,
+        ex:time_weeks,
+        ex:time_years ;
+    sh:targetClass <http://www.w3.org/2006/time#GeneralDurationDescription> .
+
+ex:time_Instant a sh:NodeShape ;
+    sh:description "Una entidad temporal con una extensión o duración cero."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property ex:time_inDateTime,
+        ex:time_inTemporalPosition,
+        ex:time_inTimePosition,
+        ex:time_inXSDDate,
+        ex:time_inXSDDateTime,
+        ex:time_inXSDDateTimeStamp,
+        ex:time_inXSDgYear,
+        ex:time_inXSDgYearMonth ;
+    sh:targetClass <http://www.w3.org/2006/time#Instant> .
+
+ex:time_Interval a sh:NodeShape ;
+    sh:description "Una entidad temporal con una extensión o duración."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property ex:time_inside ;
+    sh:targetClass <http://www.w3.org/2006/time#Interval> .
+
+ex:time_January a sh:NodeShape ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:path <http://www.w3.org/2006/time#unitType> ],
+        [ sh:path <http://www.w3.org/2006/time#month> ] ;
+    sh:targetClass <http://www.w3.org/2006/time#January> .
+
+ex:time_MonthOfYear a sh:NodeShape ;
+    sh:description "El mes del año."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:maxCount 0 ;
+            sh:minCount 0 ;
+            sh:path <http://www.w3.org/2006/time#hour> ],
+        [ sh:maxCount 0 ;
+            sh:minCount 0 ;
+            sh:path <http://www.w3.org/2006/time#minute> ],
+        [ sh:maxCount 0 ;
+            sh:minCount 0 ;
+            sh:path <http://www.w3.org/2006/time#week> ],
+        [ sh:maxCount 0 ;
+            sh:minCount 0 ;
+            sh:path <http://www.w3.org/2006/time#second> ],
+        [ sh:path <http://www.w3.org/2006/time#unitType> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/2006/time#month> ],
+        [ sh:maxCount 0 ;
+            sh:minCount 0 ;
+            sh:path <http://www.w3.org/2006/time#day> ],
+        [ sh:maxCount 0 ;
+            sh:minCount 0 ;
+            sh:path <http://www.w3.org/2006/time#year> ] ;
+    sh:targetClass <http://www.w3.org/2006/time#MonthOfYear> .
+
+ex:time_ProperInterval a sh:NodeShape ;
+    sh:description "Una entidad temporal con extensión o duración distinta de cero, es decir, para la cual los valores de principio y fin del intervalo son diferentes."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property ex:time_intervalAfter,
+        ex:time_intervalBefore,
+        ex:time_intervalContains,
+        ex:time_intervalDisjoint,
+        ex:time_intervalDuring,
+        ex:time_intervalEquals,
+        ex:time_intervalFinishedBy,
+        ex:time_intervalFinishes,
+        ex:time_intervalIn,
+        ex:time_intervalMeets,
+        ex:time_intervalMetBy,
+        ex:time_intervalOverlappedBy,
+        ex:time_intervalOverlaps,
+        ex:time_intervalStartedBy,
+        ex:time_intervalStarts ;
+    sh:targetClass <http://www.w3.org/2006/time#ProperInterval> .
+
+ex:time_TRS a sh:NodeShape ;
+    sh:description """Un sistema de referencia temporal, tal como un sistema de coordenadas temporales (con un origen, una dirección y una escala), una combinación calendario-reloj, o un sistema ordinal (posiblemente jerárquico).\r
+        Esta clase comodín representa el conjunto de todos los sistemas de referencia temporal."""@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:targetClass <http://www.w3.org/2006/time#TRS> .
+
+ex:time_TemporalDuration a sh:NodeShape ;
+    sh:description "Extensión de tiempo; duración de un intervalo de tiempo independiente de su posición de inicio particular."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:targetClass <http://www.w3.org/2006/time#TemporalDuration> .
+
+ex:time_TemporalEntity a sh:NodeShape ;
+    sh:description "Un intervalo temporal o un instante."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property ex:time_after,
+        ex:time_before,
+        ex:time_hasBeginning,
+        ex:time_hasEnd,
+        ex:time_hasTemporalDuration,
+        ex:time_hasXSDDuration ;
+    sh:targetClass <http://www.w3.org/2006/time#TemporalEntity> .
+
+ex:time_TemporalPosition a sh:NodeShape ;
+    sh:description "Una posición sobre una línea de tiempo."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/2006/time#hasTRS> ],
+        ex:time_hasTRS ;
+    sh:targetClass <http://www.w3.org/2006/time#TemporalPosition> .
+
+ex:time_TemporalUnit a sh:NodeShape ;
+    sh:description "Una duración estándar, que proporciona un factor de escala para una extensión de tiempo, o la granularidad o precisión para una posición de tiempo."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:targetClass <http://www.w3.org/2006/time#TemporalUnit> .
+
+ex:time_TimePosition a sh:NodeShape ;
+    sh:description "Una posición temporal descrita utilizando bien un valor (nominal) de un sistema de referencia ordinal, o un valor (numérico) en un sistema de coordenadas temporales."@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property ex:time_nominalPosition,
+        ex:time_numericPosition ;
+    sh:targetClass <http://www.w3.org/2006/time#TimePosition> .
+
+ex:time_TimeZone a sh:NodeShape ;
+    sh:description """Un huso horario especifica la cantidad en que la hora local está desplazada con respecto a UTC.\r
+        Un huso horario normalmente se denota geográficamente (p.ej. el horario de verano del este de Australia), con un valor constante en una región dada.\r
+        La región donde aplica y el desplazamiento desde UTC las especifica una autoridad gubernamental localmente reconocida."""@es ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:targetClass <http://www.w3.org/2006/time#TimeZone> .
+
+ex:time_Year a sh:NodeShape ;
+    sh:description "Year duration" ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:property [ sh:maxCount 0 ;
+            sh:minCount 0 ;
+            sh:path <http://www.w3.org/2006/time#weeks> ],
+        [ sh:maxCount 0 ;
+            sh:minCount 0 ;
+            sh:path <http://www.w3.org/2006/time#minutes> ],
+        [ sh:maxCount 0 ;
+            sh:minCount 0 ;
+            sh:path <http://www.w3.org/2006/time#seconds> ],
+        [ sh:maxCount 0 ;
+            sh:minCount 0 ;
+            sh:path <http://www.w3.org/2006/time#days> ],
+        [ sh:maxCount 0 ;
+            sh:minCount 0 ;
+            sh:path <http://www.w3.org/2006/time#months> ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path <http://www.w3.org/2006/time#years> ],
+        [ sh:maxCount 0 ;
+            sh:minCount 0 ;
+            sh:path <http://www.w3.org/2006/time#hours> ] ;
+    sh:targetClass <http://www.w3.org/2006/time#Year> .
+
+ex:time_hasDuration a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#Duration> ;
+    sh:description "Duración de una entidad temporal, expresada como un valor escalado o un valor nominal."@es ;
+    sh:path <http://www.w3.org/2006/time#hasDuration> .
+
+ex:time_hasDurationDescription a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#GeneralDurationDescription> ;
+    sh:description "Duración de una entidad temporal, expresada utilizando una descripción estructurada."@es ;
+    sh:path <http://www.w3.org/2006/time#hasDurationDescription> .
+
+ex:time_hasTime a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#TemporalEntity> ;
+    sh:description "Proporciona soporte a la asociación de una entidad temporal (instante o intervalo) a cualquier cosa."@es ;
+    sh:path <http://www.w3.org/2006/time#hasTime> .
+
+ex:time_after a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#TemporalEntity> ;
+    sh:description "Asume una dirección en el tiempo. Si una entidad temporal T1 está después de otra entidad temporal T2, entonces el principio de T1 está después del final de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#after> .
+
+ex:time_before a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#TemporalEntity> ;
+    sh:description "Asume una dirección en el tiempo. Si una entidad temporal T1 está antes que otra entidad temporal T2, entonces el final de T1 está antes que el principio de T2. Así, \"antes\" se puede considerar básica para instantes y derivada para intervalos."@es ;
+    sh:path <http://www.w3.org/2006/time#before> .
+
+ex:time_day a sh:PropertyShape ;
+    sh:description "Posición de día en un sistema calendario-reloj."@es ;
+    sh:path <http://www.w3.org/2006/time#day> .
+
+ex:time_dayOfWeek a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#DayOfWeek> ;
+    sh:description "El día de la semana, cuyo valor es un miembro de la clase 'día de la semana'." ;
+    sh:path <http://www.w3.org/2006/time#dayOfWeek> .
+
+ex:time_dayOfYear a sh:PropertyShape ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:description "El número de día en el año."@es ;
+    sh:path <http://www.w3.org/2006/time#dayOfYear> .
+
+ex:time_days a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:description "Longitud de, o elemento de la longitud de, una extensión temporal expresada en días."@es ;
+    sh:path <http://www.w3.org/2006/time#days> .
+
+ex:time_hasBeginning a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#Instant> ;
+    sh:description "Comienzo de una entidad temporal."@es ;
+    sh:path <http://www.w3.org/2006/time#hasBeginning> .
+
+ex:time_hasDateTimeDescription a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#GeneralDateTimeDescription> ;
+    sh:description "Valor de intervalo de fecha-hora expresado como un valor estructurado. El principio y el final del intervalo coincide con los límites del elemento más corto en la descripción."@es ;
+    sh:path <http://www.w3.org/2006/time#hasDateTimeDescription> .
+
+ex:time_hasEnd a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#Instant> ;
+    sh:description "Final de una entidad temporal."@es ;
+    sh:path <http://www.w3.org/2006/time#hasEnd> .
+
+ex:time_hasTemporalDuration a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#TemporalDuration> ;
+    sh:description "Duración de una entidad temporal."@es ;
+    sh:path <http://www.w3.org/2006/time#hasTemporalDuration> .
+
+ex:time_hasXSDDuration a sh:PropertyShape ;
+    sh:class xsd:duration ;
+    sh:description "Extensión de una entidad temporal, expresada utilizando xsd:duration."@es ;
+    sh:path <http://www.w3.org/2006/time#hasXSDDuration> .
+
+ex:time_hour a sh:PropertyShape ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:description "Posición de hora en un sistema calendario-reloj."@es ;
+    sh:path <http://www.w3.org/2006/time#hour> .
+
+ex:time_hours a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:description "Longitud de, o elemento de la longitud de, una extensión temporal expresada en horas."@es ;
+    sh:path <http://www.w3.org/2006/time#hours> .
+
+ex:time_inDateTime a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#GeneralDateTimeDescription> ;
+    sh:description "Posición de un instante, expresada utilizando una descripción estructurada."@es ;
+    sh:path <http://www.w3.org/2006/time#inDateTime> .
+
+ex:time_inTemporalPosition a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#TemporalPosition> ;
+    sh:description "Posición de un instante de tiempo."@es ;
+    sh:path <http://www.w3.org/2006/time#inTemporalPosition> .
+
+ex:time_inTimePosition a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#TimePosition> ;
+    sh:description "Posición de un instante, expresada como una coordenada temporal o un valor nominal."@es ;
+    sh:path <http://www.w3.org/2006/time#inTimePosition> .
+
+ex:time_inXSDDate a sh:PropertyShape ;
+    sh:datatype xsd:date ;
+    sh:description "Posición de un instante, expresado utilizando xsd:date."@es ;
+    sh:path <http://www.w3.org/2006/time#inXSDDate> .
+
+ex:time_inXSDDateTime a sh:PropertyShape ;
+    sh:datatype xsd:dateTime ;
+    sh:description "Posición de un instante, expresado utilizando xsd:dateTime."@es ;
+    sh:path <http://www.w3.org/2006/time#inXSDDateTime> .
+
+ex:time_inXSDDateTimeStamp a sh:PropertyShape ;
+    sh:class xsd:dateTimeStamp ;
+    sh:description "Posición de un instante, expresado utilizando xsd:dateTimeStamp."@es ;
+    sh:path <http://www.w3.org/2006/time#inXSDDateTimeStamp> .
+
+ex:time_inXSDgYear a sh:PropertyShape ;
+    sh:class xsd:gYear ;
+    sh:description "Posición de un instante, expresado utilizando xsd:gYear."@es ;
+    sh:path <http://www.w3.org/2006/time#inXSDgYear> .
+
+ex:time_inXSDgYearMonth a sh:PropertyShape ;
+    sh:class xsd:gYearMonth ;
+    sh:description "Posición de un instante, expresado utilizando xsd:gYearMonth."@es ;
+    sh:path <http://www.w3.org/2006/time#inXSDgYearMonth> .
+
+ex:time_inside a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#Instant> ;
+    sh:description "Un instante que cae dentro del intervalo. Se asume que no es ni el principio ni el final de ningún intervalo."@es ;
+    sh:path <http://www.w3.org/2006/time#inside> .
+
+ex:time_intervalAfter a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 es posterior a otro intervalo propio T2, entonces el principio de T1 está después que el final de T2." ;
+    sh:path <http://www.w3.org/2006/time#intervalAfter> .
+
+ex:time_intervalBefore a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 está antes que otro intervalo propio T2, entonces el final de T1 está antes que el principio de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalBefore> .
+
+ex:time_intervalContains a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 contiene otro intervalo propio T2, entonces el principio de T1 está antes que el principio de T2, y el final de T1 está después del final de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalContains> .
+
+ex:time_intervalDisjoint a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 es disjunto con otro intervalo propio T2, entonces el principio de T1 está después del final de T2, o el final de T1 está antes que el principio de T2, es decir, los intervalos no se solapan de ninguna forma, aunque su relación de orden no se conozca."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalDisjoint> .
+
+ex:time_intervalDuring a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 está durante otro intervalo propio T2, entonces del principio de T1 está después del principio de T2, y el final de T1 está antes que el final de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalDuring> .
+
+ex:time_intervalEquals a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 es igual a otro intervalo propio T2, entonces el principio de T1 coincide con el principio de T2, y el final de T1 coincide con el final de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalEquals> .
+
+ex:time_intervalFinishedBy a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 está terminado por otro intervalo propio T2, entonces el principio de T1 está antes que el principio de T2, y el final de T1 coincide con el final de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalFinishedBy> .
+
+ex:time_intervalFinishes a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 termina otro intervalo propio T2, entonces del principio de T1 está después del principio de T2, y el final de T1 coincide con el final de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalFinishes> .
+
+ex:time_intervalIn a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 es un intervalo interior a otro intervalo propio T2, entonces el principio de T1 está después del principio de T2 o coincide con el principio de T2, y el final de T1 está antes que el final de T2, o coincide con el final de T2, excepto que el final de T1 puede no coincidir con el final de T2 si el principio de T1 coincide con el principio de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalIn> .
+
+ex:time_intervalMeets a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 se encuentra con otro intervalo propio T2, entonces el final de T1 coincide con el principio de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalMeets> .
+
+ex:time_intervalMetBy a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 es 'intervalo encontrado por' otro intervalo propio T2, entonces el principio de T1 coincide con el final de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalMetBy> .
+
+ex:time_intervalOverlappedBy a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 es 'intervalo solapado por' otro intervalo propio T2, entonces el principio de T1 es posterior al principio de T2, y el principio de T1 es anterior al final de T2, y el final de T1 es posterior al final de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalOverlappedBy> .
+
+ex:time_intervalOverlaps a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Asume una dirección en el tiempo. Si una entidad temporal T1 está después de otra entidad temporal T2, entonces el principio de T1 está después del final de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalOverlaps> .
+
+ex:time_intervalStartedBy a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 es empezado por otro intervalo propio T2, entonces el principio de T1 coincide con el principio de T2, y el final de T1 es posterior al final de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalStartedBy> .
+
+ex:time_intervalStarts a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#ProperInterval> ;
+    sh:description "Si un intervalo propio T1 empieza otro intervalo propio T2, entonces del principio de T1 con el principio de T2, y el final de T1 es anterior al final de T2."@es ;
+    sh:path <http://www.w3.org/2006/time#intervalStarts> .
+
+ex:time_minute a sh:PropertyShape ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:description "Posición de minuto en un sistema calendario-reloj."@es ;
+    sh:path <http://www.w3.org/2006/time#minute> .
+
+ex:time_minutes a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:description "Longitud de, o elemento de la longitud de, una extensión temporal expresada en minutos."@es ;
+    sh:path <http://www.w3.org/2006/time#minutes> .
+
+ex:time_month a sh:PropertyShape ;
+    sh:description """Posición de mes en un sistema calendario-reloj.\r
+    El rango de esta propiedad no está especificado, por tanto, se puede reemplazar por cualquier representación específica de un mes de calendario de un calendario cualquiera."""@es ;
+    sh:path <http://www.w3.org/2006/time#month> .
+
+ex:time_monthOfYear a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#MonthOfYear> ;
+    sh:description "El mes del año, cuyo valor es un miembro de la clase 'mes del año'."@es ;
+    sh:path <http://www.w3.org/2006/time#monthOfYear> .
+
+ex:time_months a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:description "Longitud de, o elemento de la longitud de, una extensión temporal expresada en meses."@es ;
+    sh:path <http://www.w3.org/2006/time#months> .
+
+ex:time_nominalPosition a sh:PropertyShape ;
+    sh:datatype xsd:string ;
+    sh:description "El valor (nominal) que indica posición temporal en un sistema de referencia ordinal."@es ;
+    sh:path <http://www.w3.org/2006/time#nominalPosition> .
+
+ex:time_numericDuration a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:description "Valor de una extensión temporal expresada como un número decimal escalado por una unidad de tiempo."@es ;
+    sh:path <http://www.w3.org/2006/time#numericDuration> .
+
+ex:time_numericPosition a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:description "El valor (numérico) que indica posición temporal en un sistema de referencia ordinal."@es ;
+    sh:path <http://www.w3.org/2006/time#numericPosition> .
+
+ex:time_second a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:description "Posición de segundo en un sistema calendario-reloj."@es ;
+    sh:path <http://www.w3.org/2006/time#second> .
+
+ex:time_seconds a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:description "Longitud de, o elemento de la longitud de, una extensión temporal expresada en segundos."@es ;
+    sh:path <http://www.w3.org/2006/time#seconds> .
+
+ex:time_timeZone a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#TimeZone> ;
+    sh:description "The time zone for clock elements in the temporal position"@en ;
+    sh:path <http://www.w3.org/2006/time#timeZone> .
+
+ex:time_week a sh:PropertyShape ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:description "Número de semana en el año."@es ;
+    sh:path <http://www.w3.org/2006/time#week> .
+
+ex:time_weeks a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:description "Longitud de, o elemento de la longitud de, una extensión temporal expresada en semanas."@es ;
+    sh:path <http://www.w3.org/2006/time#weeks> .
+
+ex:time_xsdDateTime a sh:PropertyShape ;
+    sh:datatype xsd:dateTime ;
+    sh:description "Valor de 'intervalo de fecha-hora' expresado como un valor compacto."@es ;
+    sh:path <http://www.w3.org/2006/time#xsdDateTime> .
+
+ex:time_year a sh:PropertyShape ;
+    sh:description "Posición de año en un sistema calendario-reloj. rango de esta propiedad no está especificado, por tanto, se puede reemplazar por cualquier representación específica de un año de calendario de un calendario cualquiera."@es ;
+    sh:path <http://www.w3.org/2006/time#year> .
+
+ex:time_years a sh:PropertyShape ;
+    sh:datatype xsd:decimal ;
+    sh:description "Longitud de, o elemento de la longitud de, una extensión temporal expresada en años."@es ;
+    sh:path <http://www.w3.org/2006/time#years> .
+
+ex:time_hasTRS a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#TRS> ;
+    sh:description "El sistema de referencia temporal utilizado por una posición temporal o descripción de extensión."@es ;
+    sh:maxCount 1 ;
+    sh:path <http://www.w3.org/2006/time#hasTRS> .
+
+ex:time_unitType a sh:PropertyShape ;
+    sh:class <http://www.w3.org/2006/time#TemporalUnit> ;
+    sh:description "La unidad de tiempo que proporciona la precisión de un valor fecha-hora o la escala de una extensión temporal."@es ;
+    sh:path <http://www.w3.org/2006/time#unitType> .

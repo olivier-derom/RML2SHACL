@@ -1,0 +1,1 @@
+{rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#isDefinedBy'): 9, rdflib.term.URIRef('http://www.w3.org/2000/01/rdf-schema#label'): 6, rdflib.term.URIRef('http://www.w3.org/ns/shacl#description'): 6, rdflib.term.URIRef('http://www.w3.org/ns/shacl#name'): 6}

@@ -15,13 +15,19 @@
     sh:targetClass foaf:Agent .
 
 <http://mapping.example.com/map_triplesMapDeployment_000/shape> a sh:NodeShape ;
+    rdfs:label "Deployment"@en ;
     rdfs:isDefinedBy ns: ;
+    sh:description "Describes the Deployment of one or more Systems for a particular purpose. Deployment may be done on a Platform."@en ;
+    sh:name "Deployment"@en ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:Deployment .
 
 <http://mapping.example.com/map_triplesMapInput_000/shape> a sh:NodeShape ;
+    rdfs:label "Input"@en ;
     rdfs:isDefinedBy ns: ;
+    sh:description "Any information that is provided to a Procedure for its use."@en ;
+    sh:name "Input"@en ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:Input .
@@ -33,13 +39,19 @@
     sh:targetClass <http://www.w3.org/ns/sosa/Observation> .
 
 <http://mapping.example.com/map_triplesMapOutput_000/shape> a sh:NodeShape ;
+    rdfs:label "Output"@en ;
     rdfs:isDefinedBy ns: ;
+    sh:description "Any information that is reported from a Procedure."@en ;
+    sh:name "Output"@en ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:Output .
 
 <http://mapping.example.com/map_triplesMapProperty_000/shape> a sh:NodeShape ;
+    rdfs:label "Property"@en ;
     rdfs:isDefinedBy ns: ;
+    sh:description "A quality of an entity. An aspect of an entity that is intrinsic to and cannot exist without the entity."@en ;
+    sh:name "Property"@en ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:Property .
@@ -51,13 +63,19 @@
     sh:targetClass <http://www.w3.org/ns/sosa/Sampling> .
 
 <http://mapping.example.com/map_triplesMapStimulus_000/shape> a sh:NodeShape ;
+    rdfs:label "Stimulus"@en ;
     rdfs:isDefinedBy ns: ;
+    sh:description "An event in the real world that 'triggers' the Sensor. The properties associated to the Stimulus may be different to the eventual observed ObservableProperty. It is the event, not the object, that triggers the Sensor."@en ;
+    sh:name "Stimulus"@en ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:Stimulus .
 
 <http://mapping.example.com/map_triplesMapSystem_000/shape> a sh:NodeShape ;
+    rdfs:label "System"@en ;
     rdfs:isDefinedBy ns: ;
+    sh:description "System is a unit of abstraction for pieces of infrastructure that implement Procedures. A System may have components, its subsystems, which are other systems."@en ;
+    sh:name "System"@en ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:System .

@@ -1,0 +1,40 @@
+@prefix ex: <http://example.com/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/AddressMapping/shape> a sh:NodeShape ;
+    sh:class ex:address ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://example.com/address/.*/.*" ;
+    sh:property [ sh:nodeKind sh:Literal ;
+            sh:path ex:city ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ex:street ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ex:zip ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ex:state ] ;
+    sh:targetClass ex:address .
+
+<http://example.com/PersonMapping/shape> a sh:NodeShape ;
+    sh:class ex:person ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "http://example.com/person/.*" ;
+    sh:property [ sh:nodeKind sh:Literal ;
+            sh:path ex:firstname ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ex:phone ],
+        [ sh:datatype xsd:date ;
+            sh:nodeKind sh:Literal ;
+            sh:path ex:Dob ],
+        [ sh:nodeKind sh:IRI ;
+            sh:path ex:hasAddress ],
+        [ sh:datatype xsd:integer ;
+            sh:nodeKind sh:Literal ;
+            sh:path ex:age ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ex:lastname ],
+        [ sh:nodeKind sh:Literal ;
+            sh:path ex:team ] ;
+    sh:targetClass ex:person .
+
