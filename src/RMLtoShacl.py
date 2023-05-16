@@ -241,21 +241,20 @@ class RMLtoSHACL:
 
     def evaluateFiles(self, rml_mapping_file, ontology_dir=None, schema_dir=None):
 
+        # generate shacl shapes from RML mapping
         self.evaluateMapping(rml_mapping_file)
 
+        # for each XSD in the schema directory, exctract and enrich constraints
         if schema_dir is not None:
             for schema in os.listdir(schema_dir):
                 file = os.path.join(schema_dir, schema)
                 if file.endswith(".xsd"):
                     self.XSDtoSHACL.addXSDConstraints(file, self.SHACL.graph)
 
+        # retrieve ontologies and enrich the SHACL shapes with extracted constraints
         self.OWLtoSHACL.getFileOntologies(ontology_dir)
-
         self.OWLtoSHACL.getPrefixOntologies()
-
         self.OWLtoSHACL.convertOntologies(self.SHACL.graph)
-
-        self.EnrichSHACL.verifyConflicts(self.SHACL.graph)
 
         return self.SHACL.graph
 

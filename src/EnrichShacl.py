@@ -17,6 +17,8 @@ class EnrichSHACL:
         self.enrich_stats = {}
 
     def enrich(self, g, s, p, o):
+        # return if the subject-predicate pair is already present to avoid conflicts in constraints
+        # unless it's a name, description or label
         if (
             p
             not in [
@@ -28,6 +30,8 @@ class EnrichSHACL:
         ):
             return
 
+        # get the datatype of the corresponding subject
+        # only allow in/exclusiveness in value-type-datatypes and length on string-type-datatypes
         if (s, self.shaclNS.datatype, None) in g:
             datatype = g.value(subject=s, predicate=self.shaclNS.datatype)
             if p in {self.shaclNS.minInclusive, self.shaclNS.maxInclusive,
@@ -46,6 +50,8 @@ class EnrichSHACL:
                                      self.XSDNS.gYear, self.XSDNS.dateTime, self.XSDNS.date, self.XSDNS.boolean}:
                 return
 
+        # check for bounded constraints if they don't conflict with bounded counterparts
+        # e.g. maxConstraint = 10 is already present -> only allow minConstraint <= 10
         if p == self.shaclNS.minInclusive:
             if (s, self.shaclNS.maxInclusive, None) in g:
                 counterRestriction = g.value(subject=s, predicate=self.shaclNS.maxInclusive)
@@ -110,42 +116,13 @@ class EnrichSHACL:
                 counterRestriction = g.value(subject=s, predicate=self.shaclNS.minOccurs)
                 if o < counterRestriction:
                     return
+
+        # add constraint since it passed all checks
         self.updateStats(p)
         g.add((s, p, o))
 
-    def verifyConflicts(self, g):
-        q = f'SELECT ?bnode {{?s a <{self.shaclNS.NodeShape}> .?s <{self.shaclNS.property}> ?bnode.}}'
-        x = g.query(q)
-        BNode_list = [
-            row6.bnode for row6 in x if type(row6.bnode) == rdflib.term.BNode
-        ]
-        for bnode in BNode_list:
-            if ((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral) in g) and (
-                    (bnode, self.shaclNS.nodeKind, self.shaclNS.IRI) in g):
-                g.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral))
-                self.enrich_stats[self.shaclNS.nodeKind] -= 1
-            elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral) in g) and (
-                    (bnode, self.shaclNS.nodeKind, self.shaclNS.Literal) in g):
-                g.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.IRIOrLiteral))
-                self.enrich_stats[self.shaclNS.nodeKind] -= 1
-            elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrLiteral) in g) and (
-                    (bnode, self.shaclNS.nodeKind, self.shaclNS.Literal) in g):
-                g.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrLiteral))
-                self.enrich_stats[self.shaclNS.nodeKind] -= 1
-            elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrLiteral) in g) and (
-                    (bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNode) in g):
-                g.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrLiteral))
-                self.enrich_stats[self.shaclNS.nodeKind] -= 1
-            elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI) in g) and (
-                    (bnode, self.shaclNS.nodeKind, self.shaclNS.IRI) in g):
-                g.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI))
-                self.enrich_stats[self.shaclNS.nodeKind] -= 1
-            elif ((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI) in g) and (
-                    (bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNode) in g):
-                g.remove((bnode, self.shaclNS.nodeKind, self.shaclNS.BlankNodeOrIRI))
-                self.enrich_stats[self.shaclNS.nodeKind] -= 1
-
     def updateStats(self, p):
+        # function made to generate dictionary that displays which constraints we enriched the shape with
         if p in self.enrich_stats:
             self.enrich_stats[p] += 1
         else:

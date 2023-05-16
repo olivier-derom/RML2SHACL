@@ -6,6 +6,14 @@ from .RML import *
 from .SHACL import *
 from .EnrichShacl import *
 
+
+# TODO: add support for complex type named types
+#       add support for imports from other schemas
+#       add support for use of multiple target namespaces from different imports/classes
+#       add support for <xs:complexContent> <xs:extension base="insertName">rent imports/classes
+#       intregrate more translations such as xs:enumeration -> sh:in, or xs:choice -> sh:xone
+
+
 class XSDtoSHACL:
     def __init__(self):
         self.RML = RML()
@@ -17,10 +25,11 @@ class XSDtoSHACL:
         self.named_type_constraints = dict()
         self.XSDtree = None
         self.XSD_elements = dict()
-        self.named_types = None
+        self.simple_named_types = None
         self.XSDtargetNamespace = "http://example.com"
 
     def getXSDFileInfo(self, xsd_file):
+        # parse the XML schema
         self.XSDtree = ET.parse(xsd_file)
         root = self.XSDtree.getroot()
 
@@ -34,17 +43,17 @@ class XSDtoSHACL:
             if key == "targetNamespace":
                 self.XSDtargetNamespace = root.attrib[key]
 
-        self.named_types = self.XSDtree.findall(".//xs:simpleType", self.XSDNS2)
+        self.simple_named_types = self.XSDtree.findall(".//xs:simpleType", self.XSDNS2)
         self.named_type_constraints = {}
         self.XSD_elements = dict()
 
-        for named_type in self.named_types:
-            self.extractXSDConstraints(named_type)
+        for named_type in self.simple_named_types:
+            self.extractSimpleNamedTypeConstraints(named_type)
 
         for element_node in root.findall('xs:element', self.XSDNS2):
-            self.getXSDElementInfo(element_node)
+            self.extractElementConstraints(element_node)
 
-    def getXSDElementInfo(self, element, parent_name=None, is_attribute=False):
+    def extractElementConstraints(self, element, parent_name=None, is_attribute=False):
         element_name = self.XSDtargetNamespace+'/'+str(element.get('name'))
         if element_name is None:
             return None
@@ -54,7 +63,7 @@ class XSDtoSHACL:
             if parent_name:
                 element_dict['parent'] = parent_name
             for child_element in element.findall('xs:complexType/xs:sequence/xs:element', self.XSDNS2):
-                child_element_info = self.getXSDElementInfo(child_element, element_name)
+                child_element_info = self.extractElementConstraints(child_element, element_name)
                 if child_element_info is not None:
                     if child_element_info != "enumeration":
                         if "children" not in element_dict:
@@ -67,7 +76,7 @@ class XSDtoSHACL:
                         else:
                             element_dict[f"{child_element_info}"] += [element_name]
             for attribute in element.findall('xs:complexType/xs:attribute', self.XSDNS2):
-                child_element_info = self.getXSDElementInfo(attribute, element_name, True)
+                child_element_info = self.extractElementConstraints(attribute, element_name, True)
                 if child_element_info is not None:
                     if child_element_info != "enumeration":
                         if "children" not in element_dict:
@@ -97,7 +106,7 @@ class XSDtoSHACL:
                     else:
                         element_dict[f"{child_element_info}"] += [child_element.get('value')]
             for attribute in element.findall('xs:complexType/xs:attribute', self.XSDNS2):
-                child_element_info = self.getXSDElementInfo(attribute, element_name, True)
+                child_element_info = self.extractElementConstraints(attribute, element_name, True)
                 if child_element_info is not None:
                     if child_element_info != "enumeration":
                         if "children" not in element_dict:
@@ -139,7 +148,7 @@ class XSDtoSHACL:
         self.XSD_elements[str(element_name)] = element_dict
         return element_name
 
-    def extractXSDConstraints(self, named_type):
+    def extractSimpleNamedTypeConstraints(self, named_type):
         named_type_name = named_type.attrib.get("name")
         if named_type_name is not None:
             if named_type_name in self.named_type_constraints:
@@ -151,7 +160,7 @@ class XSDtoSHACL:
             for child in restriction:
                 if child.tag == "{http://www.w3.org/2001/XMLSchema}restriction":
                     named_type_name = child.attrib.get("base").split(":")[-1]
-                    nested_constraints = self.extractXSDConstraints(
+                    nested_constraints = self.extractSimpleNamedTypeConstraints(
                         self.XSDtree.find(f".//xs:simpleType[@name='{named_type_name}']", self.XSDNS2))
                     constraints.update(nested_constraints)
                 else:
@@ -162,11 +171,11 @@ class XSDtoSHACL:
                             constraints[child.tag] += [child.attrib.get("value")]
                     else:
                         constraints[child.tag] = child.attrib.get("value")
-            for named_type2 in self.named_types:
+            for named_type2 in self.simple_named_types:
                 named_type_name2 = named_type2.attrib.get("name")
                 if base == named_type_name2:
                     constraints.pop("{http://www.w3.org/2001/XMLSchema}type")
-                    constraints.update(self.extractXSDConstraints(named_type2))
+                    constraints.update(self.extractSimpleNamedTypeConstraints(named_type2))
             self.named_type_constraints[named_type_name] = constraints
             return constraints
         else:
@@ -212,6 +221,7 @@ class XSDtoSHACL:
                     if row2.p == self.shaclNS.path:
                         property_BNodes_dict[row2.o] = row2.bnode
                 for item in property_BNodes_dict:
+                    # translate the XSD constraints to SHACL constraints
                     if str(item) in self.XSD_elements:
                         # propertyshape constraints
                         if "type" in self.XSD_elements[str(item)]:

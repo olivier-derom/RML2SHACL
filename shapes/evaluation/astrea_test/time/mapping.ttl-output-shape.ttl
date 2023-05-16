@@ -1,249 +1,643 @@
 @prefix ns: <http://www.w3.org/2006/time#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdfs1: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://mapping.example.com/map_triplesMapDatetimedescription_000/shape> a sh:NodeShape ;
+    rdfs:label "Date-Time description"@en,
+        "descripciÃ³n de fecha-tiempo"@es ;
+    sh:description "Description of date and time structured with separate values for the various elements of a calendar-clock system. The temporal reference system is fixed to Gregorian Calendar, and the range of year, month, day properties restricted to corresponding XML Schema types xsd:gYear, xsd:gMonth and xsd:gDay, respectively."@en,
+        "DescripciÃ³n de fecha y tiempo estructurada con valores separados para los diferentes elementos de un sistema calendario-reloj. El sistema de referencia temporal estÃ¡ fijado al calendario gregoriano, y el rango de las propiedades aÃ±o, mes, dÃ­a restringidas a los correspondientes tipos del XML Schema xsd:gYear, xsd:gMonth y xsd:gDay respectivamente."@es ;
+    sh:name "Date-Time description"@en,
+        "descripciÃ³n de fecha-tiempo"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:DateTimeDescription .
 
 <http://mapping.example.com/map_triplesMapDatetimeinterval_000/shape> a sh:NodeShape ;
+    rdfs:label "Date-time interval"@en,
+        "intervalo de fecha-hora"@es ;
+    sh:description "DateTimeInterval is a subclass of ProperInterval, defined using the multi-element DateTimeDescription."@en,
+        "'intervalo de fecha-hora' es una subclase de 'intervalo propio', definida utilizando el multi-elemento 'descripciÃ³n de fecha-hora'."@es ;
+    sh:name "Date-time interval"@en,
+        "intervalo de fecha-hora"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapGeneraldatetimedescription_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:hasDateTimeDescription ],
-        [ sh:datatype xsd:dateTime ;
+    sh:property [ rdfs:label "has XSD date-time"@en ;
+            sh:datatype xsd:dateTime ;
+            sh:description "Valor de 'intervalo de fecha-hora' expresado como un valor compacto."@es ;
+            sh:name "tiene fecha-hora XSD"@es ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:xsdDateTime ] ;
+            sh:path ns:xsdDateTime ;
+            sh:pattern "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?|(24:00:00(\\.0+)?))(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ],
+        [ rdfs:label "tiene descripciÃ³n fecha-hora"@es ;
+            sh:class ns:GeneralDateTimeDescription ;
+            sh:description "Value of DateTimeInterval expressed as a structured value. The beginning and end of the interval coincide with the limits of the shortest element in the description."@en ;
+            sh:name "has Date-Time description"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapGeneraldatetimedescription_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:hasDateTimeDescription ] ;
     sh:targetClass ns:DateTimeInterval .
 
 <http://mapping.example.com/map_triplesMapDuration_000/shape> a sh:NodeShape ;
+    rdfs:label "duraciÃ³n de tiempo",
+        "Time duration"@en ;
+    sh:description "Duration of a temporal extent expressed as a number scaled by a temporal unit"@en,
+        "DuraciÃ³n de una extensiÃ³n temporal expresada como un nÃºmero escalado por una unidad temporal."@es ;
+    sh:name "duraciÃ³n de tiempo",
+        "Time duration"@en ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:datatype xsd:float ;
+    sh:property [ rdfs:label "Value of a temporal extent expressed as a decimal number scaled by a temporal unit"@en ;
+            sh:datatype xsd:float ;
+            sh:description "Value of a temporal extent expressed as a decimal number scaled by a temporal unit"@en ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:name "valor numÃ©rico de duraciÃ³n temporal"@es ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:numericDuration ] ;
+            sh:path ns:numericDuration ;
+            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ] ;
     sh:targetClass ns:Duration .
 
 <http://mapping.example.com/map_triplesMapDurationdescription_000/shape> a sh:NodeShape ;
+    rdfs:label "Duration description"@en,
+        "descripciÃ³n de duraciÃ³n"@es ;
+    sh:description "Description of temporal extent structured with separate values for the various elements of a calendar-clock system. The temporal reference system is fixed to Gregorian Calendar, and the range of each of the numeric properties is restricted to xsd:decimal"@en,
+        "DescripciÃ³n de extensiÃ³n temporal estructurada con valores separados para los distintos elementos de un sistema de horario-calendario. El sistema de referencia temporal se fija al calendario gregoriano, y el intervalo de cada una de las propiedades numÃ©ricas se restringe a xsd:decimal."@es ;
+    sh:name "Duration description"@en,
+        "descripciÃ³n de duraciÃ³n"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:DurationDescription .
 
 <http://mapping.example.com/map_triplesMapGeneraldurationdescription_000/shape> a sh:NodeShape ;
+    rdfs:label "Generalized duration description"@en,
+        "descripciÃ³n de duraciÃ³n generalizada"@es ;
+    sh:description "Description of temporal extent structured with separate values for the various elements of a calendar-clock system."@en,
+        "DescripciÃ³n de extensiÃ³n temporal estructurada con valores separados para los distintos elementos de un sistema de horario-calendario."@es ;
+    sh:name "Generalized duration description"@en,
+        "descripciÃ³n de duraciÃ³n generalizada"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:datatype xsd:float ;
+    sh:property [ rdfs:label "duraciÃ³n en dÃ­as"@es ;
+            sh:datatype xsd:float ;
+            sh:description "Longitud de, o elemento de la longitud de, una extensiÃ³n temporal expresada en dÃ­as."@es ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:name "duraciÃ³n en dÃ­as"@es ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:weeks ],
-        [ sh:datatype xsd:float ;
+            sh:path ns:days ;
+            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
+        [ rdfs:label "Longitud de, o elemento de la longitud de, una extensiÃ³n temporal expresada en segundos."@es ;
+            rdfs:seeAlso <http://www.bipm.org/en/publications/si-brochure/second.html> ;
+            sh:datatype xsd:float ;
+            sh:description "Longitud de, o elemento de la longitud de, una extensiÃ³n temporal expresada en segundos."@es ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:name "seconds duration"@en ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:hours ],
-        [ sh:datatype xsd:float ;
+            sh:path ns:seconds ;
+            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
+        [ rdfs:label "duraciÃ³n en meses"@es ;
+            sh:datatype xsd:float ;
+            sh:description "Longitud de, o elemento de la longitud de, una extensiÃ³n temporal expresada en meses."@es ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:name "months duration"@en ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:minutes ],
-        [ sh:datatype xsd:float ;
+            sh:path ns:months ;
+            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
+        [ rdfs:label "duraciÃ³n en aÃ±os"@es ;
+            sh:datatype xsd:float ;
+            sh:description "Longitud de, o elemento de la longitud de, una extensiÃ³n temporal expresada en aÃ±os."@es ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:name "years duration"@en ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:seconds ],
-        [ sh:datatype xsd:float ;
+            sh:path ns:years ;
+            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
+        [ rdfs:label "duraciÃ³n en horas"@es ;
+            sh:datatype xsd:float ;
+            sh:description "Longitud de, o elemento de la longitud de, una extensiÃ³n temporal expresada en horas."@es ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:name "duraciÃ³n en horas"@es ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:months ],
-        [ sh:datatype xsd:float ;
+            sh:path ns:hours ;
+            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
+        [ rdfs:label "Longitud de, o elemento de la longitud de, una extensiÃ³n temporal expresada en minutos."@es ;
+            sh:datatype xsd:float ;
+            sh:description "length, or element of, a temporal extent expressed in minutes"@en ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:name "minutes"@en ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:years ],
-        [ sh:datatype xsd:float ;
+            sh:path ns:minutes ;
+            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ],
+        [ rdfs:label "Longitud de, o elemento de la longitud de, una extensiÃ³n temporal expresada en semanas."@es ;
+            sh:datatype xsd:float ;
+            sh:description "Longitud de, o elemento de la longitud de, una extensiÃ³n temporal expresada en semanas."@es ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:name "duraciÃ³n en semanas"@es ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:days ] ;
+            sh:path ns:weeks ;
+            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ] ;
     sh:targetClass ns:GeneralDurationDescription .
 
 <http://mapping.example.com/map_triplesMapInterval_000/shape> a sh:NodeShape ;
+    rdfs:label "Time interval"@en,
+        "intervalo de tiempo"@es ;
+    sh:description "A temporal entity with an extent or duration"@en,
+        "Una entidad temporal con una extensiÃ³n o duraciÃ³n."@es ;
+    sh:name "Time interval"@en,
+        "intervalo de tiempo"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapInstant_000/shape> ;
+    sh:property [ rdfs:label "An instant that falls inside the interval. It is not intended to include beginnings and ends of intervals."@en ;
+            sh:class ns:Instant ;
+            sh:description "An instant that falls inside the interval. It is not intended to include beginnings and ends of intervals."@en ;
+            sh:name "has time instant inside"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapInstant_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:inside ] ;
     sh:targetClass ns:Interval .
 
 <http://mapping.example.com/map_triplesMapJanuary_000/shape> a sh:NodeShape ;
+    rdfs:label "January" ;
+    sh:name "January" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:January .
 
 <http://mapping.example.com/map_triplesMapTemporalunit_000/shape> a sh:NodeShape ;
+    rdfs:label "Temporal unit"@en,
+        "unidad de tiempo"@es ;
+    sh:description "A standard duration, which provides a scale factor for a time extent, or the granularity or precision for a time position."@en,
+        "Una duraciÃ³n estÃ¡ndar, que proporciona un factor de escala para una extensiÃ³n de tiempo, o la granularidad o precisiÃ³n para una posiciÃ³n de tiempo."@es ;
+    sh:name "Temporal unit"@en,
+        "unidad de tiempo"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:TemporalUnit .
 
 <http://mapping.example.com/map_triplesMapTrs_000/shape> a sh:NodeShape ;
+    rdfs:label "Temporal Reference System"@en,
+        "sistema de referencia temporal"@es ;
+    sh:description """A temporal reference system, such as a temporal coordinate system (with an origin, direction, and scale), a calendar-clock combination, or a (possibly hierarchical) ordinal system. \r
+\r
+This is a stub class, representing the set of all temporal reference systems."""@en,
+        """Un sistema de referencia temporal, tal como un sistema de coordenadas temporales (con un origen, una direcciÃ³n y una escala), una combinaciÃ³n calendario-reloj, o un sistema ordinal (posiblemente jerÃ¡rquico).\r
+        Esta clase comodÃ­n representa el conjunto de todos los sistemas de referencia temporal."""@es ;
+    sh:name "Temporal Reference System"@en,
+        "sistema de referencia temporal"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:TRS .
 
 <http://mapping.example.com/map_triplesMapYear_000/shape> a sh:NodeShape ;
+    rdfs:label "Year"@en ;
+    sh:description "Year duration" ;
+    sh:name "Year"@en ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:Year .
 
 <http://mapping.example.com/map_triplesMapDayofweek_000/shape> a sh:NodeShape ;
+    rdfs:label "Day of week"@en,
+        "dÃ­a de la semana"@es ;
+    sh:description "The day of week"@en,
+        "El dÃ­a de la semana"@es ;
+    sh:name "Day of week"@en,
+        "dÃ­a de la semana"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:DayOfWeek .
 
 <http://mapping.example.com/map_triplesMapMonthofyear_000/shape> a sh:NodeShape ;
+    rdfs:label "Month of year"@en,
+        "mes del aÃ±o"@es ;
+    sh:description "The month of the year"@en,
+        "El mes del aÃ±o."@es ;
+    sh:name "Month of year"@en,
+        "mes del aÃ±o"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:MonthOfYear .
 
 <http://mapping.example.com/map_triplesMapTemporalduration_000/shape> a sh:NodeShape ;
+    rdfs:label "Temporal duration"@en,
+        "duraciÃ³n temporal"@es ;
+    sh:description "Time extent; duration of a time interval separate from its particular start position"@en,
+        "ExtensiÃ³n de tiempo; duraciÃ³n de un intervalo de tiempo independiente de su posiciÃ³n de inicio particular."@es ;
+    sh:name "Temporal duration"@en,
+        "duraciÃ³n temporal"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:TemporalDuration .
 
 <http://mapping.example.com/map_triplesMapTemporalposition_000/shape> a sh:NodeShape ;
+    rdfs:label "Temporal position"@en,
+        "posiciÃ³n temporal"@es ;
+    sh:description "A position on a time-line"@en,
+        "Una posiciÃ³n sobre una lÃ­nea de tiempo."@es ;
+    sh:name "Temporal position"@en,
+        "posiciÃ³n temporal"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:TemporalPosition .
 
 <http://mapping.example.com/map_triplesMapTimeposition_000/shape> a sh:NodeShape ;
+    rdfs:label "Time position"@en,
+        "posiciÃ³n de tiempo"@es ;
+    sh:description "A temporal position described using either a (nominal) value from an ordinal reference system, or a (numeric) value in a temporal coordinate system. "@en,
+        "Una posiciÃ³n temporal descrita utilizando bien un valor (nominal) de un sistema de referencia ordinal, o un valor (numÃ©rico) en un sistema de coordenadas temporales."@es ;
+    sh:name "Time position"@en,
+        "posiciÃ³n de tiempo"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:nodeKind sh:Literal ;
-            sh:path ns:nominalPosition ],
-        [ sh:datatype xsd:float ;
+    sh:property [ rdfs:label "El valor (nominal) que indica posiciÃ³n temporal en un sistema de referencia ordinal."@es ;
+            sh:description "The (nominal) value indicating temporal position in an ordinal reference system "@en ;
+            sh:name "Name of temporal position"@en ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:numericPosition ] ;
+            sh:path ns:nominalPosition ],
+        [ rdfs:label "Numeric value of temporal position"@en ;
+            sh:datatype xsd:float ;
+            sh:description "El valor (numÃ©rico) que indica posiciÃ³n temporal en un sistema de referencia ordinal."@es ;
+            sh:name "Numeric value of temporal position"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:numericPosition ;
+            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ] ;
     sh:targetClass ns:TimePosition .
 
 <http://mapping.example.com/map_triplesMapTimezone_000/shape> a sh:NodeShape ;
+    rdfs:label "Time Zone"@en,
+        "huso horario"@es ;
+    sh:description """A Time Zone specifies the amount by which the local time is offset from UTC. \r
+	A time zone is usually denoted geographically (e.g. Australian Eastern Daylight Time), with a constant value in a given region. \r
+The region where it applies and the offset from UTC are specified by a locally recognised governing authority."""@en,
+        """Un huso horario especifica la cantidad en que la hora local estÃ¡ desplazada con respecto a UTC.\r
+        Un huso horario normalmente se denota geogrÃ¡ficamente (p.ej. el horario de verano del este de Australia), con un valor constante en una regiÃ³n dada.\r
+        La regiÃ³n donde aplica y el desplazamiento desde UTC las especifica una autoridad gubernamental localmente reconocida."""@es ;
+    sh:name "Time Zone"@en,
+        "huso horario"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:TimeZone .
 
+<https://astrea.linkeddata.es/shapes#41a4abdcd704a84a9e7fbe5496831ccd> a sh:PropertyShape ;
+    sh:class ns:Instant .
+
 <http://mapping.example.com/map_triplesMapGeneraldatetimedescription_000/shape> a sh:NodeShape ;
+    rdfs:label "Generalized date-time description"@en,
+        "descripciÃ³n de fecha-hora generalizada"@es ;
+    sh:description "Description of date and time structured with separate values for the various elements of a calendar-clock system"@en,
+        "DescripciÃ³n de fecha y hora estructurada con valores separados para los distintos elementos de un sistema calendario-reloj."@es ;
+    sh:name "Generalized date-time description"@en,
+        "descripciÃ³n de fecha-hora generalizada"@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapTimezone_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:timeZone ],
-        [ sh:datatype xsd:integer ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hour ],
-        [ sh:node <http://mapping.example.com/map_triplesMapMonthofyear_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:monthOfYear ],
-        [ sh:datatype xsd:float ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:second ],
-        [ sh:datatype xsd:integer ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:week ],
-        [ sh:node <http://mapping.example.com/map_triplesMapDayofweek_000/shape> ;
+    sh:property [ rdfs:label "dÃ­a de la semana"@es ;
+            sh:class ns:DayOfWeek ;
+            sh:description "El dÃ­a de la semana, cuyo valor es un miembro de la clase 'dÃ­a de la semana'." ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:name "dÃ­a de la semana"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapDayofweek_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:dayOfWeek ],
-        [ sh:datatype xsd:integer ;
+        [ rdfs:label "The month of the year, whose value is a member of the class time:MonthOfYear"@en ;
+            sh:class ns:MonthOfYear ;
+            sh:description "The month of the year, whose value is a member of the class time:MonthOfYear"@en ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:name "month of year"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapMonthofyear_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:monthOfYear ],
+        [ rdfs:label "El nÃºmero de dÃ­a en el aÃ±o."@es ;
+            sh:datatype xsd:integer ;
+            sh:description "The number of the day within the year"@en ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:minInclusive 0 ;
+            sh:name "day of year"@en ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:minute ],
-        [ sh:datatype xsd:integer ;
+            sh:path ns:dayOfYear ;
+            sh:pattern "[\\-+]?[0-9]+" ],
+        [ rdfs:label "minuto"@es ;
+            sh:datatype xsd:integer ;
+            sh:description "Minute position in a calendar-clock system."@en ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:minInclusive 0 ;
+            sh:name "minuto"@es ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:dayOfYear ] ;
+            sh:path ns:minute ;
+            sh:pattern "[\\-+]?[0-9]+" ],
+        [ rdfs:label "NÃºmero de semana en el aÃ±o."@es ;
+            sh:datatype xsd:integer ;
+            sh:description "NÃºmero de semana en el aÃ±o."@es ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:minInclusive 0 ;
+            sh:name "semana"@es ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:week ;
+            sh:pattern "[\\-+]?[0-9]+" ],
+        [ rdfs:label "PosiciÃ³n de hora en un sistema calendario-reloj."@es ;
+            sh:datatype xsd:integer ;
+            sh:description "Hour position in a calendar-clock system."@en ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:minInclusive 0 ;
+            sh:name "hour"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hour ;
+            sh:pattern "[\\-+]?[0-9]+" ],
+        [ rdfs:label "en huso horario"@es ;
+            sh:class ns:TimeZone ;
+            sh:description "The time zone for clock elements in the temporal position"@en ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:name "in time zone"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapTimezone_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:timeZone ],
+        [ rdfs:label "second"@en ;
+            sh:datatype xsd:float ;
+            sh:description "Second position in a calendar-clock system."@en ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:name "second"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:second ;
+            sh:pattern "(\\+|-)?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)" ] ;
     sh:targetClass ns:GeneralDateTimeDescription .
 
 <http://mapping.example.com/map_triplesMapTemporalentity_000/shape> a sh:NodeShape ;
+    rdfs:label "Temporal entity"@en,
+        "entidad temporal"@es ;
+    sh:description "A temporal interval or instant."@en,
+        "Un intervalo temporal o un instante."@es ;
+    sh:name "Temporal entity"@en,
+        "entidad temporal"@es ;
     sh:nodeKind sh:IRI ;
+    sh:or ( [ sh:class ns:Instant ;
+                sh:path ns:hasTime ] [ sh:class ns:Interval ;
+                sh:path ns:hasTime ] ) ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapTemporalentity_000/shape> ;
+    sh:property [ rdfs:label "has XSD duration"@en ;
+            sh:datatype xsd:duration ;
+            sh:description "ExtensiÃ³n de una entidad temporal, expresada utilizando xsd:duration."@es ;
+            sh:name "has XSD duration"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasXSDDuration ;
+            sh:pattern "-?P((([0-9]+Y([0-9]+M)?([0-9]+D)?|([0-9]+M)([0-9]+D)?|([0-9]+D))(T(([0-9]+H)([0-9]+M)?([0-9]+(\\.[0-9]+)?S)?|([0-9]+M)([0-9]+(\\.[0-9]+)?S)?|([0-9]+(\\.[0-9]+)?S)))?)|(T(([0-9]+H)([0-9]+M)?([0-9]+(\\.[0-9]+)?S)?|([0-9]+M)([0-9]+(\\.[0-9]+)?S)?|([0-9]+(\\.[0-9]+)?S))))" ],
+        [ rdfs:label "Asume una direcciÃ³n en el tiempo. Si una entidad temporal T1 estÃ¡ despuÃ©s de otra entidad temporal T2, entonces el principio de T1 estÃ¡ despuÃ©s del final de T2."@es ;
+            sh:class ns:TemporalEntity ;
+            sh:description "Asume una direcciÃ³n en el tiempo. Si una entidad temporal T1 estÃ¡ despuÃ©s de otra entidad temporal T2, entonces el principio de T1 estÃ¡ despuÃ©s del final de T2."@es ;
+            sh:name "after"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapTemporalentity_000/shape> ;
             sh:nodeKind sh:IRI ;
+            sh:or ( [ sh:class ns:Instant ;
+                        sh:path ns:hasTime ] [ sh:class ns:Interval ;
+                        sh:path ns:hasTime ] ) ;
             sh:path ns:after ],
-        [ sh:node <http://mapping.example.com/map_triplesMapInstant_000/shape> ;
+        [ rdfs:label "before"@en ;
+            sh:class ns:TemporalEntity ;
+            sh:description "Gives directionality to time. If a temporal entity T1 is before another temporal entity T2, then the end of T1 is before the beginning of T2. Thus, \"before\" can be considered to be basic to instants and derived for intervals."@en ;
+            sh:name "before"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapTemporalentity_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:or ( [ sh:class ns:Instant ;
+                        sh:path ns:hasTime ] [ sh:class ns:Interval ;
+                        sh:path ns:hasTime ] ) ;
+            sh:path ns:before ],
+        [ rdfs:label "Beginning of a temporal entity"@en ;
+            sh:class ns:Instant ;
+            sh:description "Beginning of a temporal entity"@en ;
+            sh:name "tiene principio"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapInstant_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:hasBeginning ],
-        [ sh:node <http://mapping.example.com/map_triplesMapInstant_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:hasEnd ],
-        [ sh:node <http://mapping.example.com/map_triplesMapTemporalentity_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:before ],
-        [ sh:node <http://mapping.example.com/map_triplesMapTemporalduration_000/shape> ;
+        [ rdfs:label "Duration of a temporal entity."@en ;
+            sh:class ns:TemporalDuration ;
+            sh:description "Duration of a temporal entity."@en ;
+            sh:name "has temporal duration"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapTemporalduration_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:hasTemporalDuration ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:hasXSDDuration ] ;
+        [ rdfs:label "has end"@en ;
+            sh:class ns:Instant ;
+            sh:description "Final de una entidad temporal."@es ;
+            sh:name "has end"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapInstant_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:hasEnd ] ;
     sh:targetClass ns:TemporalEntity .
 
 <http://mapping.example.com/map_triplesMapInstant_000/shape> a sh:NodeShape ;
+    rdfs:label "Time instant"@en,
+        "instante de tiempo."@es ;
+    sh:description "A temporal entity with zero extent or duration"@en,
+        "Una entidad temporal con una extensiÃ³n o duraciÃ³n cero."@es ;
+    sh:name "Time instant"@en,
+        "instante de tiempo."@es ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapTemporalposition_000/shape> ;
+    sh:property [ rdfs:label "en fecha-tiempo XSD"@es ;
+            sh:datatype xsd:dateTime ;
+            sh:description "Position of an instant, expressed using xsd:dateTime"@en ;
+            sh:name "in XSD Date-Time"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:inXSDDateTime ;
+            sh:pattern "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?|(24:00:00(\\.0+)?))(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ],
+        [ rdfs:label "in XSD date"@en ;
+            sh:datatype xsd:date ;
+            sh:description "PosiciÃ³n de un instante, expresado utilizando xsd:date."@es ;
+            sh:name "en fecha XSD"@es ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:inXSDDate ;
+            sh:pattern "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ],
+        [ rdfs:label "Position of an instant, expressed using xsd:dateTimeStamp"@en ;
+            sh:description "PosiciÃ³n de un instante, expresado utilizando xsd:dateTimeStamp."@es ;
+            sh:name "en fecha-sello de tiempo XSD"@es ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:inXSDDateTimeStamp ],
+        [ rdfs:label "en aÃ±o-mes gregoriano XSD"@es ;
+            sh:description "PosiciÃ³n de un instante, expresado utilizando xsd:gYearMonth."@es ;
+            sh:name "in XSD g-YearMonth"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:inXSDgYearMonth ;
+            sh:pattern "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ],
+        [ rdfs:label "in XSD g-Year"@en ;
+            sh:description "PosiciÃ³n de un instante, expresado utilizando xsd:gYear."@es ;
+            sh:name "in XSD g-Year"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:inXSDgYear ;
+            sh:pattern "-?([1-9][0-9]{3,}|0[0-9]{3})(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?" ],
+        [ rdfs:label "PosiciÃ³n de un instante, expresada como una coordenada temporal o un valor nominal."@es ;
+            sh:class ns:TimePosition ;
+            sh:description "PosiciÃ³n de un instante, expresada como una coordenada temporal o un valor nominal."@es ;
+            sh:name "Time position"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapTimeposition_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:inTimePosition ],
+        [ rdfs:label "Position of a time instant"@en ;
+            sh:class ns:TemporalPosition ;
+            sh:description "Position of a time instant"@en ;
+            sh:name "posiciÃ³n temporal"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapTemporalposition_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:inTemporalPosition ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:inXSDgYear ],
-        [ sh:datatype xsd:date ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:inXSDDate ],
-        [ sh:datatype xsd:dateTime ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:inXSDDateTime ],
-        [ sh:node <http://mapping.example.com/map_triplesMapGeneraldatetimedescription_000/shape> ;
+        [ rdfs:label "in date-time description"@en ;
+            sh:class ns:GeneralDateTimeDescription ;
+            sh:description "PosiciÃ³n de un instante, expresada utilizando una descripciÃ³n estructurada."@es ;
+            sh:name "in date-time description"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapGeneraldatetimedescription_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:inDateTime ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:inXSDgYearMonth ],
-        [ sh:nodeKind sh:Literal ;
-            sh:path ns:inXSDDateTimeStamp ],
-        [ sh:node <http://mapping.example.com/map_triplesMapTimeposition_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:inTimePosition ] ;
+            sh:path ns:inDateTime ] ;
     sh:targetClass ns:Instant .
 
 <http://mapping.example.com/map_triplesMapProperinterval_000/shape> a sh:NodeShape ;
+    rdfs:label "Proper interval"@en,
+        "intervalo propio"@es ;
+    sh:description "A temporal entity with non-zero extent or duration, i.e. for which the value of the beginning and end are different"@en,
+        "Una entidad temporal con extensiÃ³n o duraciÃ³n distinta de cero, es decir, para la cual los valores de principio y fin del intervalo son diferentes."@es ;
+    sh:name "Proper interval"@en,
+        "intervalo propio"@es ;
     sh:nodeKind sh:IRI ;
+    sh:not <https://astrea.linkeddata.es/shapes#41a4abdcd704a84a9e7fbe5496831ccd> ;
     sh:pattern "http://.*" ;
-    sh:property [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalEquals ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalStarts ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalContains ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalStartedBy ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalDuring ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalOverlappedBy ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalBefore ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalDisjoint ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalFinishedBy ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+    sh:property [ rdfs:label "intervalo interior"@es ;
+            sh:class ns:ProperInterval ;
+            sh:description "If a proper interval T1 is intervalIn another proper interval T2, then the beginning of T1 is after the beginning of T2 or is coincident with the beginning of T2, and the end of T1 is before the end of T2, or is coincident with the end of T2, except that end of T1 may not be coincident with the end of T2 if the beginning of T1 is coincident with the beginning of T2."@en ;
+            sh:disjoint ns:intervalEquals ;
+            sh:name "intervalo interior"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:intervalIn ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+        [ rdfs:label "Si un intervalo propio T1 empieza otro intervalo propio T2, entonces del principio de T1 con el principio de T2, y el final de T1 es anterior al final de T2."@es ;
+            sh:class ns:ProperInterval ;
+            sh:description "Si un intervalo propio T1 empieza otro intervalo propio T2, entonces del principio de T1 con el principio de T2, y el final de T1 es anterior al final de T2."@es ;
+            sh:name "intervalo empieza"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalStarts ],
+        [ rdfs:label "If a proper interval T1 is intervalDisjoint another proper interval T2, then the beginning of T1 is after the end of T2, or the end of T1 is before the beginning of T2, i.e. the intervals do not overlap in any way, but their ordering relationship is not known."@en ;
+            sh:class ns:ProperInterval ;
+            sh:description "Si un intervalo propio T1 es disjunto con otro intervalo propio T2, entonces el principio de T1 estÃ¡ despuÃ©s del final de T2, o el final de T1 estÃ¡ antes que el principio de T2, es decir, los intervalos no se solapan de ninguna forma, aunque su relaciÃ³n de orden no se conozca."@es ;
+            sh:name "intervalo disjunto"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalDisjoint ],
+        [ rdfs:label "Si un intervalo propio T1 se solapa con otro intervalo propio T2, entonces el principio de T1 es anterior al principio de T2, el final de T1 es posterior al principio de T2, y el final de T1 es anterior al final de T2."@es ;
+            sh:class ns:ProperInterval ;
+            sh:description "Si un intervalo propio T1 se solapa con otro intervalo propio T2, entonces el principio de T1 es anterior al principio de T2, el final de T1 es posterior al principio de T2, y el final de T1 es anterior al final de T2."@es ;
+            sh:name "intervalo se solapa"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:intervalOverlaps ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:intervalFinishes ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+        [ rdfs:label "intervalo encontrado por"@es ;
+            sh:class ns:ProperInterval ;
+            sh:description "If a proper interval T1 is intervalMetBy another proper interval T2, then the beginning of T1 is coincident with the end of T2."@en ;
+            sh:name "interval met by"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:intervalMetBy ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+        [ rdfs:label "intervalo posterior"@es ;
+            sh:class ns:ProperInterval ;
+            sh:description "Si un intervalo propio T1 es posterior a otro intervalo propio T2, entonces el principio de T1 estÃ¡ despuÃ©s que el final de T2." ;
+            sh:name "interval after"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:intervalAfter ],
-        [ sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+        [ rdfs:label "interval finishes"@en ;
+            sh:class ns:ProperInterval ;
+            sh:description "If a proper interval T1 is intervalFinishes another proper interval T2, then the beginning of T1 is after the beginning of T2, and the end of T1 is coincident with the end of T2."@en ;
+            sh:name "intervalo termina"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:intervalMeets ] ;
+            sh:path ns:intervalFinishes ],
+        [ rdfs:label "interval meets"@en ;
+            sh:class ns:ProperInterval ;
+            sh:description "If a proper interval T1 is intervalMeets another proper interval T2, then the end of T1 is coincident with the beginning of T2."@en ;
+            sh:name "intervalo se encuentra"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalMeets ],
+        [ rdfs:label "interval started by"@en ;
+            sh:class ns:ProperInterval ;
+            sh:description "Si un intervalo propio T1 es empezado por otro intervalo propio T2, entonces el principio de T1 coincide con el principio de T2, y el final de T1 es posterior al final de T2."@es ;
+            sh:name "interval started by"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalStartedBy ],
+        [ rdfs:label "Si un intervalo propio T1 es igual a otro intervalo propio T2, entonces el principio de T1 coincide con el principio de T2, y el final de T1 coincide con el final de T2."@es ;
+            sh:class ns:ProperInterval ;
+            sh:description "Si un intervalo propio T1 es igual a otro intervalo propio T2, entonces el principio de T1 coincide con el principio de T2, y el final de T1 coincide con el final de T2."@es ;
+            sh:disjoint ns:intervalIn ;
+            sh:name "intervalo igual"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalEquals ],
+        [ rdfs:label "interval finished by"@en ;
+            sh:class ns:ProperInterval ;
+            sh:description "If a proper interval T1 is intervalFinishedBy another proper interval T2, then the beginning of T1 is before the beginning of T2, and the end of T1 is coincident with the end of T2."@en ;
+            sh:name "interval finished by"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalFinishedBy ],
+        [ rdfs:label "If a proper interval T1 is intervalBefore another proper interval T2, then the end of T1 is before the beginning of T2."@en ;
+            sh:class ns:ProperInterval ;
+            sh:description "If a proper interval T1 is intervalBefore another proper interval T2, then the end of T1 is before the beginning of T2."@en ;
+            sh:name "intervalo anterior"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalBefore ],
+        [ rdfs:label "If a proper interval T1 is intervalDuring another proper interval T2, then the beginning of T1 is after the beginning of T2, and the end of T1 is before the end of T2."@en ;
+            sh:class ns:ProperInterval ;
+            sh:description "Si un intervalo propio T1 estÃ¡ durante otro intervalo propio T2, entonces del principio de T1 estÃ¡ despuÃ©s del principio de T2, y el final de T1 estÃ¡ antes que el final de T2."@es ;
+            sh:name "intervalo durante"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalDuring ],
+        [ rdfs:label "interval overlapped by"@en ;
+            sh:class ns:ProperInterval ;
+            sh:description "Si un intervalo propio T1 es 'intervalo solapado por' otro intervalo propio T2, entonces el principio de T1 es posterior al principio de T2, y el principio de T1 es anterior al final de T2, y el final de T1 es posterior al final de T2."@es ;
+            sh:name "intervalo solapado por"@es ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalOverlappedBy ],
+        [ rdfs:label "Si un intervalo propio T1 contiene otro intervalo propio T2, entonces el principio de T1 estÃ¡ antes que el principio de T2, y el final de T1 estÃ¡ despuÃ©s del final de T2."@es ;
+            sh:class ns:ProperInterval ;
+            sh:description "If a proper interval T1 is intervalContains another proper interval T2, then the beginning of T1 is before the beginning of T2, and the end of T1 is after the end of T2."@en ;
+            sh:name "interval contains"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapProperinterval_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:intervalContains ] ;
     sh:targetClass ns:ProperInterval .
+
+[] sh:class ns:Instant ;
+    sh:path ns:after .
+
+[] sh:class ns:Instant ;
+    sh:path ns:before .
+
+[] sh:class ns:Interval ;
+    sh:path ns:before .
+
+[] sh:class ns:Instant ;
+    sh:path ns:before .
+
+[] sh:class ns:Instant ;
+    sh:path ns:after .
+
+[] sh:class ns:Instant ;
+    sh:path ns:before .
+
+[] sh:class ns:Interval ;
+    sh:path ns:after .
+
+[] sh:class ns:Instant ;
+    sh:path ns:after .
+
+[] sh:class ns:Interval ;
+    sh:path ns:before .
+
+[] sh:class ns:Interval ;
+    sh:path ns:after .
+
+[] sh:class ns:Interval ;
+    sh:path ns:before .
+
+[] sh:class ns:Interval ;
+    sh:path ns:after .
 

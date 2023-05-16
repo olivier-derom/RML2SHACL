@@ -24,13 +24,16 @@ class OWLtoSHACL:
 
 
     def getPrefixOntologies(self):
+        # retrieve the ontologies from prefixes
         for namespace in self.RML.graph.namespaces():
             with contextlib.suppress(Exception):
                 g = rdflib.Graph()
                 g.parse(namespace[1])
+                # we don't actually do anything when parsing, but it's to check if the graph is valid
                 self.AstreaArgs += [str(namespace[1])]
 
     def getFileOntologies(self, ontology_dir):
+        # retrieve the ontologies from files in given directory
         if ontology_dir is not None:
             for ontology in os.listdir(ontology_dir):
                 file = os.path.join(ontology_dir, ontology)
@@ -40,10 +43,13 @@ class OWLtoSHACL:
                     self.AstreaArgs += [str(file)]
 
     def convertOntologies(self, RML2SHACLgraph):
+        # run the subprocess to convert ontologies for each retrieved ontology
         subprocesscommand = ['java', '-jar', self.astreajarpath, self.AstreaKG]
         subprocesscommand.extend(iter(self.AstreaArgs))
         result = subprocess.check_output(subprocesscommand, stderr=subprocess.STDOUT, text=True)
+        # all output graphs are printed in STDOUT with 'Astrea2SHACLGraphDelimiter' to know when a graph ends
         graphs = result.split('Astrea2SHACLGraphDelimiter\n')
+        # for each converted graph, enrich our SHACL shapes with it
         for item in graphs:
             if item != "":
                 graph = rdflib.Graph()
