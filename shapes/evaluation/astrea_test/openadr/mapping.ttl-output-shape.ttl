@@ -276,17 +276,17 @@
     sh:name "Item" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ rdfs:label "has item description" ;
-            sh:datatype xsd:string ;
-            sh:name "has item description" ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasItemDescription ],
-        [ rdfs:label "A scaling factor for the base unit of measure for a report" ;
+    sh:property [ rdfs:label "A scaling factor for the base unit of measure for a report" ;
             sh:datatype xsd:string ;
             sh:description "A scaling factor for the base unit of measure for a report" ;
             sh:name "has scale code" ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:hasScaleCode ] ;
+            sh:path ns:hasScaleCode ],
+        [ rdfs:label "has item description" ;
+            sh:datatype xsd:string ;
+            sh:name "has item description" ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasItemDescription ] ;
     sh:targetClass ns:Item .
 
 <http://mapping.example.com/map_triplesMapLoadcontrolcapacitysignal_000/shape> a sh:NodeShape ;
@@ -376,18 +376,23 @@
     sh:name "Node" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ rdfs:label "A link between a node and the opt it sends" ;
+    sh:property [ rdfs:label "has registration number" ;
+            sh:datatype xsd:string ;
+            sh:name "has registration number" ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasRegistrationNumber ],
+        [ rdfs:label "A link between a node and the opt it sends" ;
             sh:class ns:Opt ;
             sh:description "A link between a node and the opt it sends" ;
             sh:name "sends opt" ;
             sh:node <http://mapping.example.com/map_triplesMapOpt_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:sendsOpt ],
-        [ rdfs:label "has node name" ;
-            sh:datatype owl:rational ;
-            sh:name "has node name" ;
+        [ rdfs:label "has transport name" ;
+            sh:datatype xsd:string ;
+            sh:name "has transport name" ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:hasNodeName ],
+            sh:path ns:hasTransportName ],
         [ rdfs:label "A link between a node and the report it sends" ;
             sh:class ns:Report ;
             sh:description "A link between a node and the report it sends" ;
@@ -395,6 +400,11 @@
             sh:node <http://mapping.example.com/map_triplesMapReport_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:sendsReport ],
+        [ rdfs:label "has profile name" ;
+            sh:datatype xsd:string ;
+            sh:name "has profile name" ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasProfileName ],
         [ rdfs:label "A link between a node and the event it sends" ;
             sh:class ns:Event ;
             sh:description "A link between a node and the event it sends" ;
@@ -402,21 +412,11 @@
             sh:node <http://mapping.example.com/map_triplesMapEvent_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:sendsEvent ],
-        [ rdfs:label "has transport name" ;
-            sh:datatype xsd:string ;
-            sh:name "has transport name" ;
+        [ rdfs:label "has node name" ;
+            sh:datatype owl:rational ;
+            sh:name "has node name" ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:hasTransportName ],
-        [ rdfs:label "has profile name" ;
-            sh:datatype xsd:string ;
-            sh:name "has profile name" ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasProfileName ],
-        [ rdfs:label "has registration number" ;
-            sh:datatype xsd:string ;
-            sh:name "has registration number" ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasRegistrationNumber ] ;
+            sh:path ns:hasNodeName ] ;
     sh:targetClass ns:Node .
 
 <http://mapping.example.com/map_triplesMapOptin_000/shape> a sh:NodeShape ;
@@ -640,13 +640,19 @@
     sh:name "Event" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ rdfs:label "Link between an event and its status" ;
-            sh:class ns:EventStatus ;
-            sh:description "Link between an event and its status" ;
-            sh:name "has event status" ;
-            sh:node <http://mapping.example.com/map_triplesMapEventstatus_000/shape> ;
+    sh:property [ rdfs:label "Relation between an event and its metadata" ;
+            sh:class ns:EventDescriptor ;
+            sh:description "Relation between an event and its metadata" ;
+            sh:name "event descriptor" ;
+            sh:node <http://mapping.example.com/map_triplesMapEventdescriptor_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:hasEventStatus ],
+            sh:path ns:eventDescriptor ],
+        [ rdfs:label "Name fo an event" ;
+            sh:datatype owl:rational ;
+            sh:description "Name fo an event" ;
+            sh:name "has event name" ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasEventName ],
         [ rdfs:label "Relation between an entity and its group target" ;
             sh:class ns:Group ;
             sh:description "Relation between an entity and its group target" ;
@@ -654,12 +660,6 @@
             sh:node <http://mapping.example.com/map_triplesMapGroup_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:hasGroupTarget ],
-        [ rdfs:label "Name fo an event" ;
-            sh:datatype owl:rational ;
-            sh:description "Name fo an event" ;
-            sh:name "has event name" ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasEventName ],
         [ rdfs:label "Relation between an entity and its service area target" ;
             sh:class ns:ServiceArea ;
             sh:description "Relation between an entity and its service area target" ;
@@ -667,13 +667,13 @@
             sh:node <http://mapping.example.com/map_triplesMapServicearea_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:hasAreaTarget ],
-        [ rdfs:label "Relation between an event and its metadata" ;
-            sh:class ns:EventDescriptor ;
-            sh:description "Relation between an event and its metadata" ;
-            sh:name "event descriptor" ;
-            sh:node <http://mapping.example.com/map_triplesMapEventdescriptor_000/shape> ;
+        [ rdfs:label "Link between an event and its status" ;
+            sh:class ns:EventStatus ;
+            sh:description "Link between an event and its status" ;
+            sh:name "has event status" ;
+            sh:node <http://mapping.example.com/map_triplesMapEventstatus_000/shape> ;
             sh:nodeKind sh:IRI ;
-            sh:path ns:eventDescriptor ] ;
+            sh:path ns:hasEventStatus ] ;
     sh:targetClass ns:Event .
 
 <http://mapping.example.com/map_triplesMapEventdescriptor_000/shape> a sh:NodeShape ;
@@ -683,36 +683,18 @@
     sh:name "Event descriptor" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://www.example.com/.*" ;
-    sh:property [ rdfs:label "has randomization" ;
-            sh:name "has randomization" ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasRandomization ],
-        [ rdfs:label "Attribute to indicate if the event is for testing purposes" ;
+    sh:property [ rdfs:label "Attribute to indicate if the event is for testing purposes" ;
             sh:datatype xsd:boolean ;
             sh:description "Attribute to indicate if the event is for testing purposes" ;
             sh:name "is test event" ;
             sh:nodeKind sh:Literal ;
             sh:path ns:isTestEvent ;
             sh:pattern "true|false|0|1" ],
-        [ rdfs:label "Number which is incremented each time an event is modified." ;
-            sh:datatype xsd:integer ;
-            sh:description "Number which is incremented each time an event is modified." ;
-            sh:name "has modification number" ;
+        [ rdfs:label "It indicates why an event was modified" ;
+            sh:description "It indicates why an event was modified" ;
+            sh:name "has modification reason" ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:hasModificationNumber ;
-            sh:pattern "[\\-+]?[0-9]+" ],
-        [ rdfs:label "Attribute to indicate if a response is required to acknowledge the object" ;
-            sh:datatype xsd:boolean ;
-            sh:description "Attribute to indicate if a response is required to acknowledge the object" ;
-            sh:name "is response required" ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:isResponseRequired ;
-            sh:pattern "true|false|0|1" ],
-        [ rdfs:label "Time of modification of an event" ;
-            sh:description "Time of modification of an event" ;
-            sh:name "has modification date time" ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasModificationDateTime ],
+            sh:path ns:hasModificationReason ],
         [ rdfs:label """The priority of the event in relation to other events (The lower the number
 higher the priority. A value of zero (0) indicates no priority, which is the lowest priority by default).""" ;
             sh:datatype xsd:integer ;
@@ -722,11 +704,29 @@ higher the priority. A value of zero (0) indicates no priority, which is the low
             sh:nodeKind sh:Literal ;
             sh:path ns:hasPriority ;
             sh:pattern "[\\-+]?[0-9]+" ],
-        [ rdfs:label "It indicates why an event was modified" ;
-            sh:description "It indicates why an event was modified" ;
-            sh:name "has modification reason" ;
+        [ rdfs:label "Number which is incremented each time an event is modified." ;
+            sh:datatype xsd:integer ;
+            sh:description "Number which is incremented each time an event is modified." ;
+            sh:name "has modification number" ;
             sh:nodeKind sh:Literal ;
-            sh:path ns:hasModificationReason ] ;
+            sh:path ns:hasModificationNumber ;
+            sh:pattern "[\\-+]?[0-9]+" ],
+        [ rdfs:label "has randomization" ;
+            sh:name "has randomization" ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasRandomization ],
+        [ rdfs:label "Time of modification of an event" ;
+            sh:description "Time of modification of an event" ;
+            sh:name "has modification date time" ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasModificationDateTime ],
+        [ rdfs:label "Attribute to indicate if a response is required to acknowledge the object" ;
+            sh:datatype xsd:boolean ;
+            sh:description "Attribute to indicate if a response is required to acknowledge the object" ;
+            sh:name "is response required" ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:isResponseRequired ;
+            sh:pattern "true|false|0|1" ] ;
     sh:targetClass ns:EventDescriptor .
 
 <http://mapping.example.com/map_triplesMapEventstatus_000/shape> a sh:NodeShape ;
@@ -804,6 +804,11 @@ higher the priority. A value of zero (0) indicates no priority, which is the low
             sh:node <http://mapping.example.com/map_triplesMapLoadcontrolstate_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:hasLoadControlState ],
+        [ rdfs:label "has report name" ;
+            sh:datatype xsd:string ;
+            sh:name "has report name" ;
+            sh:nodeKind sh:Literal ;
+            sh:path ns:hasReportName ],
         [ rdfs:label "Link to the source of a report" ;
             sh:class ns:Group ;
             sh:description "Link to the source of a report" ;
@@ -811,11 +816,6 @@ higher the priority. A value of zero (0) indicates no priority, which is the low
             sh:node <http://mapping.example.com/map_triplesMapGroup_000/shape> ;
             sh:nodeKind sh:IRI ;
             sh:path ns:reportDataSource ],
-        [ rdfs:label "has report name" ;
-            sh:datatype xsd:string ;
-            sh:name "has report name" ;
-            sh:nodeKind sh:Literal ;
-            sh:path ns:hasReportName ],
         [ rdfs:label "Relation between a report and its payload" ;
             sh:class ns:ReportPayload ;
             sh:description "Relation between a report and its payload" ;

@@ -39,6 +39,7 @@
     sh:description "The four cardinal directions or cardinal points are the directions of north, east, south, and west, commonly denoted by their initials: N, E, S, W. East and west are at right angles to north and south, with east being in the clockwise direction of rotation from north and west being directly opposite east. Intermediate points between the four cardinal directions form the points of the compass. (definition taken from https://en.wikipedia.org/wiki/Cardinal_direction)"@en ;
     sh:name "Compass direction"@en ;
     sh:nodeKind sh:IRI ;
+    sh:not <https://astrea.linkeddata.es/shapes#dbff887514a7ac769bf4c90b1d5d60ef> ;
     sh:pattern "http://.*" ;
     sh:targetClass ns:CompassDirection .
 
@@ -177,6 +178,7 @@
     sh:description "An aspect of an entity that can be observable by a sensor."@en ;
     sh:name "Property"@en ;
     sh:nodeKind sh:IRI ;
+    sh:not <https://astrea.linkeddata.es/shapes#ff6cf94d2010ad4e7991ab14b6e8cec8> ;
     sh:pattern "http://.*" ;
     sh:targetClass <https://saref.etsi.org/core/Property> .
 
@@ -261,18 +263,18 @@ A device that has category saref:Sensor and performs a saref:SensingFunction."""
 <https://astrea.linkeddata.es/shapes#aa942717528b33727aa4ad14cf4313df> a sh:PropertyShape ;
     sh:class ns:CommunicationProtocol .
 
-<https://astrea.linkeddata.es/shapes#dbff887514a7ac769bf4c90b1d5d60ef> a sh:PropertyShape ;
-    sh:class ns:Light .
-
 <https://astrea.linkeddata.es/shapes#ef221800e02003a8aaab7079a833400d> a sh:PropertyShape ;
     sh:class ns:CommunicationInterface .
-
-<https://astrea.linkeddata.es/shapes#ff6cf94d2010ad4e7991ab14b6e8cec8> a sh:PropertyShape ;
-    sh:class <https://saref.etsi.org/core/Service> .
 
 <https://astrea.linkeddata.es/shapes#42dff92b4355016199856f7a85f969c0> a sh:PropertyShape ;
     sh:class ns:Color .
 
 <https://astrea.linkeddata.es/shapes#5c4d33be837d075d74476b40b9096f4e> a sh:PropertyShape ;
     sh:class <https://saref.etsi.org/core/Property> .
+
+<https://astrea.linkeddata.es/shapes#dbff887514a7ac769bf4c90b1d5d60ef> a sh:PropertyShape ;
+    sh:class ns:Light .
+
+<https://astrea.linkeddata.es/shapes#ff6cf94d2010ad4e7991ab14b6e8cec8> a sh:PropertyShape ;
+    sh:class <https://saref.etsi.org/core/Service> .
 

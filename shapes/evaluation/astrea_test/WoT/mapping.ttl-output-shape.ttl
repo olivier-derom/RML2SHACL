@@ -72,21 +72,7 @@
     sh:name "Access mapping"@en ;
     sh:nodeKind sh:IRI ;
     sh:pattern "http://.*" ;
-    sh:property [ rdfs:label "Indicates which access mappings should be excuted before the one being subject of this property." ;
-            sh:class ns:AccessMapping ;
-            sh:description "Indicates which access mappings should be excuted before the one being subject of this property." ;
-            sh:name "is executed after"@en ;
-            sh:node <http://mapping.example.com/map_triplesMapAccessmapping_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:isExecutedAfter ],
-        [ rdfs:label "Link between the access mappings to specific mappings."@en ;
-            sh:class ns:Mapping ;
-            sh:description "Link between the access mappings to specific mappings."@en ;
-            sh:name "has mapping"@en ;
-            sh:node <http://mapping.example.com/map_triplesMapMapping_000/shape> ;
-            sh:nodeKind sh:IRI ;
-            sh:path ns:hasMapping ],
-        [ rdfs:label "Link from the access mapping to the specific endpoint in which the mappings (see hasMapping) indicated by the access mapping instance can be applied."@en ;
+    sh:property [ rdfs:label "Link from the access mapping to the specific endpoint in which the mappings (see hasMapping) indicated by the access mapping instance can be applied."@en ;
             sh:class <http://iot.linkeddata.es/def/wot#Endpoint> ;
             sh:description "Link from the access mapping to the specific endpoint in which the mappings (see hasMapping) indicated by the access mapping instance can be applied."@en ;
             sh:maxCount 1 ;
@@ -96,7 +82,21 @@
             sh:path ns:mapsResourcesFrom ;
             sh:qualifiedMaxCount "1"^^xsd:nonNegativeInteger ;
             sh:qualifiedMinCount "1"^^xsd:nonNegativeInteger ;
-            sh:qualifiedValueShape [ sh:class <http://iot.linkeddata.es/def/wot#Endpoint> ] ] ;
+            sh:qualifiedValueShape [ sh:class <http://iot.linkeddata.es/def/wot#Endpoint> ] ],
+        [ rdfs:label "Link between the access mappings to specific mappings."@en ;
+            sh:class ns:Mapping ;
+            sh:description "Link between the access mappings to specific mappings."@en ;
+            sh:name "has mapping"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapMapping_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:hasMapping ],
+        [ rdfs:label "Indicates which access mappings should be excuted before the one being subject of this property." ;
+            sh:class ns:AccessMapping ;
+            sh:description "Indicates which access mappings should be excuted before the one being subject of this property." ;
+            sh:name "is executed after"@en ;
+            sh:node <http://mapping.example.com/map_triplesMapAccessmapping_000/shape> ;
+            sh:nodeKind sh:IRI ;
+            sh:path ns:isExecutedAfter ] ;
     sh:targetClass ns:AccessMapping .
 
 <http://mapping.example.com/map_triplesMapClass_000/shape> a sh:NodeShape ;
